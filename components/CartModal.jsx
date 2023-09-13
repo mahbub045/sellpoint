@@ -28,14 +28,14 @@ const CartModal = ({ onClose }) => {
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </div>
-                <h1 className="mb-4 text-xl text-center">Shopping Cart</h1> {/* Centered the text */}
+                <h1 className="mb-4 text-xl text-center">Shopping Cart</h1>
                 {cartItems.length === 0 ? (
-                    <div className='text-center mb-4'> {/* Centered the text */}
-                        Cart is empty. <Link legacyBehavior href='/'><a className='text-black primary-button hover:none'>Go Shopping</a></Link>
+                    <div className='text-center mb-4 text-red-600'>
+                        Your Cart is empty.
                     </div>
                 ) : (
                     <div className='grid md:grid-cols-2 md:gap-5'>
-                        <div className='overflow-x-auto md:col-span-2'> {/* Adjusted column span */}
+                        <div className='overflow-x-auto md:col-span-2'>
                             <table className='min-w-full'>
                                 <thead className='border-b'>
                                     <tr>
