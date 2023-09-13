@@ -22,7 +22,7 @@ const CartModal = ({ onClose }) => {
     return (
         <div className="fixed mt-60 inset-5 flex items-center justify-center z-50">
             <div className="bg-black opacity-60 inset-0 fixed"></div>
-            <div className="bg-white bg-opacity-90 p-4 rounded-md z-50 relative max-w-md w-full md:max-w-xl"> {/* Adjusted max width */}
+            <div className="bg-white border shadow-lg shadow-emerald-500 border-emerald-500 p-4 rounded-md z-50 relative max-w-md w-full md:max-w-xl"> {/* Adjusted max width */}
                 <div className="flex justify-end">
                     <button onClick={onClose}>
                         <FontAwesomeIcon icon={faTimes} />

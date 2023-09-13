@@ -1,14 +1,33 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
 
 const Admin = () => {
     const router = useRouter();
+    const [formValues, setFormValues] = useState([]);
+    const [totalUsers, setTotalUsers] = useState([]);
     const handleLogout = () => {
         // Perform logout actions here
         router.push('/login');
         console.log('Logged out successfully!');
     };
+
+    useEffect(() => {
+        const storedValues = localStorage.getItem('formValues');
+        if (storedValues) {
+            setFormValues(JSON.parse(storedValues));
+
+            const numFields = Object.keys(JSON.parse(storedValues)).length;
+
+            // Update the total number of users
+            setTotalUsers(numFields);
+        } else {
+            // If there are no customers, set total users to 0
+            setTotalUsers(0);
+        }
+    }, []);
+
     return (
         <>
             <Header title='Admin' />
@@ -21,7 +40,7 @@ const Admin = () => {
                         <div className="flex-1">
                             <ul className="pt-2 pb-4 space-y-1 text-sm">
                                 <li className="rounded-sm">
-                                    <a href="admin" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
+                                    <a href="Admin" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                         </svg>
@@ -80,7 +99,7 @@ const Admin = () => {
                                 Total Users
                             </div>
                             <div className="mt-1 text-3xl font-semibold text-gray-900">
-                                12
+                                {totalUsers}
                             </div>
                         </div>
                         <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
