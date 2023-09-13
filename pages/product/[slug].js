@@ -1,3 +1,4 @@
+import CartModal from '@/components/CartModal';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { Store } from '@/utils/Store';
@@ -14,6 +15,7 @@ const ProductScreen = () => {
     const [selectedColor, setSelectedColor] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('S');
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
     const product = data.products.find((x) => x.slug === slug);
     if (!product) {
         return <div>Product Not found!</div>;
@@ -36,6 +38,23 @@ const ProductScreen = () => {
             setQuantity(quantity + 1);
         }
     };
+
+    // Function to open the cart modal
+    const openCartModal = () => {
+        const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
+        const quantity = existItem ? existItem.quantity + 1 : 1;
+        if (product.countInStock < quantity) {
+            alert("Sorry, Product is out of stock");
+            return;
+        }
+        dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+        setIsCartModalOpen(true);
+    };
+
+    // Function to close the cart modal
+    const closeCartModal = () => {
+        setIsCartModalOpen(false);
+    };
     const addToCartHandler = () => {
         const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
         const quantity = existItem ? existItem.quantity + 1 : 1;
@@ -44,7 +63,6 @@ const ProductScreen = () => {
             return;
         }
         dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-        router.push('/cart');
     }
 
     return (
@@ -194,7 +212,10 @@ const ProductScreen = () => {
                         </div>
                         {/* Buy Now and Add to Cart buttons */}
                         <div className='mt-5 flex flex-col md:flex-row md:justify-between font-semibold'>
-                            <button className="w-full md:w-72 mb-2 md:mb-0 md:mr-2 p-2 bg-slate-400 hover:bg-slate-500 rounded" onClick={addToCartHandler}>Buy Now</button>
+                            <button className="w-full md:w-72 mb-2 md:mb-0 md:mr-2 p-2 bg-slate-400 hover:bg-slate-500 rounded" onClick={openCartModal}>
+                                Buy Now
+                            </button>
+                            {isCartModalOpen && <CartModal onClose={closeCartModal} />}
                             <button className="w-full md:w-72 p-2 primary-button" onClick={addToCartHandler}>Add to Cart</button>
                         </div>
                     </div>

@@ -11,7 +11,24 @@ const Carousel = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+        ]
     };
+
 
     const slides = [
         {
@@ -30,10 +47,10 @@ const Carousel = () => {
     ];
 
     return (
-        <div className="h-[650px] w-full">
+        <div className="h-96 sm:h-72 md:h-[650px] lg:h-[800px] xl:h-[950px] w-full overflow-hidden">
             <Slider {...settings}>
                 {slides.map((slide) => (
-                    <div key={slide.id} className="h-[550px]">
+                    <div key={slide.id} className="h-64 sm:h-48 md:h-[550px] lg:h-[700px] xl:h-[800px]">
                         <img
                             src={slide.imageSrc}
                             alt={slide.caption}
