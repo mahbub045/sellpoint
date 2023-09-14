@@ -51,7 +51,7 @@ const Login = ({ user }) => {
                 <title>Login - SellPoint</title>
                 <meta name="description" content="Signup page for Your Website" />
             </Head>
-            <div className="bg-white p-8 rounded shadow-md w-96 mx-auto bg-opacity-90">
+            <div className="bg-white dark:bg-black/70 p-8 rounded shadow-md w-96 mx-auto bg-opacity-90">
                 {/* Logo */}
                 <a href="/">
                     <img src="/logo.png" alt="E-commerce Logo" className="mx-auto w-[200px] h-[60px] mb-4" />

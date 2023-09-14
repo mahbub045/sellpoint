@@ -50,7 +50,7 @@ export default function AddCustomer() {
                     onSubmit={handleSubmit}
                 >
                     {({ isSubmitting }) => (
-                        <Form className="bg-white bg-opacity-90 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
+                        <Form className="bg-white dark:bg-black/70 bg-opacity-90 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
                             <div className="mb-6 text-center">
                                 <h1 className="text-2xl font-semibold text-emerald-500">Add New Customer</h1>
                             </div>

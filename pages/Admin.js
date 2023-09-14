@@ -31,8 +31,8 @@ const Admin = () => {
     return (
         <>
             <Header title='Admin' />
-            <div className="flex">
-                <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
+            <div className="container m-auto flex">
+                <div className="container flex flex-col h-screen p-3 shadow w-60">
                     <div className="space-y-3">
                         <div className="flex items-center">
                             <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
@@ -92,29 +92,32 @@ const Admin = () => {
                         </div>
                     </div>
                 </div>
-                <div className="container pl-2 mx-auto mt-12">
+                <div className="container pl-2 mx-auto mt-10">
+                    <div className="pb-2">
+                        <h2 className="text-2xl text-emerald-600">Manage My Account</h2>
+                    </div>
                     <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
-                        <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
+                        <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                             <div className="text-sm font-medium text-emerald-500 truncate">
                                 Total Users
                             </div>
-                            <div className="mt-1 text-3xl font-semibold text-gray-900">
+                            <div className="mt-1 text-3xl font-semibold dark:text-white">
                                 {totalUsers}
                             </div>
                         </div>
-                        <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
+                        <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                             <div className="text-sm font-medium text-emerald-500 truncate">
                                 Total Profit
                             </div>
-                            <div className="mt-1 text-3xl font-semibold text-gray-900">
+                            <div className="mt-1 text-3xl font-semibold dark:text-white">
                                 $ 40k
                             </div>
                         </div>
-                        <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
+                        <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                             <div className="text-sm font-medium text-emerald-500 truncate">
                                 Total Orders
                             </div>
-                            <div className="mt-1 text-3xl font-semibold text-gray-900">
+                            <div className="mt-1 text-3xl font-semibold dark:text-white">
                                 2k
                             </div>
                         </div>

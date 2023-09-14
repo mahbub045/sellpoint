@@ -12,8 +12,8 @@ const User = () => {
     return (
         <>
             <Header title={'User Name'} />
-            <div className="flex container px-4 m-auto">
-                <div className="flex flex-col p-3 bg-white shadow w-60">
+            <div className="flex container m-auto">
+                <div className="flex flex-col h-screen p-3  shadow w-60">
                     <div className="space-y-3">
                         <div className="flex items-center">
                             <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
@@ -65,36 +65,36 @@ const User = () => {
                         </div>
                     </div>
                 </div>
-                <div className="container pl-2 mx-auto mt-12">
-                    <div>
+                <div className="container pl-2 mx-auto mt-10">
+                    <div className="pb-2">
                         <h2 className="text-2xl text-emerald-600">Manage My Account</h2>
                     </div>
                     <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
-                        <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
+                        <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                             <div className="text-sm font-medium text-emerald-500 truncate">
                                 Personal Profile
                             </div>
-                            <div className="mt-1 text-sm text-gray-900">
+                            <div className="mt-1 text-sm dark:text-white">
                                 <p>User Name</p>
                                 <p>useremail@gmail.com</p>
                                 <p>01700000000</p>
                             </div>
                         </div>
-                        <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
+                        <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                             <div className="text-sm font-medium text-emerald-500 truncate">
                                 Address Book
                             </div>
-                            <div className="mt-1 text-sm text-gray-900">
+                            <div className="mt-1 text-sm dark:text-white">
                                 <p>User Name</p>
                                 <p>House# 00, Road No# 0, A-Block, Dhaka-1212</p>
                                 <p>01700000000</p>
                             </div>
                         </div>
-                        <div className="w-full px-4 py-5 bg-white rounded-lg shadow-md">
+                        <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                             <div className="text-sm font-medium text-emerald-500 truncate">
                                 Total Orders
                             </div>
-                            <div className="mt-1 text-3xl font-semibold text-gray-900">
+                            <div className="mt-1 text-3xl font-semibold dark:text-white">
                                 102
                             </div>
                         </div>
@@ -118,7 +118,7 @@ const User = () => {
                         </thead>
                         <tbody>
                             {/* Replace the following rows with your actual order data */}
-                            <tr className="bg-white text-center">
+                            <tr className=" text-center">
                                 <td className="border px-6 py-4">#12345</td>
                                 <td className="border px-6 py-4">2023-09-05</td>
                                 <td className="border px-6 py-4">3 items</td>
@@ -127,7 +127,7 @@ const User = () => {
                                     <button className="bg-emerald-500 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">View</button>
                                 </td>
                             </tr>
-                            <tr className="bg-gray-100 text-center">
+                            <tr className=" text-center">
                                 <td className="border px-6 py-4">#12346</td>
                                 <td className="border px-6 py-4">2023-09-04</td>
                                 <td className="border px-6 py-4">2 items</td>
@@ -141,6 +141,7 @@ const User = () => {
                     </table>
                 </div>
             </div>
+
             <Footer />
         </ >
     )

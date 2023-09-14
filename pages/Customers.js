@@ -124,7 +124,7 @@ const Customers = ({ user }) => {
                                             <td className="border border-emerald-400 p-5 text-center">{value.phone}</td>
                                             <td className="border border-emerald-400 p-5 text-center">{value.address}</td>
                                             <td className="border border-emerald-400 p-5">
-                                                <a onClick={() => { handleDeleteCustomer(index) }} className="hover:text-red-600 flex justify-center items-center cursor-pointer">
+                                                <a onClick={() => { handleDeleteCustomer(index) }} className="dark:text-white hover:dark:text-red-600 hover:text-red-600 flex justify-center items-center cursor-pointer">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
