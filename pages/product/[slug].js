@@ -1,3 +1,4 @@
+'use client';
 import CartModal from '@/components/CartModal';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -5,21 +6,35 @@ import { Store } from '@/utils/Store';
 import data from '@/utils/data';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const ProductScreen = () => {
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
-    const { query } = useRouter();
-    const { slug } = query;
+    const [product, setProduct] = useState()
     const [selectedColor, setSelectedColor] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('S');
     const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-    const product = data.products.find((x) => x.slug === slug);
-    if (!product) {
-        return <div>Product Not found!</div>;
+
+
+    const findSingleProduct = () => {
+        const singleProduct = data?.map((item) => (item?.products?.find((i) => {
+            if (i.slug == router.query.slug) {
+                setProduct(i)
+            }
+        }))
+        )
+        console.log(singleProduct)
     }
+    useEffect(() => {
+        findSingleProduct()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [router.query.slug])
+
+    console.log(product)
+
+
 
     const handleColorButtonClick = (color) => {
         setSelectedColor(color);
@@ -67,41 +82,54 @@ const ProductScreen = () => {
 
     return (
         <>
-            <Header title={product.name} />
-            <div className='container mx-auto p-4'>
+            <Header title={product?.name} />
+            <div className='container mx-auto p-2'>
                 <div className='py-2'>
-                    <Link href="/">
-                        <button className="text-black primary-button">Back to products</button>
+                    <Link legacyBehavior href="/">
+                        <button className="text-black primary-button !pl-2 flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>
+                            Back to products
+                        </button>
                     </Link>
                 </div>
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
                     <div className='relative overflow-hidden'>
-                        <img src={product.image} alt={product.name} className='w-full h-auto hover:cursor-zoom-in transition-transform transform hover:scale-150' />
+                        <img src={product?.image} alt={product?.name} className='w-full h-auto hover:cursor-zoom-in transition-transform transform hover:scale-150' />
+                        <div className='py-4 flex justify-center gap-2'>
+                            <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
+                            <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
+                            <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
+                        </div>
                     </div>
                     <div className='flex flex-col'>
                         {/* Product Info */}
                         <ul className="mb-2">
                             <li>
-                                <h1 className='text-xl font-semibold'>{product.name}</h1>
+                                <h1 className='text-xl font-semibold'>{product?.name}</h1>
                             </li>
                             <li className="text-sm">
-                                <span className='font-semibold'>Category: </span>{product.category} | <span className='font-semibold'>Brand: </span>{product.brand}
+                                <span className='font-semibold'>Category: </span>{product?.category} | <span className='font-semibold'>Sub Category: </span>{product?.subCategory}
+                            </li>
+                            <li className="text-sm">
+                                <span className='font-semibold'>Brand: </span>{product?.brand}
                             </li>
                             <li className="text-sm">
                                 <span className='font-semibold'>Rating: </span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 inline-block text-yellow-600">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                                 </svg>
-                                <span>{product.rating} of {product.numReviews}</span>
+                                <span>{product?.rating} of {product?.numReviews}</span>
                             </li>
                         </ul>
                         {/* Price */}
                         <div className='my-2'>
                             <h1 className='text-3xl font-semibold'>
-                                <span className='font-extrabold'>৳ </span>{product.discountPrice}
+                                <span className='font-extrabold'>৳ </span>{product?.discountPrice}
                             </h1>
                             <del className='text-red-600'>
-                                <span className='font-extrabold'>৳ </span>{product.price}
+                                <span className='font-extrabold'>৳ </span>{product?.price}
                             </del>
                         </div>
                         <hr className="my-2" />
@@ -181,7 +209,7 @@ const ProductScreen = () => {
                         {/* Quantity */}
                         <div className='my-2'>
                             <h4 className='font-semibold'>Quantity</h4>
-                            {product.countInStock > 0 ?
+                            {product?.countInStock > 0 ?
                                 <div className="flex items-center">
                                     <button
                                         type="button"
@@ -258,7 +286,7 @@ const ProductScreen = () => {
                 </div>
                 <div className='my-2'>
                     <h1 className='font-semibold text-xl py-4'>Description:</h1>
-                    {product.description}
+                    {product?.description}
                 </div>
                 <div className='my-2'>
                     <h1 className='text-xl font-semibold py-4'>Coustomer Reviews</h1>
@@ -268,7 +296,7 @@ const ProductScreen = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 inline-block text-yellow-600">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                             </svg>
-                            <span>{product.rating}</span>
+                            <span>{product?.rating}</span>
                         </div>
                         <button className='text-emerald-600 font-semibold hover:underline'>Noman Ali</button>
                         <p className='text-xs font-semibold opacity-80'>02-12-2020</p>
@@ -282,7 +310,7 @@ const ProductScreen = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 inline-block text-yellow-600">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                             </svg>
-                            <span>{product.rating}</span>
+                            <span>{product?.rating}</span>
                         </div>
                         <button className='text-emerald-600 font-semibold hover:underline'>Rana Khan</button>
                         <p className='text-xs font-semibold opacity-80'>02-12-2020</p>
@@ -296,7 +324,7 @@ const ProductScreen = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 inline-block text-yellow-600">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                             </svg>
-                            <span>{product.rating}</span>
+                            <span>{product?.rating}</span>
                         </div>
                         <button className='text-emerald-600 font-semibold hover:underline'>Jannati Akter</button>
                         <p className='text-xs font-semibold opacity-80'>02-12-2020</p>

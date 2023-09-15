@@ -1,4 +1,4 @@
-import data from "@/utils/data";
+import userData from "@/utils/userData";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -22,7 +22,19 @@ const Login = ({ user }) => {
             return;
         }
 
-        const user = data.users.find((user) => user.phone === phone && user.password === password);
+        const findUserForLogin = (phone, password) => {
+            for (const categoryData of userData) {
+                if (categoryData.users) {
+                    for (const user of categoryData.users) {
+                        if (user.phone === phone && user.password === password) {
+                            return user;
+                        }
+                    }
+                }
+            }
+            return null; // Return null if no matching user is found
+        };
+        const user = findUserForLogin(phone, password);
         if (user) {
             if (user.isAdmin) {
                 router.push('/Admin');
