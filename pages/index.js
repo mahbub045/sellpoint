@@ -9,13 +9,6 @@ export default function Home() {
       <Header title='SellPoint' />
       <Carousel />
       <div>
-        {/* container px-4 m-auto grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5 */}
-        {/* {data?.products?.slice(0, 5).map((product) => (<>
-          <div className='my-2 container px-4 m-auto'>
-            <h2 className='text-3xl font-semibold'>{product.category}</h2>
-          </div>
-          <Productitem product={product} key={product.slug} /></>
-        ))} */}
         {
           data && data?.map((item, index) => (
             <div className='container px-4 py-4 m-auto' key={index}>

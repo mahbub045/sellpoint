@@ -1,4 +1,5 @@
 import { Store } from '@/utils/Store';
+import data from '@/utils/data';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import Head from "next/head";
@@ -38,43 +39,6 @@ const Header = ({ title }) => {
         setIsLoggedIn(false);
     };
 
-    const navMenu = [
-        {
-            id: 1,
-            name: "Mother & Baby",
-            url: '/ServerNotFound'
-        },
-        {
-            id: 2,
-            name: "Man's & Women's Fashion",
-            url: '/ServerNotFound'
-        },
-        {
-            id: 3,
-            name: "Digital Software",
-            url: '/ServerNotFound'
-        },
-        {
-            id: 4,
-            name: "Mobiles & Tablats",
-            url: '/ServerNotFound'
-        },
-        {
-            id: 5,
-            name: "Health & Beauty",
-            url: '/ServerNotFound'
-        },
-        {
-            id: 6,
-            name: "TV & Home Appliance",
-            url: '/ServerNotFound'
-        },
-        {
-            id: 7,
-            name: "Electronics Devices",
-            url: '/ServerNotFound'
-        }
-    ];
     const navMenu2 = [
         {
             id: 1,
@@ -230,13 +194,13 @@ const Header = ({ title }) => {
                             </div>
                             <div className='absolute invisible w-[300px] group-hover:visible mt-3 bg-white dark:bg-black'>
                                 <div className='flex flex-col p-4'>
-                                    {navMenu && navMenu.map((item, index) => (
-                                        <Link legacyBehavior href={`/${item.url}`} key={index}>
+                                    {data && data?.map((item, index) => (
+                                        <Link legacyBehavior href={`/categorypages/${item?.categorySlug}`} key={index}>
                                             <a className='flex p-1 gap-2 items-center dark:text-white hover:text-emerald-600 dark:hover:text-emerald-600'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
                                                 </svg>
-                                                {item.name}
+                                                {item.category}
                                             </a>
                                         </Link>
                                     ))}
