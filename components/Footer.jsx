@@ -5,7 +5,7 @@ const Footer = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 ">
                 <div className="pb-5 text-center flex flex-col items-center">
                     <a href="/">
-                        <img src="/footer-logo.png" alt="Company Logo" className="w-36 h-16 mb-4" />
+                        <img src="/footer-logo.png" alt="Company Logo" className="w-36 h-10 mb-4" />
                     </a>
                     <p className="text-gray-300">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo nisi voluptate quaerat nulla qui quos libero corporis voluptas voluptatum reiciendis.</p>
                 </div>

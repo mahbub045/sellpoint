@@ -87,8 +87,8 @@ const Header = ({ title }) => {
 
     // Add or remove the 'fixed' class based on the state
     const headerClassName = isHeaderFixed
-        ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50'
-        : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-50';
+        ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50 shadow-md shadow-gray-600'
+        : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-50 shadow-md shadow-gray-600';
 
     // search functionality
     const [query, setQuery] = useState('');
@@ -178,7 +178,7 @@ const Header = ({ title }) => {
                 </section>
                 {/* topbar end */}
                 <header className={headerClassName}>
-                    <nav className="relative z-10 container mx-auto flex items-center shadow-md h-12">
+                    <nav className="relative z-10 container mx-auto flex items-center h-12">
                         <div className=' group cursor-pointer hover:text-white h-12 '>
                             <div className='text-xl italic font-bold text-white flex items-center gap-2 pt-2'>
                                 <svg
@@ -246,10 +246,11 @@ const Header = ({ title }) => {
                                     </button>
                                     {showInput && (
                                         <form
-                                            action=""
+                                            onSubmit={submitHandler}
                                             className="flex w-40 h-9 border border-white rounded ml-2"
                                         >
                                             <input
+                                                onChange={(e) => setQuery(e.target.value)}
                                                 style={{ '--tw-ring-inset': 'none' }}
                                                 type="text"
                                                 className="block w-full px-3 text-white bg-inherit border-none ring-none rounded placeholder-white"

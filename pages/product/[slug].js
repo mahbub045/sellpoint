@@ -57,12 +57,12 @@ const ProductScreen = () => {
     // Function to open the cart modal
     const openCartModal = () => {
         const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
-        const quantity = existItem ? existItem.quantity + 1 : 1;
-        if (product.countInStock < quantity) {
+        const newQuantity = quantity; // You may want to use quantity instead of redefining it here
+        if (product.countInStock < newQuantity) {
             alert("Sorry, Product is out of stock");
             return;
         }
-        dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+        dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: newQuantity } });
         setIsCartModalOpen(true);
     };
 
@@ -70,14 +70,15 @@ const ProductScreen = () => {
     const closeCartModal = () => {
         setIsCartModalOpen(false);
     };
+
     const addToCartHandler = () => {
         const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
-        const quantity = existItem ? existItem.quantity + 1 : 1;
-        if (product.countInStock < quantity) {
+        const newQuantity = quantity; // You may want to use quantity instead of redefining it here
+        if (product.countInStock < newQuantity) {
             alert("Sorry, Product is out of stock");
             return;
         }
-        dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+        dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: newQuantity } });
     }
 
     return (
@@ -219,6 +220,7 @@ const ProductScreen = () => {
                                         -
                                     </button>
                                     <input
+                                        onChange={(e) => setQuantity(Number(e.target.value))}
                                         type="text"
                                         className="w-28 px-4 py-1 text-center border border-gray-300 rounded"
                                         value={quantity}
