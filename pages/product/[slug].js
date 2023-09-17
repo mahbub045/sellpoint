@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from 'react';
 const ProductScreen = () => {
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
-    const [product, setProduct] = useState()
+    const [product, setProduct] = useState();
     const [selectedColor, setSelectedColor] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('S');
@@ -171,36 +171,36 @@ const ProductScreen = () => {
                             <div className="flex gap-2">
                                 <button
                                     type="button"
-                                    className={`px-3 ${selectedSize === 'S' ? 'bg-emerald-500' : 'bg-gray-300'} rounded`}
+                                    className={`px-3 ${selectedSize === 'S' ? 'bg-emerald-500' : 'bg-gray-300 dark:text-black'} rounded`}
                                     onClick={() => handleSizeButtonClick('S')}
                                 >
                                     S
                                 </button>
                                 <button
                                     type="button"
-                                    className={`px-3 ${selectedSize === 'M' ? 'bg-emerald-500' : 'bg-gray-300'} rounded`}
+                                    className={`px-3 ${selectedSize === 'M' ? 'bg-emerald-500' : 'bg-gray-300 dark:text-black'} rounded`}
                                     onClick={() => handleSizeButtonClick('M')}
                                 >
                                     M
                                 </button>
                                 <button
                                     type="button"
-                                    className={`px-3 ${selectedSize === 'XL' ? 'bg-emerald-500' : 'bg-gray-300'} rounded`}
+                                    className={`px-3 ${selectedSize === 'XL' ? 'bg-emerald-500' : 'bg-gray-300 dark:text-black'} rounded`}
                                     onClick={() => handleSizeButtonClick('XL')}
                                 >
                                     XL
                                 </button>
                                 <button
                                     type="button"
-                                    className={`px-3 ${selectedSize === '2XL' ? 'bg-emerald-500' : 'bg-gray-300'} rounded`}
+                                    className={`px-3 ${selectedSize === '2XL' ? 'bg-emerald-500' : 'bg-gray-300 dark:text-black'} rounded`}
                                     onClick={() => handleSizeButtonClick('2XL')}
                                 >
                                     2XL
                                 </button>
                                 <button
                                     type="button"
-                                    className={`px-3 ${selectedSize === '3XL' ? 'bg-emerald-500' : 'bg-gray-300'} rounded`}
-                                    onClick={() => handleSizeButtonClick('2XL')}
+                                    className={`px-3 ${selectedSize === '3XL' ? 'bg-emerald-500' : 'bg-gray-300 dark:text-black'} rounded`}
+                                    onClick={() => handleSizeButtonClick('3XL')}
                                 >
                                     3XL
                                 </button>
@@ -240,11 +240,11 @@ const ProductScreen = () => {
                         </div>
                         {/* Buy Now and Add to Cart buttons */}
                         <div className='mt-5 flex flex-col md:flex-row md:justify-between font-semibold'>
-                            <button className="w-full md:w-72 mb-2 md:mb-0 md:mr-2 p-2 bg-slate-400 hover:bg-slate-500 rounded" onClick={openCartModal}>
+                            <button className="w-full md:w-72 mb-2 md:mb-0 md:mr-2 p-2 bg-slate-400 hover:bg-slate-500 dark:text-black rounded" onClick={openCartModal}>
                                 Buy Now
                             </button>
                             {isCartModalOpen && <CartModal onClose={closeCartModal} />}
-                            <button className="w-full md:w-72 p-2 primary-button" onClick={addToCartHandler}>Add to Cart</button>
+                            <button className="w-full md:w-72 p-2 primary-button dark:text-black" onClick={addToCartHandler}>Add to Cart</button>
                         </div>
                     </div>
                     <div className="p-5">

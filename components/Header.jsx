@@ -90,6 +90,13 @@ const Header = ({ title }) => {
         ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50'
         : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-50';
 
+    // search functionality
+    const [query, setQuery] = useState('');
+    const submitHandler = (e) => {
+        e.preventDefault();
+        router.push(`/search?name=${query}`);
+    }
+
     return (
         <>
             <Head>
@@ -106,11 +113,11 @@ const Header = ({ title }) => {
                                 <img src="/logo.png" alt="SellPoint Logo" className="w-36 h-10" />
                             </a>
                         </Link>
-
                         <div className="items-center hidden md:flex">
                             <div>
-                                <form action="" className="flex border lg:w-[500px] md:w-96 border-emerald-400 rounded">
+                                <form action="" className="flex border lg:w-[500px] md:w-96 border-emerald-400 rounded" onSubmit={submitHandler}>
                                     <input
+                                        onChange={(e) => setQuery(e.target.value)}
                                         style={{ '--tw-ring-inset': 'none' }}
                                         type="text"
                                         className="block w-full px-3 text-black dark:text-white bg-inherit border-none ring-none rounded"
