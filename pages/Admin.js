@@ -32,8 +32,8 @@ const Admin = () => {
         <>
             <Header title='Admin' />
             <div className="container m-auto flex">
-                <div className="container flex flex-col h-screen p-3 shadow w-60">
-                    <div className="space-y-3">
+                <div className="container flex flex-col h-screen pt-2 shadow w-60 ">
+                    <div className="bg-slate-200 dark:bg-slate-950 border-r border-slate-400 dark:border-stone-500 rounded p-2">
                         <div className="flex items-center">
                             <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                         </div>
