@@ -30,7 +30,7 @@ a {
 }
 
 .glow-effect:hover {
-  box-shadow: 0 0 20px rgba(3, 255, 171, 0.575);
+  box-shadow: 0 0 20px rgba(78, 85, 83, 0.575);
   /* Add a stronger box-shadow on hover for a more pronounced glow effect */
   transition: box-shadow 0.3s ease;
   /* Add a smooth transition for the hover effect */
