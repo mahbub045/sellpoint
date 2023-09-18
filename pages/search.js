@@ -26,7 +26,7 @@ const Search = () => {
     return (
         <>
             <Header />
-            <div className="">
+            <div className="min-h-screen">
                 <div>
                     {searchData && searchData?.length > 0 ? (
                         <div className='container px-4 py-4 m-auto'>

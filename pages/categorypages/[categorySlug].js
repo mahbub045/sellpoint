@@ -22,7 +22,7 @@ const CategorySlug = () => {
             <Header title={categoryData?.category} />
             <div>
                 {categoryData && (
-                    <div className='container px-4 py-4 m-auto'>
+                    <div className='container min-h-screen px-4 py-4 m-auto'>
                         <div className='flex justify-center'>
                             <h2 className='text-3xl font-semibold pb-4'>{categoryData?.category}</h2>
                         </div>
