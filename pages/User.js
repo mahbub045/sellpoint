@@ -13,16 +13,16 @@ const User = () => {
         <>
             <Header title={'User Name'} />
             <div className="flex container m-auto">
-                <div className="flex flex-col h-screen pt-1  shadow w-60">
-                    <div className="bg-slate-200 dark:bg-slate-950 border-r border-slate-400 dark:border-stone-500 rounded p-2">
+                <div className="flex flex-col h-screen pt-0 w-60">
+                    <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2">
                         <div className="flex items-center">
-                            <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
+                            <h2 className="sm:text-xl text-lg font-bold text-emerald-600">Dashboard</h2>
                         </div>
                         <div className="flex-1">
-                            <ul className="pt-2 pb-4 space-y-1 text-sm">
+                            <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
                                 <li className="rounded-sm">
                                     <a href="User" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                         </svg>
                                         <span>My Account</span>
@@ -30,7 +30,7 @@ const User = () => {
                                 </li>
                                 <li className="rounded-sm">
                                     <a href="inbox" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                                         </svg>
                                         <span>Inbox</span>
@@ -38,7 +38,7 @@ const User = () => {
                                 </li>
                                 <li className="rounded-sm">
                                     <a href="UserOders" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                         </svg>
                                         <span>My Oders</span>
@@ -46,7 +46,7 @@ const User = () => {
                                 </li>
                                 <li className="rounded-sm">
                                     <a href="MyReviews" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                                         </svg>
 
@@ -55,7 +55,7 @@ const User = () => {
                                 </li>
                                 <li className="rounded-sm">
                                     <a onClick={handleLogout} className="flex items-center p-2 space-x-3 text-red-500 hover:text-red-700 cursor-pointer rounded-md">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                                         </svg>
                                         <span>Logout</span>
@@ -65,9 +65,9 @@ const User = () => {
                         </div>
                     </div>
                 </div>
-                <div className="container pl-2 mx-auto mt-10">
+                <div className="container p-2 mx-auto md:mt-5 mt-2">
                     <div className="pb-2">
-                        <h2 className="text-2xl text-emerald-600">Manage My Account</h2>
+                        <h2 className="md:text-2xl sm:text-xl text-base text-emerald-600">Manage My Account</h2>
                     </div>
                     <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
                         <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">

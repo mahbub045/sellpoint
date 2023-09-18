@@ -113,7 +113,7 @@ const Header = ({ title }) => {
                                 <img src="/logo.png" alt="SellPoint Logo" className="w-36 h-10" />
                             </a>
                         </Link>
-                        <div className="items-center hidden md:flex">
+                        <div className="items-center hidden sm:flex">
                             <div>
                                 <form action="" className="flex border lg:w-[500px] md:w-96 border-emerald-400 rounded" onSubmit={submitHandler}>
                                     <input
@@ -223,7 +223,7 @@ const Header = ({ title }) => {
                         </div>
                         {/* sm:sbox,dlmode,cart */}
                         <div className="flex ml-auto p-4">
-                            <div className="items-center md:hidden flex">
+                            <div className="items-center sm:hidden flex">
                                 <div className="relative flex items-center">
                                     <button
                                         onClick={handleSearchIconClick}
@@ -247,7 +247,7 @@ const Header = ({ title }) => {
                                     {showInput && (
                                         <form
                                             onSubmit={submitHandler}
-                                            className="flex w-40 h-9 border border-white rounded ml-2"
+                                            className="flex w-52 h-9 border border-white rounded ml-2"
                                         >
                                             <input
                                                 onChange={(e) => setQuery(e.target.value)}
