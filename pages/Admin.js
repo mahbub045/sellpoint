@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import SalesStat from '@/components/SalesStat';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 
@@ -116,9 +117,9 @@ const Admin = () => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="mt-6 p-4 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
+                    <div className="mt-6 p-4 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
                         <SalesStat />
-                    </div> */}
+                    </div>
                 </div>
             </div>
             <Footer />
