@@ -28,14 +28,13 @@ const Admin = () => {
     return (
         <>
             <Header title='Admin' />
-            <div className="container mx-auto h-screen flex flex-col sm:flex-row">
+            <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
                 <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/4">
                     <div className="flex md:justify-start justify-center">
                         <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     </div>
                     <div className="flex md:justify-start justify-center">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            {/* Add your menu items here */}
                             <li className="rounded-sm">
                                 <a href="Admin" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">

@@ -35,13 +35,13 @@ const Customers = ({ user }) => {
     return (
         <>
             <Header title='Admin(Customers)' />
-            <div className="flex container">
-                <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
+            <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
+                <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/4">
                     <div className="space-y-3">
-                        <div className="flex items-center">
+                        <div className="flex md:justify-start justify-center">
                             <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex md:justify-start justify-center">
                             <ul className="pt-2 pb-4 space-y-1 text-sm">
                                 <li className="rounded-sm">
                                     <a href="Admin" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
@@ -96,12 +96,12 @@ const Customers = ({ user }) => {
                         </div>
                     </div>
                 </div>
-                <div className="container pl-2 mx-auto mt-12">
-                    <div className="grid grid-cols-1 gap-6 mb-6 ">
+                <div className="container p-2 mx-auto md:mt-5 mt-2">
+                    <div className="grid grid-cols-1 md:gap-6 gap-1  mb-6 ">
                         <div className="flex">
-                            <h1 className="mb-4 text-2xl font-bold text-emerald-600">Customers List</h1>
-                            <a href="AddCustomer" className="flex p-2 ml-auto text-emerald-500 hover:text-emerald-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                            <h1 className="md:text-2xl sm:text-xl text-base font-bold text-emerald-600">Customers List</h1>
+                            <a href="AddCustomer" className="flex p-2 sm:text-base text-xs ml-auto text-emerald-500 hover:text-emerald-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-4  sm:h-6 h-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                                 </svg>
                                 Add New Customer
