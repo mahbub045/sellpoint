@@ -28,7 +28,7 @@ const Signup = () => {
                 <title>Signup - SellPoint</title>
                 <meta name="description" content="Signup page for SellPoint" />
             </Head>
-            <div className="bg-white dark:bg-black/70 p-8 rounded shadow-md bg-opacity-90 w-96">
+            <div className="bg-white dark:bg-black/70 p-8 rounded shadow-md shadow-emerald-600 bg-opacity-90 w-96">
                 <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">

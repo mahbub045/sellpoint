@@ -87,8 +87,8 @@ const Header = ({ title }) => {
 
     // Add or remove the 'fixed' class based on the state
     const headerClassName = isHeaderFixed
-        ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50 shadow-md shadow-gray-600'
-        : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-50 shadow-md shadow-gray-600';
+        ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50 shadow-md shadow-gray-500'
+        : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-50 shadow-md shadow-gray-500';
 
     // search functionality
     const [query, setQuery] = useState('');
@@ -96,6 +96,7 @@ const Header = ({ title }) => {
         e.preventDefault();
         router.push(`/search?name=${query}`);
     }
+
 
     return (
         <>
@@ -117,6 +118,7 @@ const Header = ({ title }) => {
                             <div>
                                 <form action="" className="flex border lg:w-[500px] md:w-96 border-emerald-400 rounded" onSubmit={submitHandler}>
                                     <input
+                                        value={query}
                                         onChange={(e) => setQuery(e.target.value)}
                                         style={{ '--tw-ring-inset': 'none' }}
                                         type="text"
