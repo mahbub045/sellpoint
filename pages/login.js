@@ -55,7 +55,7 @@ const Login = ({ user }) => {
     };
 
     return (
-        <div className="container m-auto min-h-screen flex items-center sm:justify-between justify-center lg:px-14 md:p-5">
+        <div className="container m-auto min-h-screen flex items-center sm:justify-between justify-center lg:px-14 md:p-5 sm:p-3 p-2">
             <Head>
                 <title>Login - SellPoint</title>
                 <meta name="description" content="Signup page for Your Website" />
