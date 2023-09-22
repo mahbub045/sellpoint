@@ -270,7 +270,7 @@ const data = [
             },
             {
                 name: 'iPhone 14 Pro Max',
-                slug: 'iPhone-14-Pro-Max',
+                slug: 'iPhone-14-Pro-Max2',
                 category: 'Mobile\'s & Tablate\'s',
                 subCategory: 'Mobile',
                 image: '/images/MobileAndTablate/iPhone 14 Pro Max2.jpg',
