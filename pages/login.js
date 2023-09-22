@@ -66,9 +66,12 @@ const Login = ({ user }) => {
 
             <div className="bg-slate-100 dark:bg-white/10 p-5 rounded shadow-md shadow-emerald-400 lg:w-[450px] md:w-96 sm:w-80 w-full mx-auto bg-opacity-90">
                 {/* Logo */}
-                <a href="/">
-                    <img src="/logo.png" alt="E-commerce Logo" className="mx-auto w-[200px] h-[60px] mb-4" />
-                </a>
+                <div className="mx-auto flex justify-center">
+                    <a href="/">
+                        <img src="/logo.png" alt="E-commerce Logo" className=" w-[200px] h-[60px] mb-4" />
+                    </a>
+                </div>
+
                 <h2 className="sm:text-2xl text-xl font-semibold mb-4">Login to Your Account</h2>
                 <form onSubmit={handleSubmit(submitHandler)}>
                     <div className="mb-4">
