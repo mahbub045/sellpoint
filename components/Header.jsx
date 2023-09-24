@@ -13,6 +13,7 @@ const Header = ({ title }) => {
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
     const router = useRouter();
+    const [suggestions, setSuggestions] = useState(false)
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('username');
@@ -113,8 +114,11 @@ const Header = ({ title }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setSearchSuggestions([])
         router.push(`/search?name=${query}`);
+
     }
+
 
 
     return (
@@ -160,10 +164,12 @@ const Header = ({ title }) => {
                                     </svg>
                                 </button>
                                 {query && searchSuggestions?.length > 0 && (
-                                    <ul className="absolute z-20 mt-10 lg:w-[500px] md:w-96 bg-white dark:bg-black border border-emerald-400 rounded shadow-md shadow-emerald-600">
+                                    <ul className="absolute z-20 mt-10 lg:w-[500px] md:w-96 bg-white dark:bg-black border border-emerald-400 rounded shadow-md shadow-emerald-600  ">
                                         {searchSuggestions?.slice(0, 10).map((suggestion, index) => (
                                             <Link key={index} legacyBehavior href={`/search?name=${suggestion.name}`}>
-                                                <li className="px-4 py-2 cursor-pointer hover:bg-emerald-100 dark:hover:bg-slate-950">
+                                                <li className="px-4 py-2 cursor-pointer hover:bg-emerald-100 dark:hover:bg-slate-950" onClick={() => {
+                                                    setSearchSuggestions([])
+                                                }} >
                                                     <a className='dark:text-white'>{suggestion.name}</a>
                                                 </li>
                                             </Link>
