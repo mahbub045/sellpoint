@@ -286,12 +286,26 @@ const Header = ({ title }) => {
                                             className="flex w-52 h-9 border border-white rounded ml-2"
                                         >
                                             <input
-                                                onChange={(e) => setQuery(e.target.value)}
+                                                value={query}
+                                                onChange={handleSearchInputChange}
                                                 style={{ '--tw-ring-inset': 'none' }}
                                                 type="text"
                                                 className="block w-full px-3 text-white bg-inherit border-none ring-none rounded placeholder-white"
                                                 placeholder='Search...'
                                             />
+                                            {query && searchSuggestions?.length > 0 && (
+                                                <ul className="absolute z-30 mt-[35px] w-52 bg-white dark:bg-black border border-emerald-400 rounded shadow-md shadow-emerald-600  ">
+                                                    {searchSuggestions?.slice(0, 10).map((suggestion, index) => (
+                                                        <Link key={index} legacyBehavior href={`/search?name=${suggestion.name}`}>
+                                                            <li className="px-4 py-2 cursor-pointer hover:bg-emerald-100 dark:hover:bg-slate-950" onClick={() => {
+                                                                setSearchSuggestions([])
+                                                            }} >
+                                                                <a className='dark:text-white'>{suggestion.name}</a>
+                                                            </li>
+                                                        </Link>
+                                                    ))}
+                                                </ul>
+                                            )}
                                         </form>
                                     )}
                                 </div>
@@ -348,7 +362,7 @@ const Header = ({ title }) => {
                         <div className='md:hidden flex flex-row justify-between'>
                             {navMenu2 && navMenu2.map((item, index) => (
                                 <Link legacyBehavior href={`/${item.name}`} key={index}>
-                                    <a className="p-2 ml-3 text-black hover:text-stone-600 text-[10px]">{item.name}</a>
+                                    <a className="p-2 ml-3 text-black dark:text-white hover:text-stone-600 text-[10px]">{item.name}</a>
                                 </Link>
                             ))}
                         </div>
