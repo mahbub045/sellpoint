@@ -1,40 +1,41 @@
-import userData from "@/utils/userData";
+import axios from "axios";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = ({ user }) => {
     const [error, setError] = useState('');
     const router = useRouter();
+    const [usersData, setUsersData] = useState(null);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     // Regular expression for validating Bangladeshi phone numbers
     const bangladeshiPhoneNumberRegex = /^01[3-9]\d{8}$/;
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/users.json');
+                setUsersData(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+        fetchUserData();
+
+    }, [])
+
     const submitHandler = (formData) => {
         const { phone, password } = formData;
-
         // Check Bangladeshi phone number pattern
         if (!phone.match(bangladeshiPhoneNumberRegex)) {
             setError('Invalid Bangladeshi Phone number');
             return;
         }
+        const user = usersData?.find((userData) => phone === userData.phone && password === userData.password);
 
-        const findUserForLogin = (phone, password) => {
-            for (const categoryData of userData) {
-                if (categoryData.users) {
-                    for (const user of categoryData.users) {
-                        if (user.phone === phone && user.password === password) {
-                            return user;
-                        }
-                    }
-                }
-            }
-            return null; // Return null if no matching user is found
-        };
-        const user = findUserForLogin(phone, password);
         if (user) {
             if (user.isAdmin) {
                 router.push('/Admin');
@@ -55,16 +56,16 @@ const Login = ({ user }) => {
     };
 
     return (
-        <div className="container m-auto min-h-screen flex items-center sm:justify-between justify-center lg:px-14 md:p-5 p-5 ">
+        <div className="container m-auto min-h-screen flex items-center sm:justify-between justify-center lg:px-12 md:p-5 p-5 ">
             <Head>
                 <title>Login - SellPoint</title>
                 <meta name="description" content="Signup page for Your Website" />
             </Head>
             <div className="sm:flex hidden">
-                <img src="/login.png" alt="" className="lg:w-[500px] md:w-96 sm:w-72 lg:h-[450px] md:h-80 sm:h-56" />
+                <img src="/login.png" alt="" className="lg:w-[540px] md:w-96 sm:w-72 lg:h-[450px] md:h-80 sm:h-56" />
             </div>
 
-            <div className="bg-slate-100 dark:bg-white/10 p-5 rounded shadow-md shadow-emerald-400 lg:w-[450px] md:w-96 sm:w-80 w-full mx-auto bg-opacity-90">
+            <div className="bg-slate-100 dark:bg-white/10 p-5 rounded shadow-md shadow-emerald-400 lg:w-[400px] md:w-96 sm:w-80 w-full mx-auto bg-opacity-90">
                 {/* Logo */}
                 <div className="mx-auto flex justify-center">
                     <a href="/">
