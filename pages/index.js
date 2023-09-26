@@ -2,15 +2,32 @@ import Carousel from '@/components/Carousel';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Productitem from '@/components/Productitem';
-import data from '@/utils/data';
+import axios from "axios";
+import { useEffect, useState } from 'react';
+
 export default function Home() {
+  const [productDetails, setProductDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchProductsData = async () => {
+      try {
+        const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/productDetails.json');
+        setProductDetails(response.data);
+      } catch (error) {
+        console.error('Error fetching products data:', error);
+      }
+    }
+    fetchProductsData();
+  }, []);
+
+
   return (
     <>
       <Header title='SellPoint' />
       <Carousel />
       <div>
         {
-          data && data?.map((item, index) => (
+          productDetails && productDetails?.map((item, index) => (
             <div className='container px-4 py-4 m-auto' key={index}>
               <div className='flex justify-between'>
                 <h2 className='text-3xl font-semibold pb-4'>{item.category}</h2>

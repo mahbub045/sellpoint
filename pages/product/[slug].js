@@ -3,7 +3,7 @@ import CartModal from '@/components/CartModal';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { Store } from '@/utils/Store';
-import data from '@/utils/data';
+import axios from "axios";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
@@ -17,23 +17,35 @@ const ProductScreen = () => {
     const [selectedSize, setSelectedSize] = useState('S');
     const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
+    //for get productDetails
+    const [productDetails, setProductDetails] = useState(null);
 
-    const findSingleProduct = () => {
-        const singleProduct = data?.map((item) => (item?.products?.find((i) => {
-            if (i.slug == router.query.slug) {
-                setProduct(i)
-            }
-        }))
-        )
-        console.log(singleProduct)
-    }
+    //for get productDetails
     useEffect(() => {
-        findSingleProduct()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [router.query.slug])
+        const fetchProductsData = async () => {
+            try {
+                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/productDetails.json');
+                setProductDetails(response.data);
+            } catch (error) {
+                console.error('Error fetching products data:', error);
+            }
+        }
+        fetchProductsData();
+    }, []);
+    //for get productDetails end
 
-    console.log(product)
 
+    useEffect(() => {
+        const findSingleProduct = () => {
+            const singleProduct = productDetails?.map((item) => (item?.products?.find((i) => {
+                if (i.slug == router.query.slug) {
+                    setProduct(i);
+                }
+            })));
+        };
+
+        findSingleProduct();
+    }, [router.query.slug, productDetails]);
 
 
     const handleColorButtonClick = (color) => {

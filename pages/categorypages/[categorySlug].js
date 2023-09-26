@@ -1,21 +1,38 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Productitem from '@/components/Productitem';
-import data from '@/utils/data';
+import axios from "axios";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const CategorySlug = () => {
     const router = useRouter();
     const [categoryData, setCategoryData] = useState(null);
+    //for get productDetails
+    const [productDetails, setProductDetails] = useState(null);
+
+    //for get productDetails
+    useEffect(() => {
+        const fetchProductsData = async () => {
+            try {
+                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/productDetails.json');
+                setProductDetails(response.data);
+            } catch (error) {
+                console.error('Error fetching products data:', error);
+            }
+        }
+        fetchProductsData();
+    }, []);
+    //for get productDetails end
+
 
     useEffect(() => {
-        const singleCategory = data.find(item => item.categorySlug === router.query.categorySlug);
+        const singleCategory = productDetails?.find((item) => item.categorySlug === router.query.categorySlug);
 
         if (singleCategory) {
             setCategoryData(singleCategory);
         }
-    }, [router.query.categorySlug]);
+    }, [router.query.categorySlug, productDetails]);
 
     return (
         <>
