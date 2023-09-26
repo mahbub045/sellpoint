@@ -1,6 +1,6 @@
-import SearchData from '@/utils/SearchData';
 import { Store } from '@/utils/Store';
 import data from '@/utils/data';
+import axios from "axios";
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import Head from "next/head";
@@ -10,15 +10,26 @@ import { useContext, useEffect, useState } from 'react';
 import CartModal from './CartModal';
 
 const Header = ({ title }) => {
+    //for cart
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
-    const router = useRouter();
-    const [suggestions, setSuggestions] = useState(false)
 
+    //for router
+    const router = useRouter();
+
+    // for search
+    const [query, setQuery] = useState('');
+    const [searchSuggestions, setSearchSuggestions] = useState([]);
+    const [suggestions, setSuggestions] = useState(false);
+    const [searchData, setSearchData] = useState(null);
+
+    //for login
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('username');
     const [showInput, setShowInput] = useState(false);
-    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+
+    //for change theme
     const { theme, setTheme } = useTheme();
 
     // Function to open the cart modal
@@ -92,9 +103,19 @@ const Header = ({ title }) => {
         ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50 shadow-md shadow-gray-500'
         : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-10 shadow-md shadow-gray-500';
 
-    // search functionality
-    const [query, setQuery] = useState('');
-    const [searchSuggestions, setSearchSuggestions] = useState([]);
+    // search functionality start
+
+    useEffect(() => {
+        const fetchSearchData = async () => {
+            try {
+                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/SearchData.json');
+                setSearchData(response.data);
+            } catch (error) {
+                console.error('Error fetching search data:', error);
+            }
+        };
+        fetchSearchData();
+    }, [])
 
     // Function to handle user input for search
     const handleSearchInputChange = (e) => {
@@ -102,23 +123,21 @@ const Header = ({ title }) => {
         setQuery(query);
 
         // Filter suggestions based on product names
-        const filteredSuggestions = SearchData.filter(item => {
+        const filteredSuggestions = searchData?.filter(item => {
             if (typeof item.name === 'string') {
                 return item.name.toLowerCase().includes(query.toLowerCase());
             }
             return false;
         });
-
         setSearchSuggestions(filteredSuggestions);
     };
 
     const submitHandler = (e) => {
         e.preventDefault();
-        setSearchSuggestions([])
+        setSearchSuggestions([]);
         router.push(`/search?name=${query}`);
 
     }
-
 
 
     return (

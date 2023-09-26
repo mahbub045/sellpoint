@@ -15,7 +15,7 @@ const Login = ({ user }) => {
     const bangladeshiPhoneNumberRegex = /^01[3-9]\d{8}$/;
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUsersData = async () => {
             try {
                 const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/users.json');
                 setUsersData(response.data);
@@ -23,9 +23,8 @@ const Login = ({ user }) => {
                 console.error('Error fetching user data:', error);
             }
         };
-        fetchUserData();
-
-    }, [])
+        fetchUsersData();
+    }, []);
 
     const submitHandler = (formData) => {
         const { phone, password } = formData;
