@@ -1,13 +1,18 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { Store } from "@/utils/Store";
+import Cookies from "js-cookie";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
 const User = () => {
+    const { dispatch } = useContext(Store);
     const router = useRouter();
     const handleLogout = () => {
-        // Perform logout actions here
-        router.push('/login');
-        console.log('Logged out successfully!');
+        Cookies.remove('cart');
+        dispatch({ type: 'CART_RESET' })
+        signOut({ callbackUrl: '/login' });
     };
     return (
         <>

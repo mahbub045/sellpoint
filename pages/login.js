@@ -1,56 +1,54 @@
-import axios from "axios";
+import { signIn, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Login = ({ user }) => {
+const Login = () => {
+    const { data: session } = useSession();
     const [error, setError] = useState('');
     const router = useRouter();
-    const [usersData, setUsersData] = useState(null);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { redirect } = router.query;
+
+
+    useEffect(() => {
+        if (session) {
+            if (session?.user?.isAdmin) {
+                router.push(redirect || '/Admin');
+            } else if ((session?.user)) {
+                router.push(redirect || '/User');
+            }
+
+        }
+
+    }, [session, router, redirect])
+
 
     // Regular expression for validating Bangladeshi phone numbers
     const bangladeshiPhoneNumberRegex = /^01[3-9]\d{8}$/;
 
-    useEffect(() => {
-        const fetchUsersData = async () => {
-            try {
-                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/users.json');
-                setUsersData(response.data);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-        fetchUsersData();
-    }, []);
-
-    const submitHandler = (formData) => {
+    const submitHandler = async (formData) => {
         const { phone, password } = formData;
         // Check Bangladeshi phone number pattern
         if (!phone.match(bangladeshiPhoneNumberRegex)) {
             setError('Invalid Bangladeshi Phone number');
             return;
         }
-        const user = usersData?.find((userData) => phone === userData.phone && password === userData.password);
 
-        if (user) {
-            if (user.isAdmin) {
-                router.push('/Admin');
-            } else {
-                router.push('/User');
-            }
+        const result = await signIn('credentials', {
+            redirect: false,
+            phone,
+            password,
+        });
+
+        if (result.ok) {
+            console.log('success')
         } else {
-            {
-                const storedUser = JSON.parse(localStorage.getItem('users'));
-                if (storedUser && storedUser.phone === phone && storedUser.password === password) {
-                    router.push('/User');
-                } else {
-                    setError('Invalid Phone number or Password');
-                }
-            }
+            setError("Invalid Phone number or Password");
         }
+
 
     };
 
@@ -78,7 +76,7 @@ const Login = ({ user }) => {
                         <label htmlFor="phone" className="block text-emerald-600">
                             Phone
                         </label>
-                        <input type="tel" id="phone" placeholder="Enter your phone number"
+                        <input type="tel" id="phone" placeholder="01XXXXXXXXX"
                             {...register('phone', {
                                 required: 'Please enter your phone number!',
                                 pattern: {

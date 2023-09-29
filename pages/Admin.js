@@ -1,17 +1,22 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SalesStat from '@/components/SalesStat';
+import { Store } from '@/utils/Store';
+import Cookies from 'js-cookie';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const Admin = () => {
     const router = useRouter();
     const [formValues, setFormValues] = useState([]);
     const [totalUsers, setTotalUsers] = useState([]);
+    const { dispatch } = useContext(Store);
 
     const handleLogout = () => {
-        router.push('/login');
-        console.log('Logged out successfully!');
+        Cookies.remove('cart');
+        dispatch({ type: 'CART_RESET' })
+        signOut({ callbackUrl: '/login' });
     };
 
     useEffect(() => {

@@ -1,11 +1,15 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { Store } from "@/utils/Store";
+import Cookies from "js-cookie";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const Customers = ({ user }) => {
     const router = useRouter();
     const [formValues, setFormValues] = useState([]);
+    const { dispatch } = useContext(Store);
 
     useEffect(() => {
         const storedValues = localStorage.getItem('formValues');
@@ -28,9 +32,9 @@ const Customers = ({ user }) => {
 
 
     const handleLogout = () => {
-        // Perform logout actions here
-        router.push('/login');
-        console.log('Logged out successfully!');
+        Cookies.remove('cart');
+        dispatch({ type: 'CART_RESET' })
+        signOut({ callbackUrl: '/login' });
     };
     return (
         <>

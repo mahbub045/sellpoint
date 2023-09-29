@@ -1,5 +1,8 @@
 import { Store } from '@/utils/Store';
+import { Menu } from '@headlessui/react';
 import axios from "axios";
+import Cookies from 'js-cookie';
+import { signOut, useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import Head from "next/head";
@@ -8,7 +11,8 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import CartModal from './CartModal';
 
-const Header = ({ title }) => {
+const Header = ({ title, user }) => {
+    const { data: session } = useSession();
     //fetch product details
     const [productDetails, setProductDetails] = useState(null);
 
@@ -27,9 +31,26 @@ const Header = ({ title }) => {
     const [searchData, setSearchData] = useState(null);
 
     //for login
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('username');
+    const [isLoggedIn, setIsLoggedIn] = useState();
+    const [username, setUsername] = useState('');
     const [showInput, setShowInput] = useState(false);
+
+    // console.log(session.user)
+    useEffect(() => {
+        if (session) {
+            setIsLoggedIn(true);
+            setUsername(session?.user?.name);
+        }
+    }, [session]);
+
+    // Function to handle logout
+    const handleLogout = () => {
+        Cookies.remove('cart');
+        dispatch({ type: 'CART_RESET' })
+        signOut({ callbackUrl: '/login' });
+    };
+
+
 
     //for change theme
     const { theme, setTheme } = useTheme();
@@ -48,11 +69,6 @@ const Header = ({ title }) => {
         setShowInput(!showInput);
     };
 
-    // Function to handle logout
-    const handleLogout = () => {
-        // Implement your logout logic here (e.g., clear authentication token, reset state)
-        setIsLoggedIn(false);
-    };
 
     // fetchproduct details from api link
     useEffect(() => {
@@ -155,7 +171,6 @@ const Header = ({ title }) => {
 
     }
 
-
     return (
         <>
             <Head>
@@ -217,16 +232,44 @@ const Header = ({ title }) => {
                             {/* Display "Logout" and the user's name when logged in */}
                             {isLoggedIn ? (
                                 <div className="flex items-center">
-                                    <span className="mr-2">Hello, {username}</span>
-                                    <button onClick={handleLogout} className="p-2 font-medium text-emerald-400 hover:text-emerald-600">
-                                        Logout
-                                    </button>
+                                    <Menu as="div" className="relative z-30 inline-block">
+                                        <Menu.Button className="sm:text-base text-sm">
+                                            <h6 className="mr-2">Hello,{' '}
+                                                <span className='font-medium text-emerald-500 hover:text-emerald-600 cursor-pointer'>
+                                                    {username}
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mt-[2px] inline-block">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                    </svg>
+                                                </span>
+                                            </h6>
+                                        </Menu.Button>
+                                        <Menu.Items className="absolute right-0 w-44 origin-top-right bg-white dark:bg-black  shadow-md shadow-emerald-600 border border-emerald-300 rounded-md p-2 font-medium">
+                                            <Menu.Item className="py-1">
+                                                <Link legacyBehavior href={`${session.user.isAdmin ? '/Admin' : '/User'}`}>
+                                                    <span className='text-emerald-500 hover:text-emerald-600 cursor-pointer flex justify-center'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        </svg>
+                                                        Profile
+                                                    </span>
+                                                </Link>
+                                            </Menu.Item>
+                                            <Menu.Item className="py-1">
+                                                <a onClick={handleLogout} className="flex justify-center text-red-500 cursor-pointer hover:text-red-600">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                                                    </svg>
+                                                    Logout
+                                                </a>
+                                            </Menu.Item>
+                                        </Menu.Items>
+                                    </Menu>
                                 </div>
                             ) : (
                                 // Display "Sign Up" and "Login" when not logged in
                                 <div className="z-10 flex items-center">
                                     <Link legacyBehavior href="/signup">
-                                        <a className="p-2 md:text-base sm:text-[12px] text-[12px] flex font-medium text-emerald-400 hover:text-emerald-600">
+                                        <a className="p-2 md:text-base sm:text-[12px] text-[12px] flex font-medium text-emerald-500 hover:text-emerald-600">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="md:w-6 md:h-6 w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                                             </svg>
@@ -234,7 +277,7 @@ const Header = ({ title }) => {
                                         </a>
                                     </Link>
                                     <Link legacyBehavior href="/login">
-                                        <a className="pr-3 md:text-base sm:text-[12px] text-[12px] font-medium flex text-emerald-400 hover:text-emerald-600">
+                                        <a className="pr-3 md:text-base sm:text-[12px] text-[12px] font-medium flex text-emerald-500 hover:text-emerald-600">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="md:w-6 md:h-6 w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                                             </svg>
@@ -246,9 +289,9 @@ const Header = ({ title }) => {
                             )}
                         </div>
                     </div>
-                </section>
+                </section >
                 {/* topbar end */}
-                <header className={headerClassName}>
+                <header className={headerClassName} >
                     <nav className="relative container mx-auto flex items-center h-12">
                         <div className=' group cursor-pointer hover:text-white h-12 '>
                             <div className='text-xl italic font-bold text-white flex items-center gap-2 pt-2'>
@@ -391,7 +434,7 @@ const Header = ({ title }) => {
                             {/* cart end */}
                         </div>
                     </nav>
-                </header>
+                </header >
                 <section className='container'>
                     <div className='md:flex'>
                         <div className='md:hidden flex flex-row justify-between'>

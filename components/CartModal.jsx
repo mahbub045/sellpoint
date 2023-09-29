@@ -67,7 +67,7 @@ const CartModal = ({ onClose }) => {
                                                     }
                                                 </select>
                                             </td>
-                                            <td className='p-5 text-center'><span className='text-xl'>৳ </span>{item.price}</td>
+                                            <td className='p-5 text-center'><span className='text-xl'>৳ </span>{item.discountPrice}</td>
                                             <td className='p-5 text-center hover:text-red-600'>
                                                 <button onClick={() => removeItemHandler(item)}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
