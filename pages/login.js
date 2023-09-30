@@ -37,18 +37,6 @@ const Login = () => {
             setError('Invalid Bangladeshi Phone number');
             return;
         }
-
-        // const result = await signIn('credentials', {
-        //     redirect: false,
-        //     phone,
-        //     password,
-        // });
-
-        // if (result.ok) {
-        //     console.log('success')
-        // } else {
-        //     setError("Invalid Phone number or Password");
-        // }
         try {
             const result = await signIn('credentials', {
                 redirect: false,

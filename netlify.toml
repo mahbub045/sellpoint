@@ -1,0 +1,8 @@
+[[redirects]]
+  from = "/*"
+  to = "https://raw.githubusercontent.com/mahbub045/sellPointApi/main/users.json"
+  status = 200
+ 
+ # These are optional
+  force = true
+  headers = {X-From = "Netlify"}
