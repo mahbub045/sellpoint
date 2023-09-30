@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const { data: session } = useSession();
@@ -56,11 +57,11 @@ const Login = () => {
                 password,
             });
             if (result.error) {
-                // setError(result.error);
-                setError("Invalid Phone number or Password");
+                // toast.error(result.error);
+                setError("Invalid Phone number or Password")
             }
         } catch (err) {
-            setError(getError(err));
+            toast.error(getError(err));
         }
 
 

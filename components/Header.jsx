@@ -9,6 +9,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import CartModal from './CartModal';
 
 const Header = ({ title, user }) => {
@@ -177,6 +178,7 @@ const Header = ({ title, user }) => {
                 <title>{title ? title + " - SellPoint" : "SellPoint"}</title>
                 <meta name="description" content="e-Commerce Website" />
             </Head>
+            <ToastContainer position="bottom-center" className=" w-3 h-3" limit={1} />
             <div className="flex flex-col justify-between">
                 {/* topbar */}
                 <section className="container m-auto">
