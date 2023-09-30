@@ -3,11 +3,12 @@ import Header from '@/components/Header';
 import SalesStat from '@/components/SalesStat';
 import { Store } from '@/utils/Store';
 import Cookies from 'js-cookie';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from "react";
 
 const Admin = () => {
+    const { data: session } = useSession();
     const router = useRouter();
     const [formValues, setFormValues] = useState([]);
     const [totalUsers, setTotalUsers] = useState([]);
@@ -32,7 +33,7 @@ const Admin = () => {
 
     return (
         <>
-            <Header title='Admin' />
+            <Header title={`${session?.user?.name}`} />
             <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
                 <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/4">
                     <div className="flex md:justify-start justify-center">

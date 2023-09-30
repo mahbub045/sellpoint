@@ -16,7 +16,7 @@ const User = () => {
     };
     return (
         <>
-            <Header title={'User Name'} />
+            <Header title={`${session?.user?.name}`} />
             <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
                 <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/4">
                     {/* ... Dashboard menu code ... */}

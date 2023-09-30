@@ -1,4 +1,6 @@
-import axios from 'axios';
+import CreateUser from '@/models/CreateUser';
+import db from '@/utils/db';
+import bcryptjs from "bcryptjs";
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -8,12 +10,12 @@ export default NextAuth({
     },
     callbacks: {
         async jwt({ token, user }) {
-            if (user?.id) token.id = user.id;
+            if (user?._id) token._id = user._id;
             if (user?.isAdmin) token.isAdmin = user.isAdmin;
             return token;
         },
         async session({ session, token }) {
-            if (token?.id) session.user.id = token.id;
+            if (token?._id) session.user._id = token._id;
             if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
             return session;
         }
@@ -22,34 +24,21 @@ export default NextAuth({
         CredentialsProvider({
             async authorize(credentials) {
                 // Check if phone number and password are valid
-                try {
-                    const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/users.json');
-                    const usersData = response.data;
-                    const user = usersData?.find(
-                        (userData) => credentials.phone === userData.phone && credentials.password === userData.password
-                    );
-                    console.log(user.isAdmin)
-                    if (user) {
-                        // Return the user object if authentication succeeds
-                        return {
-                            id: user.id,
-                            name: user.fullname,
-                            phone: user.phone,
-                            isAdmin: user.isAdmin,
-                        };
-                    } else {
-                        // Return null if authentication fails
-                        return null;
-                    }
-
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                    return null;
+                await db.connect();
+                const user = await CreateUser.findOne({
+                    phone: credentials.phone,
+                });
+                await db.disconnect();
+                if (user && bcryptjs.compareSync(credentials.password, user.password)) {
+                    return {
+                        _id: user._id,
+                        name: user.name,
+                        phone: user.phone,
+                        isAdmin: user.isAdmin,
+                    };
                 }
+                throw new Error("Invalid Email or Password");
             },
         }),
     ],
-    pages: {
-        signIn: '/login'
-    }
 });

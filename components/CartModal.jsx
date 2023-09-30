@@ -88,7 +88,7 @@ const CartModal = ({ onClose }) => {
                         <li>
                             <div className='pb-3 text-xl text-center'>
                                 Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}):
-                                <span className='text-2xl'> ৳ </span>{cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
+                                <span className='text-2xl'> ৳ </span>{cartItems.reduce((a, c) => a + c.quantity * c.discountPrice, 0)}
                             </div>
                         </li>
                         <li className='text-center'>
