@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/*"
+  from = "/login"
   to = "https://raw.githubusercontent.com/mahbub045/sellPointApi/main/users.json"
   status = 200
  
