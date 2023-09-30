@@ -1,3 +1,4 @@
+import { getError } from "@/utils/error";
 import { signIn, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
@@ -37,16 +38,29 @@ const Login = () => {
             return;
         }
 
-        const result = await signIn('credentials', {
-            redirect: false,
-            phone,
-            password,
-        });
+        // const result = await signIn('credentials', {
+        //     redirect: false,
+        //     phone,
+        //     password,
+        // });
 
-        if (result.ok) {
-            console.log('success')
-        } else {
-            setError("Invalid Phone number or Password");
+        // if (result.ok) {
+        //     console.log('success')
+        // } else {
+        //     setError("Invalid Phone number or Password");
+        // }
+        try {
+            const result = await signIn('credentials', {
+                redirect: false,
+                phone,
+                password,
+            });
+            if (result.error) {
+                // setError(result.error);
+                setError("Invalid Phone number or Password");
+            }
+        } catch (err) {
+            setError(getError(err));
         }
 
 

@@ -39,7 +39,6 @@ export default NextAuth({
                         };
                     } else {
                         // Return null if authentication fails
-                        setError('Invalid Phone number or Password');
                         return null;
                     }
 
