@@ -82,13 +82,13 @@ textarea {
 .dot-spinner {
   display: inline-block;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .dot-spinner div {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: #fff;
   margin: 0 3px;
