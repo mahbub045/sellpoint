@@ -14,8 +14,8 @@ const User = () => {
     const id = session?.user?._id;
 
     const fetchData = async (id) => {
-        // const response = await fetch(`https://sp-demo045.netlify.app/api/users/${id}`);
-        const response = await fetch(`http://localhost:3000/api/users/${id}`);
+        const response = await fetch(`https://sp-demo045.netlify.app/api/users/${id}`);
+        // const response = await fetch(`http://localhost:3000/api/users/${id}`);
         const data = await response.json();
         return data;
     }
