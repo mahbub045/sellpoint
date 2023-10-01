@@ -79,35 +79,21 @@ textarea {
 }
 
 /* spinner */
-.dot-spinner {
+.spinner-border {
   display: inline-block;
-  text-align: center;
-  font-size: 16px;
-}
-
-.dot-spinner div {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: text-bottom;
+  border: .20em solid currentColor;
+  border-right: .20em solid transparent;
   border-radius: 50%;
-  background: #fff;
-  margin: 0 3px;
-  animation: dot-animation 1.3s infinite;
+  animation: spinner-border .75s linear infinite;
 }
 
-@keyframes dot-animation {
-
-  0%,
-  20% {
-    opacity: 0;
-    transform: scale(0);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1);
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
   }
 }
-
 
 /* spinner end */

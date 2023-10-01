@@ -110,13 +110,11 @@ const Login = () => {
                     <button
                         type="submit"
                         className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded px-4 py-2 w-full"
-                        disabled={isLoading}
+                        disabled={isLoading} // Disable the button when loading
                     >
                         {isLoading ? (
-                            <div className="dot-spinner">
-                                <div></div>
-                                <div></div>
-                                <div></div>
+                            <div className="spinner-border text-light" role="status">
+                                <span className="sr-only">Loading...</span>
                             </div>
                         ) : (
                             'Login'
