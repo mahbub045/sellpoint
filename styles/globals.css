@@ -77,3 +77,37 @@ textarea {
     @apply bg-white dark:bg-black;
   }
 }
+
+/* spinner */
+.dot-spinner {
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+}
+
+.dot-spinner div {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  margin: 0 3px;
+  animation: dot-animation 1.3s infinite;
+}
+
+@keyframes dot-animation {
+
+  0%,
+  20% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* spinner end */

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const { data: session } = useSession();
     const [error, setError] = useState('');
     const router = useRouter();
@@ -31,6 +32,7 @@ const Login = () => {
     const bangladeshiPhoneNumberRegex = /^01[3-9]\d{8}$/;
 
     const submitHandler = async (formData) => {
+        setIsLoading(true);
         const { phone, password } = formData;
         // Check Bangladeshi phone number pattern
         if (!phone.match(bangladeshiPhoneNumberRegex)) {
@@ -49,6 +51,7 @@ const Login = () => {
         } catch (err) {
             setError(getError(err));
         }
+        setIsLoading(false);
     };
 
     return (
@@ -107,8 +110,17 @@ const Login = () => {
                     <button
                         type="submit"
                         className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded px-4 py-2 w-full"
+                        disabled={isLoading}
                     >
-                        Login
+                        {isLoading ? (
+                            <div className="dot-spinner">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        ) : (
+                            'Login'
+                        )}
                     </button>
                     {error && (
                         <div className="text-red-500 ">{error}</div>

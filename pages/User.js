@@ -4,12 +4,25 @@ import { Store } from "@/utils/Store";
 import Cookies from "js-cookie";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const User = () => {
+    const [userDetails, setUserDetails] = useState();
     const { data: session } = useSession();
     const { dispatch } = useContext(Store);
     const router = useRouter();
+    const id = session?.user?._id;
+
+    const fetchData = async (id) => {
+        const response = await fetch(`/api/users/${id}`);
+        const data = await response.json();
+        return data;
+    }
+    if (!userDetails?.address) {
+        fetchData(id).then((result) => {
+            setUserDetails(result);
+        });
+    }
     const handleLogout = () => {
         Cookies.remove('cart');
         dispatch({ type: 'CART_RESET' })
@@ -81,9 +94,9 @@ const User = () => {
                                 Personal Profile
                             </div>
                             <div className="mt-1 text-sm dark:text-white">
-                                <p>User Name</p>
-                                <p>useremail@gmail.com</p>
-                                <p>01700000000</p>
+                                <p>{userDetails?.name}</p>
+                                <p>{userDetails?.email}</p>
+                                <p>{userDetails?.phone}</p>
                             </div>
                         </div>
                         <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
@@ -91,9 +104,9 @@ const User = () => {
                                 Address Book
                             </div>
                             <div className="mt-1 text-sm dark:text-white">
-                                <p>User Name</p>
-                                <p>House# 00, Road No# 0, A-Block, Dhaka-1212</p>
-                                <p>01700000000</p>
+                                <p>{userDetails?.name}</p>
+                                <p>{userDetails?.address}</p>
+                                <p>{userDetails?.phone}</p>
                             </div>
                         </div>
                         <div className="w-full px-4 py-5 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">

@@ -35,6 +35,7 @@ export default NextAuth({
                         _id: user._id,
                         name: user.name,
                         phone: user.phone,
+                        address: user.address,
                         isAdmin: user.isAdmin,
                     };
                 }
