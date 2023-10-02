@@ -6,7 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
-const User = () => {
+const Profile = () => {
     const [userDetails, setUserDetails] = useState();
     const { data: session } = useSession();
     const { dispatch } = useContext(Store);
@@ -170,4 +170,4 @@ const User = () => {
     )
 }
 
-export default User;
+export default Profile;

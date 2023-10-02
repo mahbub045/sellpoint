@@ -1,4 +1,4 @@
-import CreateUser from "@/models/CreateUser";
+import User from "@/models/User";
 import db from "@/utils/db";
 
 export default async function handler(req, res) {
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
         return;
     }
     await db.connect();
-    const user = await CreateUser.findById(
+    const user = await User.findById(
         id
     );
     await db.disconnect();

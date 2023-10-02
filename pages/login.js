@@ -18,9 +18,9 @@ const Login = () => {
     useEffect(() => {
         if (session) {
             if (session?.user?.isAdmin) {
-                router.push(redirect || '/Admin');
+                router.push(redirect || '/admin/profile');
             } else if ((session?.user)) {
-                router.push(redirect || '/User');
+                router.push(redirect || '/');
             }
 
         }

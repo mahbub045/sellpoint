@@ -1,4 +1,4 @@
-import CreateUser from '@/models/CreateUser';
+import User from '@/models/User';
 import db from '@/utils/db';
 import bcryptjs from "bcryptjs";
 import NextAuth from 'next-auth';
@@ -26,7 +26,7 @@ export default NextAuth({
             async authorize(credentials) {
                 // Check if phone number and password are valid
                 await db.connect();
-                const user = await CreateUser.findOne({
+                const user = await User.findOne({
                     phone: credentials.phone,
                 });
                 await db.disconnect();

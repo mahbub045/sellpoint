@@ -1,7 +1,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -33,7 +32,7 @@ export default function AddCustomer() {
         setFormValues(updatedFormValues);
         resetForm();
         setSubmitting(false);
-        router.push('/Customers');
+        router.push('/admin/customers');
     };
 
     return (
@@ -84,9 +83,7 @@ export default function AddCustomer() {
                             </div>
 
                             <div className="text-center">
-                                <Link legacyBehavior href='/Customers'>
-                                    <a className="text-blue-500 hover:text-blue-700 text-sm">Back to Customers</a>
-                                </Link>
+                                <a href='/admin/customers' className="text-blue-500 hover:text-blue-700 text-sm">Back to Customers</a>
                             </div>
                         </Form>
                     )}
