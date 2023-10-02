@@ -10,6 +10,12 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+@layer base {
+  body {
+    @apply bg-white dark:bg-black;
+  }
+}
+
 a {
   @apply text-black;
 }
@@ -64,20 +70,6 @@ textarea {
   @apply p-3 my-3 text-green-700 bg-green-100 rounded-lg;
 }
 
-.custom-gradient {
-  background: linear-gradient(to right, #0b8647, #3c60ac, #d72e27, #faa419);
-}
-
-.custom-gradient:hover {
-  background: linear-gradient(to right, #038341, #2750a7, #d61f19, #fa9d07);
-}
-
-@layer base {
-  body {
-    @apply bg-white dark:bg-black;
-  }
-}
-
 /* spinner */
 .spinner-border {
   display: inline-block;
@@ -97,3 +89,42 @@ textarea {
 }
 
 /* spinner end */
+/* image zooming */
+#img-zoomer-box {
+  max-width: 500px;
+  height: auto;
+  position: relative;
+  margin: 10px auto;
+}
+
+#img-1 {
+  width: 100%;
+  height: auto;
+}
+
+#img-zoomer-box:hover,
+#img-zoomer-box:active {
+  cursor: zoom-in;
+  display: block;
+}
+
+#img-zoomer-box:hover #img-2,
+#img-zoomer-box:active #img-2 {
+  opacity: 1;
+}
+
+#img-2 {
+  width: 450px;
+  height: 450px;
+  box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  position: absolute;
+  opacity: 0;
+  border: 4px solid whitesmoke;
+  z-index: 30;
+  border-radius: 100%;
+  display: block;
+  transition: opacity .2s;
+}
+
+/* image zooming end*/

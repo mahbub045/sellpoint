@@ -12,10 +12,10 @@ const User = () => {
     const { dispatch } = useContext(Store);
     const router = useRouter();
     const id = session?.user?._id;
+    const url = process.env.NEXT_PUBLIC_URL;
 
     const fetchData = async (id) => {
-        const response = await fetch(`https://sp-demo045.netlify.app/api/users/${id}`);
-        // const response = await fetch(`http://localhost:3000/api/users/${id}`);
+        const response = await fetch(`${url}/api/users/${id}`);
         const data = await response.json();
         return data;
     }
@@ -24,6 +24,7 @@ const User = () => {
             setUserDetails(result);
         });
     }
+
     const handleLogout = () => {
         Cookies.remove('cart');
         dispatch({ type: 'CART_RESET' })

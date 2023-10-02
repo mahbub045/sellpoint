@@ -93,6 +93,43 @@ const ProductScreen = () => {
         dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: newQuantity } });
     }
 
+    //Image zooming
+    useEffect(() => {
+        if (typeof document !== 'undefined') {
+            const zoomer = () => {
+                document.querySelector('#img-zoomer-box')
+                    .addEventListener('mousemove', function (e) {
+                        let original = document.querySelector('#img-1'),
+                            magnified = document.querySelector('#img-2'),
+                            style = magnified.style,
+                            x = e.pageX - this.offsetLeft,
+                            y = e.pageY - this.offsetTop,
+                            imgWidth = original.offsetWidth,
+                            imgHeight = original.offsetHeight,
+                            xperc = ((x / imgWidth) * 100),
+                            yperc = ((y / imgHeight) * 100);
+
+                        if (x > (.01 * imgWidth)) {
+                            xperc += (.15 * xperc);
+                        }
+
+                        if (y >= (.01 * imgHeight)) {
+                            yperc += (.15 * yperc);
+                        }
+
+                        style.backgroundPositionX = (xperc - 9) + '%';
+                        style.backgroundPositionY = (yperc - 9) + '%';
+
+                        style.left = (x - 220) + 'px';
+                        style.top = (y - 220) + 'px';
+                    }, false);
+            };
+
+            zoomer();
+        }
+    }, []);
+    //Image zooming end
+
     return (
         <>
             <Header title={product?.name} />
@@ -108,8 +145,13 @@ const ProductScreen = () => {
                     </Link>
                 </div>
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-                    <div className='relative overflow-hidden'>
-                        <img src={product?.image} alt={product?.name} className='w-full h-auto hover:cursor-zoom-in transition-transform transform hover:scale-150' />
+                    <div className=''>
+                        {/* <img src={product?.image} alt={product?.name} className='w-full h-auto hover:cursor-zoom-in transition-transform transform hover:scale-150' /> */}
+                        <div id="img-zoomer-box">
+                            <img src={product?.image} alt={product?.name} id="img-1" />
+                            <div id="img-2" style={{ background: `url(${product?.image}) no-repeat` }}></div>
+                        </div>
+
                         <div className='py-4 flex justify-center gap-2'>
                             <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
                             <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
@@ -352,3 +394,4 @@ const ProductScreen = () => {
 }
 
 export default ProductScreen;
+

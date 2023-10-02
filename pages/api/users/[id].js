@@ -3,7 +3,10 @@ import db from "@/utils/db";
 
 export default async function handler(req, res) {
     const id = req.query.id;
-    console.log(id)
+    if (!id) {
+        res.status(400).json({ message: "Invalid request. Missing ID." });
+        return;
+    }
     await db.connect();
     const user = await CreateUser.findById(
         id
