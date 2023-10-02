@@ -1,11 +1,11 @@
-const { default: CreateUser } = require("@/models/CreateUser");
+import User from "@/models/User";
 const { default: data } = require("@/utils/data");
 const { default: db } = require("@/utils/db");
 
 const handler = async (req, res) => {
     await db.connect();
-    await CreateUser.deleteMany();
-    await CreateUser.insertMany(data.users);
+    await User.deleteMany();
+    await User.insertMany(data.users);
     await db.disconnect();
     res.send({ message: "Seeded Successfully" });
 }
