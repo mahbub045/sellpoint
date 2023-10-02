@@ -4,11 +4,13 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { Store } from '@/utils/Store';
 import axios from "axios";
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
 const ProductScreen = () => {
+    const { data: session } = useSession();
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
     const [product, setProduct] = useState();
@@ -16,6 +18,20 @@ const ProductScreen = () => {
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('S');
     const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+    const [userDetails, setUserDetails] = useState();
+    const id = session?.user?._id;
+    const url = process.env.NEXT_PUBLIC_URL;
+
+    const fetchData = async (id) => {
+        const response = await fetch(`${url}/api/users/${id}`);
+        const data = await response.json();
+        return data;
+    }
+    if (!userDetails?.phone) {
+        fetchData(id).then((result) => {
+            setUserDetails(result);
+        });
+    }
 
     //for get productDetails
     const [productDetails, setProductDetails] = useState(null);
@@ -93,43 +109,6 @@ const ProductScreen = () => {
         dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: newQuantity } });
     }
 
-    //Image zooming
-    useEffect(() => {
-        if (typeof document !== 'undefined') {
-            const zoomer = () => {
-                document.querySelector('#img-zoomer-box')
-                    .addEventListener('mousemove', function (e) {
-                        let original = document.querySelector('#img-1'),
-                            magnified = document.querySelector('#img-2'),
-                            style = magnified.style,
-                            x = e.pageX - this.offsetLeft,
-                            y = e.pageY - this.offsetTop,
-                            imgWidth = original.offsetWidth,
-                            imgHeight = original.offsetHeight,
-                            xperc = ((x / imgWidth) * 100),
-                            yperc = ((y / imgHeight) * 100);
-
-                        if (x > (.01 * imgWidth)) {
-                            xperc += (.15 * xperc);
-                        }
-
-                        if (y >= (.01 * imgHeight)) {
-                            yperc += (.15 * yperc);
-                        }
-
-                        style.backgroundPositionX = (xperc - 9) + '%';
-                        style.backgroundPositionY = (yperc - 9) + '%';
-
-                        style.left = (x - 220) + 'px';
-                        style.top = (y - 220) + 'px';
-                    }, false);
-            };
-
-            zoomer();
-        }
-    }, []);
-    //Image zooming end
-
     return (
         <>
             <Header title={product?.name} />
@@ -145,18 +124,8 @@ const ProductScreen = () => {
                     </Link>
                 </div>
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-                    <div className=''>
-                        {/* <img src={product?.image} alt={product?.name} className='w-full h-auto hover:cursor-zoom-in transition-transform transform hover:scale-150' /> */}
-                        <div id="img-zoomer-box">
-                            <img src={product?.image} alt={product?.name} id="img-1" />
-                            <div id="img-2" style={{ background: `url(${product?.image}) no-repeat` }}></div>
-                        </div>
-
-                        <div className='py-4 flex justify-center gap-2'>
-                            <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
-                            <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
-                            <img src={product?.image} alt={product?.name} className='w-14 h-14 cursor-pointer border border-gray-300' />
-                        </div>
+                    <div className='relative overflow-hidden'>
+                        <img src={product?.image} alt={product?.name} className='w-full h-[500px] object-cover hover:cursor-zoom-in transition-transform transform hover:scale-150' />
                     </div>
                     <div className='flex flex-col'>
                         {/* Product Info */}
@@ -165,7 +134,7 @@ const ProductScreen = () => {
                                 <h1 className='text-xl font-semibold'>{product?.name}</h1>
                             </li>
                             <li className="text-sm">
-                                <span className='font-semibold'>Category: </span>{product?.category} | <span className='font-semibold'>Sub Category: </span>{product?.subCategory}
+                                <span className='font-semibold'>Sub Category: {product?.subCategory}</span>
                             </li>
                             <li className="text-sm">
                                 <span className='font-semibold'>Brand: </span>{product?.brand}
@@ -192,32 +161,15 @@ const ProductScreen = () => {
                         <div className='my-4'>
                             <h4 className='font-semibold'>Color Family</h4>
                             <div className="flex gap-2">
-                                <button
-                                    type="button"
-                                    className={`bg-black w-10 h-10 rounded-full ${selectedColor === 'black' ? 'border-2 border-black' : 'border border-solid border-gray-300'}`}
-                                    onClick={() => handleColorButtonClick('black')}
-                                />
-                                <button
-                                    type="button"
-                                    className={`bg-blue-500 w-10 h-10 rounded-full ${selectedColor === 'blue' ? 'border-2 border-blue-600' : 'border border-solid border-gray-300'}`}
-                                    onClick={() => handleColorButtonClick('blue')}
-                                />
-                                <button
-                                    type="button"
-                                    className={`bg-green-500 w-10 h-10 rounded-full ${selectedColor === 'green' ? 'border-2 border-green-600' : 'border border-solid border-gray-300'}`}
-                                    onClick={() => handleColorButtonClick('green')}
-                                />
-                                <button
-                                    type="button"
-                                    className={`bg-violet-500 w-10 h-10 rounded-full ${selectedColor === 'violet' ? 'border-2 border-violet-600' : 'border border-solid border-gray-300'}`}
-                                    onClick={() => handleColorButtonClick('violet')}
-                                />
-                                <button
-                                    type="button"
-                                    className={`bg-yellow-500 w-10 h-10 rounded-full ${selectedColor === 'yellow' ? 'border-2 border-yellow-600' : 'border border-solid border-gray-300'}`}
-                                    onClick={() => handleColorButtonClick('yellow')}
-                                />
-                                {/* Add more color buttons as needed */}
+                                <button type="button" className="" onClick={() => handleColorButtonClick()}>
+                                    <img src={product?.image} alt={product?.name} className='w-14 h-14 rounded-full object-cover' />
+                                </button>
+                                <button type="button" className="" onClick={() => handleColorButtonClick()}>
+                                    <img src={product?.image} alt={product?.name} className='w-14 h-14 rounded-full object-cover' />
+                                </button>
+                                <button type="button" className="" onClick={() => handleColorButtonClick()}>
+                                    <img src={product?.image} alt={product?.name} className='w-14 h-14 rounded-full object-cover' />
+                                </button>
                             </div>
                         </div>
                         {/* Size */}
@@ -314,7 +266,11 @@ const ProductScreen = () => {
                                     </svg>
                                     Change
                                 </button>
-                                <p>123 Main Street, Dhaka, Bangladesh</p>
+                                {!userDetails ?
+                                    <p className='text-slate-400 dark:text-slate-600'>No Delivery Address found</p>
+                                    :
+                                    <p>{userDetails.address}</p>
+                                }
                             </div>
                             <hr />
                             <div className="mb-4">

@@ -19,7 +19,7 @@ const Profile = () => {
         const data = await response.json();
         return data;
     }
-    if (!userDetails?.address) {
+    if (!userDetails?.phone) {
         fetchData(id).then((result) => {
             setUserDetails(result);
         });
@@ -42,7 +42,7 @@ const Profile = () => {
                     <div className="flex md:justify-start justify-center">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
                             <li className="rounded-sm">
-                                <a href="User" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
+                                <a href="/user/profile" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                     </svg>
