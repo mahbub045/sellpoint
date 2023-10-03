@@ -267,7 +267,7 @@ const ProductScreen = () => {
                                     Change
                                 </button>
                                 {!userDetails ?
-                                    <p className='text-slate-400 dark:text-slate-600'>No Delivery Address found</p>
+                                    <p className='text-slate-400 dark:text-slate-600'>No Delivery Address Found</p>
                                     :
                                     <p>{userDetails.address}</p>
                                 }

@@ -11,7 +11,7 @@ function App({ Component, pageProps }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); // Simulating a 1-second delay, you can adjust this as needed
+    }, 2000); // Simulating a 2-second delay, you can adjust this as needed
 
     return () => clearTimeout(timer);
   }, []);
