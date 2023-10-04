@@ -220,10 +220,10 @@ const ProductScreen = () => {
                         <div className='my-2'>
                             <h4 className='font-semibold'>Quantity</h4>
                             {product?.countInStock > 0 ?
-                                <div className="flex items-center">
+                                <div className="flex items-center gap-1">
                                     <button
                                         type="button"
-                                        className="px-5 py-1 font-bold bg-emerald-200 text-black rounded-l"
+                                        className="px-5 py-1 font-bold bg-emerald-200 text-black rounded"
                                         onClick={decreaseQuantity}
                                     >
                                         -
@@ -237,7 +237,7 @@ const ProductScreen = () => {
                                     />
                                     <button
                                         type="button"
-                                        className="px-5 py-1 font-bold bg-emerald-400 text-black rounded-r"
+                                        className="px-5 py-1 font-bold bg-emerald-400 text-black rounded"
                                         onClick={increaseQuantity}
                                     >
                                         +
