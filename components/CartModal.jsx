@@ -92,7 +92,9 @@ const CartModal = ({ onClose }) => {
                             </div>
                         </li>
                         <li className='text-center'>
-                            <button onClick={() => router.push('login?redirect=/shipping')} className='w-60 primary-button dark:text-black'>Check Out</button>
+                            <button onClick={() => window.location.href = '/login?redirect=/shipping'} className='w-60 primary-button dark:text-black'>
+                                Check Out
+                            </button>
                         </li>
                     </ul>
                 </div>

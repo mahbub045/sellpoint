@@ -1,8 +1,9 @@
 import Preloader from '@/components/Preloader';
 import '@/styles/globals.css';
 import { StoreProvider } from '@/utils/Store';
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider, useSession } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 function App({ Component, pageProps }) {
@@ -11,7 +12,7 @@ function App({ Component, pageProps }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Simulating a 2-second delay, you can adjust this as needed
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -20,30 +21,31 @@ function App({ Component, pageProps }) {
     <ThemeProvider attribute="class" defaultTheme="light">
       <SessionProvider session={pageProps.session}>
         <StoreProvider>
-          {loading ? <Preloader /> : <Component {...pageProps} />}
+          {Component.auth ? (
+            <Auth>
+              {loading ? <Preloader /> : <Component {...pageProps} />}
+            </Auth>
+          ) : (
+            loading ? <Preloader /> : <Component {...pageProps} />
+          )}
         </StoreProvider>
       </SessionProvider>
     </ThemeProvider>
   );
 }
 
+function Auth({ children }) {
+  const router = useRouter();
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push('unauthorized?message=Login required');
+    },
+  });
+  if (status === 'loading') {
+    return <Preloader />
+  }
+  return children;
+}
+
 export default App;
-
-
-// import '@/styles/globals.css';
-// import { StoreProvider } from '@/utils/Store';
-// import { SessionProvider } from 'next-auth/react';
-// import { ThemeProvider } from 'next-themes';
-
-// function App({ Component, pageProps }) {
-//   return (
-//     <ThemeProvider attribute="class" defaultTheme="light">
-//       <SessionProvider session={pageProps.session}>
-//         <StoreProvider>
-//           <Component {...pageProps} />
-//         </StoreProvider>
-//       </SessionProvider>
-//     </ThemeProvider>
-//   );
-// }
-// export default App;
