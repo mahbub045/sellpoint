@@ -40,7 +40,7 @@ const Profile = () => {
                         <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     </div>
                     <div className="flex md:justify-start justify-center">
-                        <ul className="pt-2 pb-4 space-y-1 text-sm">
+                        <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
                             <li className="rounded-sm">
                                 <a href="/admin/profile" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
