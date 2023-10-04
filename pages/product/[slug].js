@@ -14,7 +14,7 @@ const ProductScreen = () => {
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
     const [product, setProduct] = useState();
-    const [selectedColor, setSelectedColor] = useState(null);
+    const [activeStatesColorFamily, setActiveStatesColorFamily] = useState([false, false, false]);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('S');
     const [isCartModalOpen, setIsCartModalOpen] = useState(false);
@@ -64,8 +64,9 @@ const ProductScreen = () => {
     }, [router.query.slug, productDetails]);
 
 
-    const handleColorButtonClick = (color) => {
-        setSelectedColor(color);
+    const handleColorButtonClick = (index) => {
+        const newActiveStatesColorFamily = activeStatesColorFamily.map((state, i) => i === index);
+        setActiveStatesColorFamily(newActiveStatesColorFamily);
     };
     const handleSizeButtonClick = (value) => {
         setSelectedSize(value);
@@ -161,15 +162,17 @@ const ProductScreen = () => {
                         <div className='my-4'>
                             <h4 className='font-semibold'>Color Family</h4>
                             <div className="flex gap-2">
-                                <button type="button" className="" onClick={() => handleColorButtonClick()}>
-                                    <img src={product?.image} alt={product?.name} className='w-14 h-14 rounded-full object-cover' />
-                                </button>
-                                <button type="button" className="" onClick={() => handleColorButtonClick()}>
-                                    <img src={product?.image} alt={product?.name} className='w-14 h-14 rounded-full object-cover' />
-                                </button>
-                                <button type="button" className="" onClick={() => handleColorButtonClick()}>
-                                    <img src={product?.image} alt={product?.name} className='w-14 h-14 rounded-full object-cover' />
-                                </button>
+                                {[0, 1, 2].map((index) => (
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        className={`relative w-14 h-14 rounded-full overflow-hidden ${activeStatesColorFamily[index] ? 'border-2 border-emerald-600' : ''
+                                            }`}
+                                        onClick={() => handleColorButtonClick(index)}
+                                    >
+                                        <img src={product?.image} alt={product?.name} className='w-full h-full rounded-full object-cover' />
+                                    </button>
+                                ))}
                             </div>
                         </div>
                         {/* Size */}
