@@ -6,7 +6,7 @@ import { ThemeProvider } from 'next-themes';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps: { session, ...pageProps } }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
-      <SessionProvider session={pageProps.session}>
+      <SessionProvider session={session}>
         <StoreProvider>
           {Component.auth ? (
             <Auth>
@@ -42,7 +42,7 @@ function Auth({ children }) {
       router.push('unauthorized?message=Login required');
     },
   });
-  if (status === 'loading') {
+  if (status === "loading") {
     return <Preloader />
   }
   return children;

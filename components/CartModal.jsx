@@ -83,20 +83,26 @@ const CartModal = ({ onClose }) => {
                     </div>
                 )}
                 <hr />
-                <div className='p-5'>
-                    <ul>
-                        <li>
-                            <div className='pb-3 text-xl text-center'>
-                                Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}):
-                                <span className='text-2xl'> ৳ </span>{cartItems.reduce((a, c) => a + c.quantity * c.discountPrice, 0)}
-                            </div>
-                        </li>
-                        <li className='text-center'>
-                            <button onClick={() => window.location.href = '/login?redirect=/shipping'} className='w-60 primary-button dark:text-black'>
-                                Check Out
-                            </button>
-                        </li>
-                    </ul>
+                <div className='p-5 text-center'>
+                    {cartItems?.length === 0 ? (
+                        <Link legacyBehavior href="/">
+                            <button className='primary-button dark:text-black'>Back to Shopping</button>
+                        </Link>
+                    ) : (
+                        <ul>
+                            <li>
+                                <div className='pb-3 text-xl text-center'>
+                                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}):
+                                    <span className='text-2xl'> ৳ </span>{cartItems.reduce((a, c) => a + c.quantity * c.discountPrice, 0)}
+                                </div>
+                            </li>
+                            <li className='text-center'>
+                                <button onClick={() => window.location.href = '/login?redirect=/shipping'} className='w-60 primary-button dark:text-black'>
+                                    Check Out
+                                </button>
+                            </li>
+                        </ul>
+                    )}
                 </div>
             </div>
         </div>
