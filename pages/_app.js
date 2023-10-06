@@ -23,10 +23,10 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
         <StoreProvider>
           {Component.auth ? (
             <Auth>
-              {loading ? <Preloader /> : <Component {...pageProps} />}
+              <Component {...pageProps} />
             </Auth>
           ) : (
-            loading ? <Preloader /> : <Component {...pageProps} />
+            <Component {...pageProps} />
           )}
         </StoreProvider>
       </SessionProvider>
