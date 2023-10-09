@@ -57,8 +57,8 @@ const Search = () => {
                         </div>
                     ) : (
                         <div className='container h-screen mx-auto flex flex-col justify-center items-center'>
-                            <img src="/searchError.webp" alt="Not Found!" className="w-80 h-64" />
-                            <h2 className="text-3xl text-red-600">Sorry!</h2>
+                            <img src="/searchError.webp" alt="Not Found!" className="w-80 h-64 object-contain" />
+                            <h2 className="text-4xl font-semibold text-red-600">Sorry!</h2>
                             <p className='text-2xl font-bold text-emerald-500'>Product Not Found!</p>
                         </div>
                     )}
