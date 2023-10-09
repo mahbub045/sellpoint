@@ -57,9 +57,7 @@ const Search = () => {
                         </div>
                     ) : (
                         <div className='container h-screen mx-auto flex flex-col justify-center items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-52 h-52">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-                            </svg>
+                            <img src="/searchError.webp" alt="Not Found!" className="w-80 h-64" />
                             <h2 className="text-3xl text-red-600">Sorry!</h2>
                             <p className='text-2xl font-bold text-emerald-500'>Product Not Found!</p>
                         </div>
