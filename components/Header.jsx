@@ -74,7 +74,7 @@ const Header = ({ title, user }) => {
     useEffect(() => {
         const fetchProductsData = async () => {
             try {
-                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/productDetails.json');
+                const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/category`);
                 setProductDetails(response.data);
             } catch (error) {
                 console.error('Error fetching products data:', error);
@@ -140,7 +140,7 @@ const Header = ({ title, user }) => {
     useEffect(() => {
         const fetchSearchData = async () => {
             try {
-                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/SearchData.json');
+                const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product/name`);
                 setSearchData(response.data);
             } catch (error) {
                 console.error('Error fetching search data:', error);

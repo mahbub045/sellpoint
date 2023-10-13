@@ -15,7 +15,7 @@ const CategorySlug = () => {
     useEffect(() => {
         const fetchProductsData = async () => {
             try {
-                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/productDetails.json');
+                const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product`);
                 setProductDetails(response.data);
             } catch (error) {
                 console.error('Error fetching products data:', error);
