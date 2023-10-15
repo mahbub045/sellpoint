@@ -1,3 +1,4 @@
+import useFetchCategory from '@/hooks/useFetchCategory';
 import { Store } from '@/utils/Store';
 import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
@@ -10,7 +11,8 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import CartModal from './CartModal';
 
-const Header = ({ title, categoryDetails, searchData }) => {
+const Header = ({ title, searchData }) => {
+    const { categoryDetails, loading, error } = useFetchCategory();
     const { data: session } = useSession();
 
     //for cart
@@ -139,32 +141,6 @@ const Header = ({ title, categoryDetails, searchData }) => {
         router.push(`/search?name=${query}`);
 
     }
-
-    ///////////////////
-    const [categoryData, setCategoryData] = useState(null);
-    const [loading, setLoading] = useState(null);
-    const [error, setError] = useState(null);
-
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const result = await response.json();
-            console.log(result)
-            setCategoryData(result);
-            setLoading(false);
-        } catch (error) {
-            setError(error);
-            setLoading(false);
-        }
-    }
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    ///////////////////////
 
     return (
         <>
@@ -310,7 +286,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
                             </div>
                             <div className='absolute invisible w-[300px] group-hover:visible mt-3 bg-white dark:bg-black'>
                                 <div className='flex flex-col p-4'>
-                                    {categoryData && categoryData?.map((item, index) => (
+                                    {categoryDetails && categoryDetails?.map((item, index) => (
                                         <Link legacyBehavior href={`/categorypages/${item?.categorySlug}`} key={index}>
                                             <a className='flex p-1 gap-2 items-center dark:text-white hover:text-emerald-600 dark:hover:text-emerald-600'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
