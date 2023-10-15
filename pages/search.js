@@ -1,38 +1,37 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Productitem from "@/components/Productitem";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const Search = ({ productDetails }) => {
+const Search = ({ productDetails, categoryDetails, searchData }) => {
     const router = useRouter();
-    const [searchData, setSearchData] = useState(null);
+    const [productData, setProductData] = useState(null);
 
     useEffect(() => {
         const productName = router.query.name?.toLowerCase();
 
         if (productName && productDetails) { //check for productDetails
-            const searchResults = productDetails.filter(item => {
+            const productSearchResults = productDetails.filter(item => {
                 return item.products.some(product =>
                     product.name.toLowerCase().includes(productName)
                 );
             });
 
-            setSearchData(searchResults);
+            setProductData(productSearchResults);
         }
     }, [router.query.name, productDetails]);
 
 
     return (
         <>
-            <Header />
+            <Header title="Search" categoryDetails={categoryDetails} searchData={searchData} />
             <div className="min-h-screen">
                 <div>
-                    {searchData && searchData?.length > 0 ? (
+                    {productData && productData?.length > 0 ? (
                         <div className='container px-4 py-4 m-auto'>
                             <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5'>
-                                {searchData?.map(item => (
+                                {productData?.map(item => (
                                     item?.products?.map(product => (
                                         <Productitem product={product} key={product.name} />
                                     ))
@@ -55,18 +54,32 @@ const Search = ({ productDetails }) => {
 
 export default Search;
 
-export const getServerSideProps = async () => {
-    let productDetails = null;
+export async function getServerSideProps() {
     try {
-        const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product`);
-        productDetails = response.data;
+        const res = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const data = await res.json();
+
+        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryData = await categoryRes.json();
+
+        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchData = await searchRes.json();
+        return {
+            props: {
+                productDetails: data,
+                categoryDetails: categoryData,
+                searchData: searchData,
+            },
+        };
     } catch (error) {
         console.error('Error fetching products data:', error);
+        return {
+            props: {
+                productDetails: null,
+                categoryDetails: null,
+                searchData: null
+            },
+        };
     }
+}
 
-    return {
-        props: {
-            productDetails,
-        },
-    };
-};

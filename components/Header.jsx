@@ -1,4 +1,3 @@
-import useFetchCategory from '@/hooks/useFetchCategory';
 import { Store } from '@/utils/Store';
 import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
@@ -11,8 +10,7 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import CartModal from './CartModal';
 
-const Header = ({ title, searchData }) => {
-    const { categoryDetails, loading, error } = useFetchCategory();
+const Header = ({ title, categoryDetails, searchData }) => {
     const { data: session } = useSession();
 
     //for cart

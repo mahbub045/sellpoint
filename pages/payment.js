@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-const PaymentScreen = () => {
+const PaymentScreen = ({ categoryDetails, searchData }) => {
     const router = useRouter();
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const { state, dispatch } = useContext(Store);
@@ -39,7 +39,7 @@ const PaymentScreen = () => {
 
     return (
         <>
-            <Header title="Payment Method" />
+            <Header title="Payment Method" categoryDetails={categoryDetails} searchData={searchData} />
             <div className='container mx-auto px-4 py-2'>
                 <CheckoutWizard activeStep={2} />
                 <form
@@ -104,3 +104,32 @@ const PaymentScreen = () => {
 }
 
 export default PaymentScreen;
+
+export async function getServerSideProps() {
+    try {
+        const res = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const data = await res.json();
+
+        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryData = await categoryRes.json();
+
+        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchData = await searchRes.json();
+        return {
+            props: {
+                productDetails: data,
+                categoryDetails: categoryData,
+                searchData: searchData,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching products data:', error);
+        return {
+            props: {
+                productDetails: null,
+                categoryDetails: null,
+                searchData: null
+            },
+        };
+    }
+}

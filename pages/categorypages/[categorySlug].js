@@ -1,11 +1,10 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Productitem from '@/components/Productitem';
-import axios from "axios";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-const CategorySlug = ({ productDetails }) => {
+const CategorySlug = ({ productDetails, categoryDetails, searchData }) => {
     const router = useRouter();
     const [categoryData, setCategoryData] = useState(null);
 
@@ -20,7 +19,7 @@ const CategorySlug = ({ productDetails }) => {
 
     return (
         <>
-            <Header title={categoryData?.category} />
+            <Header title={categoryData?.category} categoryDetails={categoryDetails} searchData={searchData} />
             <div>
                 {categoryData && (
                     <div className='container min-h-screen px-4 py-4 m-auto'>
@@ -42,18 +41,32 @@ const CategorySlug = ({ productDetails }) => {
 
 export default CategorySlug;
 
-export const getServerSideProps = async () => {
-    let productDetails = null;
+export async function getServerSideProps() {
     try {
-        const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product`);
-        productDetails = response.data;
+        const res = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const data = await res.json();
+
+        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryData = await categoryRes.json();
+
+        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchData = await searchRes.json();
+        return {
+            props: {
+                productDetails: data,
+                categoryDetails: categoryData,
+                searchData: searchData,
+            },
+        };
     } catch (error) {
         console.error('Error fetching products data:', error);
+        return {
+            props: {
+                productDetails: null,
+                categoryDetails: null,
+                searchData: null
+            },
+        };
     }
+}
 
-    return {
-        props: {
-            productDetails,
-        },
-    };
-};

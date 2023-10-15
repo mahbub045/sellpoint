@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-export default function ShippingScreen() {
+export default function ShippingScreen({ categoryDetails, searchData }) {
     const router = useRouter();
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
@@ -39,7 +39,7 @@ export default function ShippingScreen() {
     };
     return (
         <>
-            <Header title="Shipping Address" />
+            <Header title="Shipping Address" categoryDetails={categoryDetails} searchData={searchData} />
             <div className="container mx-auto px-4 py-2">
                 <CheckoutWizard activeStep={1} />
                 <form className="max-w-screen-md mx-auto bg-slate-100 dark:bg-slate-950 px-4 py-2 shadow-md shadow-emerald-600 rounded-md" onSubmit={handleSubmit(submitHandler)}>
@@ -120,3 +120,27 @@ export default function ShippingScreen() {
 }
 
 ShippingScreen.auth = true;
+
+export async function getServerSideProps() {
+    try {
+        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryData = await categoryRes.json();
+
+        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchData = await searchRes.json();
+        return {
+            props: {
+                categoryDetails: categoryData,
+                searchData: searchData,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching products data:', error);
+        return {
+            props: {
+                categoryDetails: null,
+                searchData: null
+            },
+        };
+    }
+}

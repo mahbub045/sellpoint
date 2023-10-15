@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-const ProductScreen = () => {
+const ProductScreen = ({ categoryDetails, searchData }) => {
     const { data: session } = useSession();
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
@@ -112,7 +112,7 @@ const ProductScreen = () => {
 
     return (
         <>
-            <Header title={product?.name} />
+            <Header title={product?.name} categoryDetails={categoryDetails} searchData={searchData} />
             <div className='container mx-auto p-2'>
                 <div className='py-2'>
                     <Link legacyBehavior href="/">
@@ -360,4 +360,30 @@ const ProductScreen = () => {
 }
 
 export default ProductScreen;
+
+
+export async function getServerSideProps() {
+    try {
+        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryData = await categoryRes.json();
+
+        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchData = await searchRes.json();
+        return {
+            props: {
+                categoryDetails: categoryData,
+                searchData: searchData,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching products data:', error);
+        return {
+            props: {
+                categoryDetails: null,
+                searchData: null
+            },
+        };
+    }
+}
+
 

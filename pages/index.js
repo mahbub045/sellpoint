@@ -6,8 +6,7 @@ import Productitem from '@/components/Productitem';
 const Home = ({ productDetails, categoryDetails, searchData }) => {
   return (
     <>
-      <Header title='SellPoint' />
-      {/* <Header title='SellPoint' categoryDetails={categoryDetails} searchData={searchData} /> */}
+      <Header title='SellPoint' categoryDetails={categoryDetails} searchData={searchData} />
       <Carousel />
       <div>
         {productDetails && productDetails?.map((item, index) => (
@@ -38,16 +37,16 @@ export async function getServerSideProps() {
     const res = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
     const data = await res.json();
 
-    // const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
-    // const categoryData = await categoryRes.json();
+    const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+    const categoryData = await categoryRes.json();
 
-    // const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
-    // const searchData = await searchRes.json();
+    const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+    const searchData = await searchRes.json();
     return {
       props: {
         productDetails: data,
-        // categoryDetails: categoryData,
-        // searchData: searchData,
+        categoryDetails: categoryData,
+        searchData: searchData,
       },
     };
   } catch (error) {
@@ -55,8 +54,8 @@ export async function getServerSideProps() {
     return {
       props: {
         productDetails: null,
-        // categoryDetails: null,
-        // searchData: null
+        categoryDetails: null,
+        searchData: null
       },
     };
   }

@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 
-const Customers = ({ user }) => {
+const Customers = ({ categoryDetails, searchData }) => {
     const router = useRouter();
     const [formValues, setFormValues] = useState([]);
     const { dispatch } = useContext(Store);
@@ -38,7 +38,7 @@ const Customers = ({ user }) => {
     };
     return (
         <>
-            <Header title='Admin(Customers)' />
+            <Header title='Admin(Customers)' categoryDetails={categoryDetails} searchData={searchData} />
             <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
                 <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/4">
                     <div className="space-y-3">
@@ -148,3 +148,32 @@ const Customers = ({ user }) => {
 }
 
 export default Customers;
+
+export async function getServerSideProps() {
+    try {
+        const res = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const data = await res.json();
+
+        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryData = await categoryRes.json();
+
+        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchData = await searchRes.json();
+        return {
+            props: {
+                productDetails: data,
+                categoryDetails: categoryData,
+                searchData: searchData,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching products data:', error);
+        return {
+            props: {
+                productDetails: null,
+                categoryDetails: null,
+                searchData: null
+            },
+        };
+    }
+}
