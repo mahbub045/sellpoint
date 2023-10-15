@@ -5,25 +5,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const Search = () => {
+const Search = ({ productDetails }) => {
     const router = useRouter();
     const [searchData, setSearchData] = useState(null);
-    //for get productDetails
-    const [productDetails, setProductDetails] = useState(null);
-
-    //for get productDetails
-    useEffect(() => {
-        const fetchProductsData = async () => {
-            try {
-                const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product`);
-                setProductDetails(response.data);
-            } catch (error) {
-                console.error('Error fetching products data:', error);
-            }
-        }
-        fetchProductsData();
-    }, []);
-    //for get productDetails end
 
     useEffect(() => {
         const productName = router.query.name?.toLowerCase();
@@ -70,3 +54,19 @@ const Search = () => {
 }
 
 export default Search;
+
+export const getServerSideProps = async () => {
+    let productDetails = null;
+    try {
+        const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product`);
+        productDetails = response.data;
+    } catch (error) {
+        console.error('Error fetching products data:', error);
+    }
+
+    return {
+        props: {
+            productDetails,
+        },
+    };
+};
