@@ -1,6 +1,5 @@
 import { Store } from '@/utils/Store';
 import { Menu } from '@headlessui/react';
-import axios from "axios";
 import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
@@ -11,10 +10,8 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import CartModal from './CartModal';
 
-const Header = ({ title, user }) => {
+const Header = ({ title, categoryDetails, searchData }) => {
     const { data: session } = useSession();
-    //fetch product details
-    const [productDetails, setProductDetails] = useState(null);
 
     //for cart
     const [isCartModalOpen, setIsCartModalOpen] = useState(false);
@@ -28,7 +25,7 @@ const Header = ({ title, user }) => {
     const [query, setQuery] = useState('');
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [suggestions, setSuggestions] = useState(false);
-    const [searchData, setSearchData] = useState(null);
+    // const [searchData, setSearchData] = useState(null);
 
     //for login
     const [isLoggedIn, setIsLoggedIn] = useState();
@@ -51,7 +48,6 @@ const Header = ({ title, user }) => {
     };
 
 
-
     //for change theme
     const { theme, setTheme } = useTheme();
 
@@ -69,20 +65,6 @@ const Header = ({ title, user }) => {
         setShowInput(!showInput);
     };
 
-
-    // fetchproduct details from api link
-    useEffect(() => {
-        const fetchProductsData = async () => {
-            try {
-                const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/category`);
-                setProductDetails(response.data);
-            } catch (error) {
-                console.error('Error fetching products data:', error);
-            }
-        }
-        fetchProductsData();
-    }, []);
-    // fetchproduct details from api link end
 
     const navMenu2 = [
         {
@@ -135,19 +117,6 @@ const Header = ({ title, user }) => {
         ? 'bg-emerald-500 transition-transform duration-300 ease-in-out transform fixed top-0 left-0 right-0 z-50 shadow-md shadow-gray-500'
         : 'bg-emerald-500 transition-transform duration-300 ease-in-out transform z-10 shadow-md shadow-gray-500';
 
-    // search functionality start
-
-    useEffect(() => {
-        const fetchSearchData = async () => {
-            try {
-                const response = await axios.get(`http://sellpoint-api.vercel.app/api/v1/product/name`);
-                setSearchData(response.data);
-            } catch (error) {
-                console.error('Error fetching search data:', error);
-            }
-        };
-        fetchSearchData();
-    }, [])
 
     // Function to handle user input for search
     const handleSearchInputChange = (e) => {
@@ -170,6 +139,32 @@ const Header = ({ title, user }) => {
         router.push(`/search?name=${query}`);
 
     }
+
+    ///////////////////
+    const [categoryData, setCategoryData] = useState(null);
+    const [loading, setLoading] = useState(null);
+    const [error, setError] = useState(null);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            console.log(result)
+            setCategoryData(result);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    ///////////////////////
 
     return (
         <>
@@ -315,7 +310,7 @@ const Header = ({ title, user }) => {
                             </div>
                             <div className='absolute invisible w-[300px] group-hover:visible mt-3 bg-white dark:bg-black'>
                                 <div className='flex flex-col p-4'>
-                                    {productDetails && productDetails?.map((item, index) => (
+                                    {categoryData && categoryData?.map((item, index) => (
                                         <Link legacyBehavior href={`/categorypages/${item?.categorySlug}`} key={index}>
                                             <a className='flex p-1 gap-2 items-center dark:text-white hover:text-emerald-600 dark:hover:text-emerald-600'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -451,5 +446,4 @@ const Header = ({ title, user }) => {
         </>
     )
 };
-
 export default dynamic(() => Promise.resolve(Header), { ssr: false });
