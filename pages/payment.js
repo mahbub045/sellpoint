@@ -80,7 +80,7 @@ const PaymentScreen = ({ categoryDetails, searchData }) => {
 
                     <div className="mb-4 flex justify-between">
                         <button
-                            className="w-24 primary-button !bg-emerald-200 font-semibold dark:text-black"
+                            className="w-24 primary-button !bg-emerald-200 hover:!bg-emerald-300 font-semibold dark:text-black"
                             onClick={() => router.push('/shipping')}
                             type="button"
                         >
