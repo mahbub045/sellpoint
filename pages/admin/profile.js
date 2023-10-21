@@ -136,8 +136,8 @@ const Profile = ({ categoryDetails, searchData }) => {
 export default Profile;
 export async function getServerSideProps() {
     try {
-        const res = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
-        const data = await res.json();
+        const productRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const productData = await productRes.json();
 
         const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
         const categoryData = await categoryRes.json();
@@ -146,7 +146,7 @@ export async function getServerSideProps() {
         const searchData = await searchRes.json();
         return {
             props: {
-                productDetails: data,
+                productDetails: productData,
                 categoryDetails: categoryData,
                 searchData: searchData,
             },
