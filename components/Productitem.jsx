@@ -4,7 +4,7 @@ const Productitem = ({ product }) => {
     return (
         <>
             <Link legacyBehavior href={`/product/${product.slug}`}>
-                <div className='card h-fit group cursor-pointer'>
+                <div className='card h-fit group cursor-pointer' title="View Details">
                     <div className='relative overflow-hidden'>
                         <img src={product.image} alt={product.name} className='object-cover w-full h-52' />
                     </div>
