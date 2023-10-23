@@ -24,26 +24,6 @@ a {
   box-sizing: border-box;
 }
 
-/* card start */
-.card {
-  @apply block mb-5 border border-gray-200 rounded-lg shadow-md;
-  border: 1px solid #eaeaea;
-  /* Add your desired border styles */
-  border-radius: 8px;
-  /* Add your desired border-radius */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  /* Add the box-shadow for the glow effect */
-}
-
-.glow-effect:hover {
-  box-shadow: 0 0 20px rgba(78, 85, 83, 0.575);
-  /* Add a stronger box-shadow on hover for a more pronounced glow effect */
-  transition: box-shadow 0.3s ease;
-  /* Add a smooth transition for the hover effect */
-}
-
-/* card end  */
-
 .primary-button {
   @apply px-4 py-2 bg-emerald-400 rounded shadow outline-none hover:bg-emerald-500 active:bg-emerald-600;
 }

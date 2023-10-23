@@ -1,5 +1,6 @@
 import Preloader from '@/components/Preloader';
 import '@/styles/globals.css';
+import '@/styles/styles.scss';
 import { StoreProvider } from '@/utils/Store';
 import { SessionProvider, useSession } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';

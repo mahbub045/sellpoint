@@ -1,16 +1,12 @@
-'use client';
 import Link from "next/link";
 
 const Productitem = ({ product }) => {
     return (
         <>
             <Link legacyBehavior href={`/product/${product.slug}`}>
-                <div className='card glow-effect h-fit group cursor-pointer'>
-                    <div className='relative overflow-hidden '>
-                        <img src={product.image} alt={product.name} className='object-cover w-full h-52 rounded' />
-                        <div className='absolute h-full w-full bg-black/40 flex items-center justify-center -bottom-10 group-hover:bottom-0 opacity-0 group-hover:opacity-100'>
-                            {/* add button to over image if needed */}
-                        </div>
+                <div className='card h-fit group cursor-pointer'>
+                    <div className='relative overflow-hidden'>
+                        <img src={product.image} alt={product.name} className='object-cover w-full h-52' />
                     </div>
                     <div className='flex flex-col items-center justify-center p-5'>
                         <h2 className='text-lg font-medium dark:text-white'>{product.name}</h2>
@@ -23,4 +19,5 @@ const Productitem = ({ product }) => {
         </>
     )
 };
+
 export default Productitem;
