@@ -1,10 +1,10 @@
+// card border slider effect start
 @mixin card-border-slide($color, $hoverColor, $borderWidth, $time) {
     $easing: cubic-bezier(0.4, 0, 0.2, 1);
 
     position: relative;
 
     display: inline-block;
-    // padding: 0.1em;
 
     cursor: pointer;
     overflow: hidden;
@@ -98,3 +98,5 @@
 .card {
     @include card-border-slide(#fff, #10b981, 2px, 0.8s);
 }
+
+// card border slider effect end
