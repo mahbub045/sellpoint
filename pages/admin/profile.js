@@ -2,10 +2,11 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SalesStat from '@/components/SalesStat';
 import { Store } from '@/utils/Store';
+import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 
 const Profile = ({ categoryDetails, searchData }) => {
     const { data: session } = useSession();
@@ -13,6 +14,12 @@ const Profile = ({ categoryDetails, searchData }) => {
     const [formValues, setFormValues] = useState([]);
     const [totalUsers, setTotalUsers] = useState([]);
     const { dispatch } = useContext(Store);
+
+    const links = [
+        { href: '/allproducts', label: 'All Products' },
+        { href: '/addproduct', label: 'Add Product' },
+        { href: '/productreviews', label: 'Product Reviews' },
+    ]
 
     const handleLogout = () => {
         Cookies.remove('cart');
@@ -35,10 +42,8 @@ const Profile = ({ categoryDetails, searchData }) => {
         <>
             <Header title={`${session?.user?.name}`} categoryDetails={categoryDetails} searchData={searchData} />
             <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
-                <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/4">
-                    <div className="flex md:justify-start justify-center">
-                        <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
-                    </div>
+                <div className="bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full sm:w-1/5">
+                    <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex md:justify-start justify-center">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
                             <li className="rounded-sm">
@@ -56,6 +61,47 @@ const Profile = ({ categoryDetails, searchData }) => {
                                     </svg>
                                     <span>Inbox</span>
                                 </a>
+                            </li>
+                            <li className="rounded-sm relative">
+                                <Menu>
+                                    <Menu.Button className="flex items-center p-2 space-x-3 text-emerald-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-packages" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z"></path>
+                                            <path d="M2 13.5v5.5l5 3"></path>
+                                            <path d="M7 16.545l5 -3.03"></path>
+                                            <path d="M17 16.5l-5 -3l5 -3l5 3v5.5l-5 3z"></path>
+                                            <path d="M12 19l5 3"></path>
+                                            <path d="M17 16.5l5 -3"></path>
+                                            <path d="M12 13.5v-5.5l-5 -3l5 -3l5 3v5.5"></path>
+                                            <path d="M7 5.03v5.455"></path>
+                                            <path d="M12 8l5 -3"></path>
+                                        </svg>
+                                        <span>Products</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mt-1">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </Menu.Button>
+                                    <Menu.Items className='flex flex-col px-5 w-full focus:outline-none'>
+                                        {links.map((link) => (
+                                            <Menu.Item key={link.href} as={Fragment} >
+                                                {({ active }) => (
+                                                    <a
+                                                        href={link.href}
+                                                        className={`${active ? 'text-emerald-600 hover:font-bold p-2' : 'text-emerald-600 p-2'
+                                                            }`}
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-point-filled inline-block mr-2" width="15" height="15" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" strokeWidth="0" fill="currentColor"></path>
+                                                        </svg>
+                                                        {link.label}
+                                                    </a>
+                                                )}
+                                            </Menu.Item>
+                                        ))}
+                                    </Menu.Items>
+                                </Menu>
                             </li>
                             <li className="rounded-sm">
                                 <a href="oders" className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md">
