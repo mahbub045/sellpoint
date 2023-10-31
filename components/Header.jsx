@@ -204,7 +204,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
                                     <Menu as="div" className="relative z-30 inline-block">
                                         <Menu.Button className="sm:text-base text-sm">
                                             <h6 className="mr-2">Hello,{' '}
-                                                <span className='font-medium text-emerald-500 hover:text-emerald-600 cursor-pointer'>
+                                                <span className='font-medium md:text-base text-sm text-emerald-500 hover:text-emerald-600 cursor-pointer'>
                                                     {username}
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mt-[2px] inline-block">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -213,17 +213,20 @@ const Header = ({ title, categoryDetails, searchData }) => {
                                             </h6>
                                         </Menu.Button>
                                         <Menu.Items className="absolute right-0 w-44 origin-top-right bg-white dark:bg-black  shadow-md shadow-emerald-600 border border-emerald-300 rounded-md p-2 font-medium">
-                                            <Menu.Item className="py-1">
+                                            <Menu.Item className="py-2">
                                                 <Link legacyBehavior href={`${session.user.isAdmin ? '/admin/profile' : '/user/profile'}`}>
                                                     <span className='text-emerald-500 hover:text-emerald-600 cursor-pointer flex justify-center'>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
                                                         </svg>
-                                                        Profile
+                                                        Dashboard
                                                     </span>
                                                 </Link>
                                             </Menu.Item>
-                                            <Menu.Item className="py-1">
+                                            <Menu.Item className="py-2">
                                                 <a onClick={handleLogout} className="flex justify-center text-red-500 cursor-pointer hover:text-red-600">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-5 sm:h-6 h-5">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
