@@ -1,7 +1,6 @@
 import Drawer from '@/components/Drawer';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import SalesStat from '@/components/SalesStat';
 import { Store } from '@/utils/Store';
 import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
@@ -9,7 +8,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Fragment, useContext, useEffect, useState } from "react";
 
-const Profile = ({ categoryDetails, searchData }) => {
+const AddProduct = ({ categoryDetails, searchData }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
@@ -161,37 +160,11 @@ const Profile = ({ categoryDetails, searchData }) => {
                     </div>
                 </div>
                 <div className="w-full md:w-3/4 sm:w-[75%] p-4">
-                    <div className="pb-2">
-                        <h2 className="text-2xl text-emerald-600">Manage My Account</h2>
+                    <div className="pb-2 text-center">
+                        <h2 className="text-2xl text-emerald-600">Add New Product</h2>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        <div className="w-full p-4 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
-                            <div className="text-sm font-medium text-emerald-500 truncate">
-                                Total Users
-                            </div>
-                            <div className="mt-1 text-3xl font-semibold dark:text-white">
-                                {totalUsers}
-                            </div>
-                        </div>
-                        <div className="w-full p-4 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
-                            <div className="text-sm font-medium text-emerald-500 truncate">
-                                Total Profit
-                            </div>
-                            <div className="mt-1 text-3xl font-semibold dark:text-white">
-                                $40k
-                            </div>
-                        </div>
-                        <div className="w-full p-4 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
-                            <div className="text-sm font-medium text-emerald-500 truncate">
-                                Total Orders
-                            </div>
-                            <div className="mt-1 text-3xl font-semibold dark:text-white">
-                                2k
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-6 p-4 border border-emerald-300 rounded-lg shadow-md shadow-emerald-600">
-                        <SalesStat />
+
                     </div>
                 </div>
             </div>
@@ -307,7 +280,7 @@ const Profile = ({ categoryDetails, searchData }) => {
     )
 }
 
-export default Profile;
+export default AddProduct;
 export async function getServerSideProps() {
     try {
         const productRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
