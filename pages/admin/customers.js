@@ -19,9 +19,12 @@ const Customers = ({ categoryDetails, searchData }) => {
     };
 
     const links = [
-        { href: '/allproducts', label: 'All Products' },
-        { href: '/addproduct', label: 'Add Product' },
-        { href: '/productreviews', label: 'Product Reviews' },
+        { href: '/admin/allproducts', label: 'All Products' },
+        { href: '/admin/addproduct', label: 'Add New Product' },
+        { href: '/admin/categories', label: 'Add Category' },
+        { href: '/admin/brands', label: 'Add Category' },
+        { href: '/admin/attributes', label: 'Add Attribute' },
+        { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
 
     useEffect(() => {

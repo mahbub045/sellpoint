@@ -23,7 +23,10 @@ const Profile = ({ categoryDetails, searchData }) => {
 
     const links = [
         { href: '/admin/allproducts', label: 'All Products' },
-        { href: '/admin/addproduct', label: 'Add Product' },
+        { href: '/admin/addproduct', label: 'Add New Product' },
+        { href: '/admin/categories', label: 'Add Category' },
+        { href: '/admin/brands', label: 'Add Category' },
+        { href: '/admin/attributes', label: 'Add Attribute' },
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
 
