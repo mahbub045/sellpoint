@@ -1,3 +1,4 @@
+'use client';
 import Drawer from '@/components/Drawer';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -12,8 +13,6 @@ const AddProduct = ({ categoryDetails, searchData }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
-    const [formValues, setFormValues] = useState([]);
-    const [totalUsers, setTotalUsers] = useState([]);
     const { dispatch } = useContext(Store);
 
     const handleToggleDrawer = () => {
@@ -24,7 +23,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
         { href: '/admin/allproducts', label: 'All Products' },
         { href: '/admin/addproduct', label: 'Add New Product' },
         { href: '/admin/categories', label: 'Add Category' },
-        { href: '/admin/brands', label: 'Add Category' },
+        { href: '/admin/brands', label: 'Add Brand' },
         { href: '/admin/attributes', label: 'Add Attribute' },
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
@@ -48,8 +47,8 @@ const AddProduct = ({ categoryDetails, searchData }) => {
     const [price, setPrice] = useState('');
     const [brand, setBrand] = useState('');
     const [colorEnabled, setColorEnabled] = useState(false);
-    const [sizeEnabled, setSizeEnabled] = useState(false);
-    const [selectedSizes, setSelectedSizes] = useState([]);
+    const [attribute, setAttribute] = useState('');
+    const [selectedAttributes, setSelectedAttributes] = useState(false);
     const [countInStock, setCountInStock] = useState('');
     const [description, setDescription] = useState('');
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
@@ -62,10 +61,15 @@ const AddProduct = ({ categoryDetails, searchData }) => {
             category,
             subCategory,
             image,
+            image2,
+            image3,
+            image4,
             discountPrice,
             price,
             brand,
-            color,
+            colorEnabled,
+            attributes,
+            selectedAttributes,
             countInStock,
             description,
             cashOnDelivery,
@@ -73,20 +77,13 @@ const AddProduct = ({ categoryDetails, searchData }) => {
         console.log(formData);
         // Reset form fields or perform any other necessary actions after submission
     };
-    const handleSizeChange = (e) => {
-        const selectedSize = e.target.value;
-        if (selectedSizes.includes(selectedSize)) {
-            setSelectedSizes(selectedSizes.filter((size) => size !== selectedSize));
-        } else {
-            setSelectedSizes([...selectedSizes, selectedSize]);
-        }
-    };
     ////////////////////////////////////////////////
 
     return (
         <>
             <Header title={`${session?.user?.name}`} categoryDetails={categoryDetails} searchData={searchData} />
             <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
+                {/* Dashboard for mobile start */}
                 <div className='sm:hidden flex flex-row justify-center'>
                     <button
                         onClick={handleToggleDrawer}
@@ -102,7 +99,8 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                         Dashboard
                     </button>
                 </div>
-                <div className="hidden sm:flex flex-col bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full lg:w-1/5 md:w-2/6">
+                {/* Dashboard for mobile end */}
+                <div className="hidden sm:flex flex-col bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
@@ -199,152 +197,157 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                         </ul>
                     </div>
                 </div>
-                <div className="w-full md:w-3/4 sm:w-[75%] p-4">
+                {/* from div start */}
+                <div className='w-full p-4'>
                     <div className="pb-2 text-center">
                         <h2 className="text-2xl text-emerald-600">Add New Product</h2>
                     </div>
-                    <div className="">
-                        <form onSubmit={handleSubmit} className="mx-auto">
-                            {/* Product Name */}
-                            <div className="mb-4">
-                                <label htmlFor="productName" className="block text-sm font-semibold mb-1">
-                                    Product Name<span className="text-red-500">*</span>:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="productName"
-                                    value={productName}
-                                    onChange={(e) => setProductName(e.target.value)}
-                                    className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                    placeholder='Your Product Name'
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="slug" className="block text-sm font-semibold mb-1">
-                                    Slug<span className="text-red-500">*(Unique)</span>:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="slug"
-                                    value={slug}
-                                    onChange={(e) => setSlug(e.target.value)}
-                                    className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                    placeholder='Ex: product_name_345'
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2">
-                                <div>
-                                    <label htmlFor="category" className="block text-sm font-semibold mb-1">
-                                        Category<span className="text-red-500">*</span>:
-                                    </label>
-                                    <select
-                                        id="category"
-                                        value={category}
-                                        onChange={(e) => setCategory(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                        required
-                                    >
-                                        <option value="">Select a category</option>
-                                        <option value="Category 1">Category 1</option>
-                                        <option value="Category 2">Category 2</option>
-                                        {/* Add more options dynamically or fetch from a data source */}
-                                    </select>
-                                </div>
-                                <div>
-                                    <label htmlFor="subCategory" className="block text-sm font-semibold mb-1">
-                                        Subcategory<span className="text-red-500">*</span>:
+                    <form onSubmit={handleSubmit}>
+                        <div className="flex lg:flex-row flex-col justify-between gap-2">
+                            <div className="">
+                                {/* Product Name */}
+                                <div className="mb-4">
+                                    <label htmlFor="productName" className="block text-sm font-semibold mb-1">
+                                        Product Name<span className="text-red-500">*</span>:
                                     </label>
                                     <input
                                         type="text"
-                                        id="subCategory"
-                                        value={subCategory}
-                                        onChange={(e) => setSubCategory(e.target.value)}
+                                        id="productName"
+                                        value={productName}
+                                        onChange={(e) => setProductName(e.target.value)}
                                         className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                        placeholder='Ex: Baby Toy'
+                                        placeholder='Your Product Name'
                                         required
                                     />
                                 </div>
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="image" className="block text-sm font-semibold mb-1">
-                                    Product Image<span className="text-red-500">*(Size: 900x900px)</span>:
-                                </label>
-                                <input
-                                    type="file"
-                                    id="image"
-                                    value={image}
-                                    accept="image/*"
-                                    onChange={(e) => setImage(e.target.value)}
-                                    className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-4">
-                                <div>
-                                    <label htmlFor="price" className="block text-sm font-semibold mb-1">
-                                        Price<span className="text-red-500">*</span>:
+                                <div className="mb-4">
+                                    <label htmlFor="slug" className="block text-sm font-semibold mb-1">
+                                        Slug<span className="text-red-500">*(Unique)</span>:
                                     </label>
                                     <input
                                         type="text"
-                                        id="price"
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
+                                        id="slug"
+                                        value={slug}
+                                        onChange={(e) => setSlug(e.target.value)}
                                         className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                        placeholder='Amount in BDT'
+                                        placeholder='Ex: product_name_345'
                                         required
                                     />
                                 </div>
-                                <div>
-                                    <label htmlFor="discountPrice" className="block text-sm font-semibold mb-1">
-                                        Discount Price<span className="text-red-500">*</span>:
+                                <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2">
+                                    <div>
+                                        <label htmlFor="category" className="block text-sm font-semibold mb-1">
+                                            Category<span className="text-red-500">*</span>:
+                                        </label>
+                                        <select
+                                            id="category"
+                                            value={category}
+                                            onChange={(e) => setCategory(e.target.value)}
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            required
+                                        >
+                                            <option value="">Select a category</option>
+                                            <option value="Category 1">Category 1</option>
+                                            <option value="Category 2">Category 2</option>
+                                            {/* Add more options dynamically or fetch from a data source */}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="subCategory" className="block text-sm font-semibold mb-1">
+                                            Subcategory<span className="text-red-500">*</span>:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="subCategory"
+                                            value={subCategory}
+                                            onChange={(e) => setSubCategory(e.target.value)}
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            placeholder='Ex: Baby Toy'
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="image" className="block text-sm font-semibold mb-1">
+                                        Product Image<span className="text-red-500">*(Size: 900x900px)</span>:
                                     </label>
                                     <input
-                                        type="text"
-                                        id="discountPrice"
-                                        value={discountPrice}
-                                        onChange={(e) => setDiscountPrice(e.target.value)}
+                                        type="file"
+                                        id="image"
+                                        value={image}
+                                        accept="image/*"
+                                        onChange={(e) => setImage(e.target.value)}
                                         className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                        placeholder='Amount in BDT'
                                         required
                                     />
                                 </div>
-                                <div>
-                                    <label htmlFor="brand," className="block text-sm font-semibold mb-1">
-                                        Brand<span className="text-red-500">*</span>:
-                                    </label>
-                                    <select
-                                        id="brand,"
-                                        value={brand}
-                                        onChange={(e) => setBrand(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                        required
-                                    >
-                                        <option value="">None</option>
-                                        <option value="Category 1">Category 1</option>
-                                        <option value="Category 2">Category 2</option>
-                                        {/* Add more options dynamically or fetch from a data source */}
-                                    </select>
+                                <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-4">
+                                    <div>
+                                        <label htmlFor="price" className="block text-sm font-semibold mb-1">
+                                            Price<span className="text-red-500">*</span>:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="price"
+                                            value={price}
+                                            onChange={(e) => setPrice(e.target.value)}
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            placeholder='Amount in BDT'
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="discountPrice" className="block text-sm font-semibold mb-1">
+                                            Discount Price<span className="text-red-500">*</span>:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="discountPrice"
+                                            value={discountPrice}
+                                            onChange={(e) => setDiscountPrice(e.target.value)}
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            placeholder='Amount in BDT'
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="brand" className="block text-sm font-semibold mb-1">
+                                            Brand<span className="text-red-500">*</span>:
+                                        </label>
+                                        <select
+                                            id="brand"
+                                            value={brand}
+                                            onChange={(e) => setBrand(e.target.value)}
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            required
+                                        >
+                                            <option value="">None</option>
+                                            <option value="Category 1">Category 1</option>
+                                            <option value="Category 2">Category 2</option>
+                                            {/* Add more options dynamically or fetch from a data source */}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="countInStock," className="block text-sm font-semibold mb-1">
+                                            In Stock<span className="text-red-500">*</span>:
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="countInStock,"
+                                            value={countInStock}
+                                            onChange={(e) => setCountInStock(e.target.value)}
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            placeholder='In Stock'
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label htmlFor="countInStock," className="block text-sm font-semibold mb-1">
-                                        In Stock,<span className="text-red-500">*</span>:
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="countInStock,"
-                                        value={countInStock}
-                                        onChange={(e) => setCountInStock(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                        placeholder='In Stock'
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="mb-1 grid grid-cols-1 gap-6 md:grid-cols-3 border border-emerald-500 p-2">
-                                <div>
-                                    <div className='text-center mb-4'>
+                                {/* product variation start */}
+                                <div className='mb-4 p-4 border border-emerald-500'>
+                                    <h3 className='font-semibold text-lg mb-2'>Product Variation</h3>
+                                    <hr />
+                                    {/*Product color start */}
+                                    <div className=' mb-4'>
                                         <label htmlFor="colorEnabled," className="block text-sm font-semibold mb-1">
                                             Colour:
                                         </label>
@@ -352,20 +355,19 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                             checked={colorEnabled}
                                             onChange={setColorEnabled}
                                             className={`${colorEnabled ? 'bg-emerald-600' : 'bg-slate-600'}
-                                        relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
+                                            relative inline-flex h-[28px] w-[56px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
                                         >
                                             <span className="sr-only">Use setting</span>
                                             <span
                                                 aria-hidden="true"
-                                                className={`${colorEnabled ? 'translate-x-9' : 'translate-x-0'}
-                                            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                                className={`${colorEnabled ? 'translate-x-7' : 'translate-x-0'}pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out`}
                                             />
                                         </Switch>
                                     </div>
 
                                     {colorEnabled ? (
                                         <>
-                                            <div>
+                                            <div className='py-2'>
                                                 <label htmlFor="image2" className="block text-sm font-semibold mb-1">
                                                     Product Image<span className="text-red-500">(Size: 900x900px)</span>:
                                                 </label>
@@ -378,7 +380,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                                     className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                                 />
                                             </div>
-                                            <div>
+                                            <div className='py-2'>
                                                 <label htmlFor="image3" className="block text-sm font-semibold mb-1">
                                                     Product Image<span className="text-red-500">(Size: 900x900px)</span>:
                                                 </label>
@@ -391,7 +393,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                                     className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                                 />
                                             </div>
-                                            <div>
+                                            <div className='py-2'>
                                                 <label htmlFor="image4" className="block text-sm font-semibold mb-1">
                                                     Product Image<span className="text-red-500">(Size: 900x900px)</span>:
                                                 </label>
@@ -406,93 +408,68 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                             </div>
                                         </>
                                     ) : null}
-                                </div>
-                                {/* Switch for Size */}
-                                <div>
-                                    <div className='text-center mb-4'>
-                                        <label htmlFor="colorEnabled," className="block text-sm font-semibold mb-1">
-                                            Size:
-                                        </label>
-                                        <Switch
-                                            checked={sizeEnabled}
-                                            onChange={setSizeEnabled}
-                                            className={`${sizeEnabled ? 'bg-emerald-600' : 'bg-slate-600'}
-                                        relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
-                                        >
-                                            <span className="sr-only">Use setting</span>
-                                            <span
-                                                aria-hidden="true"
-                                                className={`${sizeEnabled ? 'translate-x-9' : 'translate-x-0'}
-                                            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-                                            />
-                                        </Switch>
-                                    </div>
-
-                                    {sizeEnabled ? (
+                                    {/*Product color end */}
+                                    {/* Attributes start */}
+                                    <label htmlFor="attribute" className="block text-sm font-semibold mt-2 mb-1">
+                                        Attributes:
+                                    </label>
+                                    <select
+                                        id="attribute"
+                                        value={attribute}
+                                        onChange={(e) => setAttribute(e.target.value)}
+                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        required
+                                    >
+                                        <option value="">None</option>
+                                        <option value="Category 1">Category 1</option>
+                                        <option value="Category 2">Category 2</option>
+                                        {/* Add more options dynamically or fetch from a data source */}
+                                    </select>
+                                    {attribute ? (
                                         <>
-                                            <div className="mb-4 text-center">
-                                                <label htmlFor="sizes" className="block text-sm font-semibold mb-1">
-                                                    Product Size:
-                                                </label>
-                                                <div className="flex flex-wrap justify-center">
-                                                    <label className="inline-flex items-center mr-4 mb-2">
-                                                        <input
-                                                            type="checkbox"
-                                                            value="S"
-                                                            checked={selectedSizes.includes('S')}
-                                                            onChange={handleSizeChange}
-                                                            className="form-checkbox h-4 w-4 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-300"
-                                                        />
-                                                        <span className="ml-2 text-sm">S</span>
-                                                    </label>
-                                                    <label className="inline-flex items-center mr-4 mb-2">
-                                                        <input
-                                                            type="checkbox"
-                                                            value="M"
-                                                            checked={selectedSizes.includes('M')}
-                                                            onChange={handleSizeChange}
-                                                            className="form-checkbox h-4 w-4 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-300"
-                                                        />
-                                                        <span className="ml-2 text-sm">M</span>
-                                                    </label>
-                                                    <label className="inline-flex items-center mr-4 mb-2">
-                                                        <input
-                                                            type="checkbox"
-                                                            value="XL"
-                                                            checked={selectedSizes.includes('XL')}
-                                                            onChange={handleSizeChange}
-                                                            className="form-checkbox h-4 w-4 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-300"
-                                                        />
-                                                        <span className="ml-2 text-sm">XL</span>
-                                                    </label>
-                                                    <label className="inline-flex items-center mr-4 mb-2">
-                                                        <input
-                                                            type="checkbox"
-                                                            value="2XL"
-                                                            checked={selectedSizes.includes('2XL')}
-                                                            onChange={handleSizeChange}
-                                                            className="form-checkbox h-4 w-4 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-300"
-                                                        />
-                                                        <span className="ml-2 text-sm">2XL</span>
-                                                    </label>
-                                                    <label className="inline-flex items-center mb-2">
-                                                        <input
-                                                            type="checkbox"
-                                                            value="3XL"
-                                                            checked={selectedSizes.includes('3XL')}
-                                                            onChange={handleSizeChange}
-                                                            className="form-checkbox h-4 w-4 text-emerald-600 border-emerald-300 rounded focus:ring-emerald-300"
-                                                        />
-                                                        <span className="ml-2 text-sm">3XL</span>
-                                                    </label>
-                                                </div>
-                                            </div>
+                                            <label htmlFor="selectedAttributes" className="block text-sm font-semibold mt-2 mb-1">
+                                                Selected Attributes:
+                                            </label>
+                                            <select
+                                                id="selectedAttributes"
+                                                value={selectedAttributes}
+                                                onChange={(e) => setSelectedAttributes(e.target.value)}
+                                                className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            >
+                                                <option value="">None</option>
+                                                <option value="Category 1">Category 1</option>
+                                                <option value="Category 2">Category 2</option>
+                                                {/* Add more options dynamically or fetch from a data source */}
+                                            </select>
                                         </>
-
                                     ) : null}
+                                    {/* Attributes end */}
                                 </div>
-                                {/* switch for cod */}
-                                <div>
+                                {/* product variation end */}
+                                {/* Description start */}
+                                <div className="mb-4">
+                                    <label htmlFor="description" className="block text-sm font-semibold mb-1">
+                                        Description<span className="text-red-500">*</span>:
+                                    </label>
+                                    <textarea
+                                        type="text"
+                                        id="description"
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        className="w-full h-60 px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        placeholder='Write Your Product Description'
+                                        required
+                                    />
+                                </div>
+                                {/* Description end */}
+                            </div>
+                            {/* right side bar */}
+                            <div className="mb-1 lg:w-1/2 w-full lg:ml-4 ml-0 py-2">
+                                <div className='border border-emerald-500 p-2'>
+                                    <div className='p-1'>
+                                        <h3 className='text-emerald-600'>Active this state if needed.</h3>
+                                    </div>
+                                    {/* switch for cod */}
                                     <div className='text-center mb-4'>
                                         <label htmlFor="colorEnabled," className="block text-sm font-semibold mb-1">
                                             Cash On Delivery:
@@ -500,47 +477,32 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                         <Switch
                                             checked={cashOnDelivery}
                                             onChange={setCashOnDelivery}
-                                            className={`${cashOnDelivery ? 'bg-emerald-600' : 'bg-slate-600'}
-                                        relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
+                                            className={`relative inline-flex h-[28px] w-[56px] cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 ${cashOnDelivery ? 'bg-emerald-600' : 'bg-slate-600'}`}
                                         >
                                             <span className="sr-only">Use setting</span>
                                             <span
                                                 aria-hidden="true"
-                                                className={`${cashOnDelivery ? 'translate-x-9' : 'translate-x-0'}
-                                            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                                                className={`inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${cashOnDelivery ? 'translate-x-7' : 'translate-x-0'} pointer-events-none`}
                                             />
                                         </Switch>
                                     </div>
                                 </div>
                             </div>
-                            <div className="mb-4">
-                                <label htmlFor="description" className="block text-sm font-semibold mb-1">
-                                    Description<span className="text-red-500">*</span>:
-                                </label>
-                                <textarea
-                                    type="text"
-                                    id="description"
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    className="w-full h-60 px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                    placeholder='Write Your Product Description'
-                                    required
-                                />
-                            </div>
-
-
-                            {/* Submit Button */}
-                            <div className="mb-4 text-center">
-                                <button
-                                    type="submit"
-                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded px-4 py-2"
-                                >
-                                    Upload Product
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                            {/* right side bar end */}
+                        </div>
+                        {/* Submit Button */}
+                        <div className="mb-4 text-center">
+                            <button
+                                type="submit"
+                                className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded px-4 py-2"
+                            >
+                                Upload Product
+                            </button>
+                        </div>
+                    </form>
                 </div>
+                {/* from div end */}
+
             </div>
             <Footer />
             {/* Drawer start */}

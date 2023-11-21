@@ -22,7 +22,7 @@ const Customers = ({ categoryDetails, searchData }) => {
         { href: '/admin/allproducts', label: 'All Products' },
         { href: '/admin/addproduct', label: 'Add New Product' },
         { href: '/admin/categories', label: 'Add Category' },
-        { href: '/admin/brands', label: 'Add Category' },
+        { href: '/admin/brands', label: 'Add Brand' },
         { href: '/admin/attributes', label: 'Add Attribute' },
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
@@ -56,6 +56,7 @@ const Customers = ({ categoryDetails, searchData }) => {
         <>
             <Header title='Admin(Customers)' categoryDetails={categoryDetails} searchData={searchData} />
             <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
+                {/* Dashboard for mobile */}
                 <div className='sm:hidden flex flex-row justify-center'>
                     <button
                         onClick={handleToggleDrawer}
@@ -71,7 +72,8 @@ const Customers = ({ categoryDetails, searchData }) => {
                         Dashboard
                     </button>
                 </div>
-                <div className="hidden sm:flex flex-col bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full lg:w-1/5 md:w-2/6">
+                {/* Dashboard for mobile end */}
+                <div className="hidden sm:flex flex-col bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
