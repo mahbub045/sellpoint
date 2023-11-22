@@ -62,7 +62,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                         Dashboard
                     </button>
                 </div>
-                <div className="hidden sm:flex flex-col bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 w-full lg:w-1/5 md:w-2/6">
+                <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">

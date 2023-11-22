@@ -8,6 +8,13 @@ import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Fragment, useContext, useState } from "react";
+import Select from 'react-select';
+
+const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+]
 
 const AddProduct = ({ categoryDetails, searchData }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -100,7 +107,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                     </button>
                 </div>
                 {/* Dashboard for mobile end */}
-                <div className="hidden sm:flex flex-col bg-slate-200 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
+                <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
@@ -345,7 +352,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                 {/* product variation start */}
                                 <div className='mb-4 p-4 border border-emerald-500'>
                                     <h3 className='font-semibold text-lg mb-2'>Product Variation</h3>
-                                    <hr />
+                                    <hr className='border-emerald-400' />
                                     {/*Product color start */}
                                     <div className=' mb-4'>
                                         <label htmlFor="colorEnabled," className="block text-sm font-semibold mb-1">
@@ -428,19 +435,15 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                     {attribute ? (
                                         <>
                                             <label htmlFor="selectedAttributes" className="block text-sm font-semibold mt-2 mb-1">
-                                                Selected Attributes:
+                                                {attribute}:
                                             </label>
-                                            <select
-                                                id="selectedAttributes"
-                                                value={selectedAttributes}
-                                                onChange={(e) => setSelectedAttributes(e.target.value)}
-                                                className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
-                                            >
-                                                <option value="">None</option>
-                                                <option value="Category 1">Category 1</option>
-                                                <option value="Category 2">Category 2</option>
-                                                {/* Add more options dynamically or fetch from a data source */}
-                                            </select>
+                                            <Select
+                                                isMulti
+                                                name="colors"
+                                                options={options}
+                                                className="basic-multi-select text-emerald-700  border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                                classNamePrefix="select"
+                                            />
                                         </>
                                     ) : null}
                                     {/* Attributes end */}
