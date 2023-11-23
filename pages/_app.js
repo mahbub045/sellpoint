@@ -19,7 +19,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   return (
-    <ThemeProvider attribute="class" >
+    <ThemeProvider attribute="class" defaultTheme="system">
       <SessionProvider session={session}>
         <StoreProvider>
           {Component.auth ? (
