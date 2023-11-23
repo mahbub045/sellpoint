@@ -307,7 +307,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
                                 </Link>
                             ))}
                         </div>
-                        {/* sm:sbox,dlmode,cart */}
+                        {/* sm:sbox,dark & light mode button,cart */}
                         <div className="flex ml-auto p-4">
                             <div className="items-center sm:hidden flex">
                                 <div className="relative flex items-center">

@@ -7,9 +7,11 @@ import Cookies from "js-cookie";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment, useContext, useEffect, useState } from "react";
+import AddCustomer from "./AddCustomer";
 
 const Customers = ({ categoryDetails, searchData }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isAddCustomerOpen, setIsAddCustomerOpen] = useState(false);
     const router = useRouter();
     const [formValues, setFormValues] = useState([]);
     const { dispatch } = useContext(Store);
@@ -18,14 +20,24 @@ const Customers = ({ categoryDetails, searchData }) => {
         setIsDrawerOpen(!isDrawerOpen);
     };
 
+    // Function to open the Add Category modal
+    const openAddCustomer = () => {
+        setIsAddCustomerOpen(true);
+    };
+    // Function to close the Add Category modal
+    const closeAddCustomer = () => {
+        setIsAddCustomerOpen(false);
+    };
+
     const links = [
         { href: '/admin/allproducts', label: 'All Products' },
         { href: '/admin/addproduct', label: 'Add New Product' },
-        { href: '/admin/categories', label: 'Add Category' },
-        { href: '/admin/brands', label: 'Add Brand' },
-        { href: '/admin/attributes', label: 'Add Attribute' },
+        { href: '/admin/categories', label: 'Category' },
+        { href: '/admin/brands', label: 'Brand' },
+        { href: '/admin/attributes', label: 'Attribute' },
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
+
 
     useEffect(() => {
         const storedValues = localStorage.getItem('formValues');
@@ -170,16 +182,21 @@ const Customers = ({ categoryDetails, searchData }) => {
                         </ul>
                     </div>
                 </div>
-                <div className="container p-2 mx-auto md:mt-5 mt-2">
-                    <div className="grid grid-cols-1 md:gap-6 gap-1  mb-6 ">
-                        <div className="flex">
+                <div className="container p-2">
+                    <div className="mb-6">
+                        <div className="flex justify-between my-2">
                             <h1 className="md:text-2xl sm:text-xl text-base font-bold text-emerald-600">Customers List</h1>
-                            <a href="/admin/addcustomer" className="flex p-2 sm:text-base text-xs ml-auto text-emerald-500 hover:text-emerald-700">
+                            <button
+                                onClick={openAddCustomer}
+                                className="primary-button dark:text-black flex sm:text-base text-xs ml-auto"
+                            >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="sm:w-6 w-4  sm:h-6 h-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                                 </svg>
                                 Add New Customer
-                            </a>
+                            </button>
+                            {/* Render the CartModal if isCartModalOpen is true */}
+                            {isAddCustomerOpen && <AddCustomer onClose={closeAddCustomer} />}
                         </div>
                         <div className="overflow-x-auto md:col-span-3">
                             <table className="min-w-full">

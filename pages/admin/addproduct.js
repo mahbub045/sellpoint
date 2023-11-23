@@ -29,9 +29,9 @@ const AddProduct = ({ categoryDetails, searchData }) => {
     const links = [
         { href: '/admin/allproducts', label: 'All Products' },
         { href: '/admin/addproduct', label: 'Add New Product' },
-        { href: '/admin/categories', label: 'Add Category' },
-        { href: '/admin/brands', label: 'Add Brand' },
-        { href: '/admin/attributes', label: 'Add Attribute' },
+        { href: '/admin/categories', label: 'Category' },
+        { href: '/admin/brands', label: 'Brand' },
+        { href: '/admin/attributes', label: 'Attribute' },
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
 
@@ -59,6 +59,9 @@ const AddProduct = ({ categoryDetails, searchData }) => {
     const [countInStock, setCountInStock] = useState('');
     const [description, setDescription] = useState('');
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
+    const [worldWideDelivery, setWorldWideDelivery] = useState(false);
+    const [featuredProduct, setFeaturedProduct] = useState(false);
+    const [flashDeal, setFlashDeal] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -254,14 +257,20 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                             required
                                         >
                                             <option value="">Select a category</option>
-                                            <option value="Category 1">Category 1</option>
-                                            <option value="Category 2">Category 2</option>
+                                            {categoryDetails && categoryDetails?.map((item, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={item.category}
+                                                >
+                                                    {item.category}
+                                                </option>
+                                            ))}
                                             {/* Add more options dynamically or fetch from a data source */}
                                         </select>
                                     </div>
                                     <div>
                                         <label htmlFor="subCategory" className="block text-sm font-semibold mb-1">
-                                            Subcategory<span className="text-red-500">*</span>:
+                                            Sub Category<span className="text-red-500">*</span>:
                                         </label>
                                         <input
                                             type="text"
@@ -351,10 +360,10 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                 </div>
                                 {/* product variation start */}
                                 <div className='mb-4 p-4 border border-emerald-500'>
-                                    <h3 className='font-semibold text-lg mb-2'>Product Variation</h3>
+                                    <h3 className='font-semibold text-lg mb-1'>Product Variation</h3>
                                     <hr className='border-emerald-400' />
                                     {/*Product color start */}
-                                    <div className=' mb-4'>
+                                    <div className='my-4'>
                                         <label htmlFor="colorEnabled," className="block text-sm font-semibold mb-1">
                                             Colour:
                                         </label>
@@ -468,14 +477,18 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                             </div>
                             {/* right side bar */}
                             <div className="mb-1 lg:w-1/2 w-full lg:ml-4 ml-0 py-2">
-                                <div className='border border-emerald-500 p-2'>
+                                {/* switch for cod */}
+                                <div className='border rounded-md border-emerald-500 p-2 my-4'>
                                     <div className='p-1'>
-                                        <h3 className='text-emerald-600'>Active this state if needed.</h3>
+                                        <h3 className='font-semibold text-lg mb-1'>
+                                            Cash On Delivery
+                                            <span className='text-red-600 text-xs'>(Active this state if needed)</span>
+                                        </h3>
                                     </div>
-                                    {/* switch for cod */}
-                                    <div className='text-center mb-4'>
-                                        <label htmlFor="colorEnabled," className="block text-sm font-semibold mb-1">
-                                            Cash On Delivery:
+                                    <hr className='border-emerald-600 mb-4' />
+                                    <div className='mb-4 flex justify-start gap-x-32'>
+                                        <label htmlFor="cashOnDelivery," className="text-sm font-semibold mt-1">
+                                            Status:
                                         </label>
                                         <Switch
                                             checked={cashOnDelivery}
@@ -490,8 +503,90 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                         </Switch>
                                     </div>
                                 </div>
+                                {/* switch for cod end */}
+                                {/* switch for World Wide Delivery */}
+                                <div className='border rounded-md border-emerald-500 p-2 my-4'>
+                                    <div className='p-1'>
+                                        <h3 className='font-semibold text-lg mb-1'>
+                                            World Wide Delivery
+                                            <span className='text-red-600 text-xs'>(Active this state if needed)</span>
+                                        </h3>
+                                    </div>
+                                    <hr className='border-emerald-600 mb-4' />
+                                    <div className='mb-4 flex justify-start gap-x-32'>
+                                        <label htmlFor="worldWideDelivery," className="text-sm font-semibold mt-1">
+                                            Status:
+                                        </label>
+                                        <Switch
+                                            checked={worldWideDelivery}
+                                            onChange={setWorldWideDelivery}
+                                            className={`relative inline-flex h-[28px] w-[56px] cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 ${worldWideDelivery ? 'bg-emerald-600' : 'bg-slate-600'}`}
+                                        >
+                                            <span className="sr-only">Use setting</span>
+                                            <span
+                                                aria-hidden="true"
+                                                className={`inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${worldWideDelivery ? 'translate-x-7' : 'translate-x-0'} pointer-events-none`}
+                                            />
+                                        </Switch>
+                                    </div>
+                                </div>
+                                {/* switch for World Wide Delivery */}
+                                {/* Switch for featured product start */}
+                                <div className='border rounded-md border-emerald-500 p-2 my-4'>
+                                    <div className='p-1'>
+                                        <h3 className='font-semibold text-lg mb-1'>
+                                            Featured Product
+                                            <span className='text-red-600 text-xs'>(Active this state if needed)</span>
+                                        </h3>
+                                    </div>
+                                    <hr className='border-emerald-600 mb-4' />
+                                    <div className='mb-4 flex justify-start gap-x-32'>
+                                        <label htmlFor="featuredProduct," className="block text-sm font-semibold mt-1">
+                                            Status:
+                                        </label>
+                                        <Switch
+                                            checked={featuredProduct}
+                                            onChange={setFeaturedProduct}
+                                            className={`relative inline-flex h-[28px] w-[56px] cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 ${featuredProduct ? 'bg-emerald-600' : 'bg-slate-600'}`}
+                                        >
+                                            <span className="sr-only">Use setting</span>
+                                            <span
+                                                aria-hidden="true"
+                                                className={`inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${featuredProduct ? 'translate-x-7' : 'translate-x-0'} pointer-events-none`}
+                                            />
+                                        </Switch>
+                                    </div>
+                                </div>
+                                {/* Switch for featured product end */}
+                                {/* Switch for Flash Deal start */}
+                                <div className='border rounded-md border-emerald-500 p-2 my-4'>
+                                    <div className='p-1'>
+                                        <h3 className='font-semibold text-lg mb-1'>
+                                            Flash Deal
+                                            <span className='text-red-600 text-xs'>(Active this state if needed)</span>
+                                        </h3>
+                                    </div>
+                                    <hr className='border-emerald-600 mb-4' />
+                                    <div className='mb-4 flex justify-start gap-x-32'>
+                                        <label htmlFor="flashDeal," className="block text-sm font-semibold mt-1">
+                                            Status:
+                                        </label>
+                                        <Switch
+                                            checked={flashDeal}
+                                            onChange={setFlashDeal}
+                                            className={`relative inline-flex h-[28px] w-[56px] cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 ${flashDeal ? 'bg-emerald-600' : 'bg-slate-600'}`}
+                                        >
+                                            <span className="sr-only">Use setting</span>
+                                            <span
+                                                aria-hidden="true"
+                                                className={`inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${flashDeal ? 'translate-x-7' : 'translate-x-0'} pointer-events-none`}
+                                            />
+                                        </Switch>
+                                    </div>
+                                </div>
+                                {/* Switch for featured product end */}
+                                {/* right side bar end */}
                             </div>
-                            {/* right side bar end */}
                         </div>
                         {/* Submit Button */}
                         <div className="mb-4 text-center">

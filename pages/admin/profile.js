@@ -24,9 +24,9 @@ const Profile = ({ categoryDetails, searchData }) => {
     const links = [
         { href: '/admin/allproducts', label: 'All Products' },
         { href: '/admin/addproduct', label: 'Add New Product' },
-        { href: '/admin/categories', label: 'Add Category' },
-        { href: '/admin/brands', label: 'Add Brand' },
-        { href: '/admin/attributes', label: 'Add Attribute' },
+        { href: '/admin/categories', label: 'Category' },
+        { href: '/admin/brands', label: 'Brand' },
+        { href: '/admin/attributes', label: 'Attribute' },
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
 
