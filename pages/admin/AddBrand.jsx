@@ -1,9 +1,9 @@
 'use client';
 import { useState } from "react";
 
-const AddCategory = ({ onClose }) => {
-    const [category, setCategory] = useState('');
-    const [categorySlug, setCategorySlug] = useState('');
+const AddBrand = ({ onClose }) => {
+    const [brand, setBrand] = useState('');
+    const [brandSlug, setBrandSlug] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,33 +23,33 @@ const AddCategory = ({ onClose }) => {
                 </div>
                 <div>
                     <div className="text-center">
-                        <h2 className="font-semibold text-xl text-emerald-600 mb-8">Add New Category</h2>
+                        <h2 className="font-semibold text-xl text-emerald-600 mb-8">Add New Brand</h2>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="my-4">
-                            <label htmlFor="category" className="mr-12" >
-                                Category
+                            <label htmlFor="brand" className="mr-[74px]" >
+                                Brand
                                 <span className="text-red-500">*</span>:
                             </label>
                             <input
                                 type="text"
-                                id="category"
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
+                                id="brand"
+                                value={brand}
+                                onChange={(e) => setBrand(e.target.value)}
                                 className="w-3/5 px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                 required
                             />
                         </div>
                         <div className="my-4">
-                            <label htmlFor="categorySlug" className="mr-4" >
+                            <label htmlFor="brandSlug" className="mr-4" >
                                 Category Slug
                                 <span className="text-red-500">*</span>:
                             </label>
                             <input
                                 type="text"
-                                id="categorySlug"
-                                value={categorySlug}
-                                onChange={(e) => setCategorySlug(e.target.value)}
+                                id="brandSlug"
+                                value={brandSlug}
+                                onChange={(e) => setBrandSlug(e.target.value)}
                                 className="w-3/5 px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                 required
                             />
@@ -65,4 +65,4 @@ const AddCategory = ({ onClose }) => {
     )
 }
 
-export default AddCategory;
+export default AddBrand;
