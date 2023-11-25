@@ -67,7 +67,7 @@ const Customers = ({ categoryDetails, searchData }) => {
     return (
         <>
             <Header title='Admin(Customers)' categoryDetails={categoryDetails} searchData={searchData} />
-            <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
+            <div className="min-h-screen flex flex-col sm:flex-row">
                 {/* Dashboard for mobile */}
                 <div className='sm:hidden flex flex-row justify-center'>
                     <button
@@ -85,7 +85,7 @@ const Customers = ({ categoryDetails, searchData }) => {
                     </button>
                 </div>
                 {/* Dashboard for mobile end */}
-                <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
+                <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/4 md:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
@@ -131,7 +131,7 @@ const Customers = ({ categoryDetails, searchData }) => {
                                                 {({ active }) => (
                                                     <a
                                                         href={link.href}
-                                                        className={`${active ? 'text-emerald-700 p-2' : 'text-emerald-600 p-2'
+                                                        className={`${active ? 'text-emerald-700 lg:text-sm md:text-xs p-2' : 'text-emerald-600 lg:text-sm md:text-xs p-2'
                                                             }`}
                                                     >
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-point-filled inline-block mr-2" width="15" height="15" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">

@@ -5,30 +5,20 @@ import { Store } from '@/utils/Store';
 import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useContext, useState } from "react";
-import AddBrand from './AddBrand';
 
-const Brands = ({ categoryDetails, searchData }) => {
+const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [isAddBrandOpen, setIsAddBrandOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
-    const [formValues, setFormValues] = useState([]);
-    const [totalUsers, setTotalUsers] = useState([]);
+    const [searchProduct, setSearchProduct] = useState('');
     const { dispatch } = useContext(Store);
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
-    };
-
-    // Function to open the Add Brand modal
-    const openAddBrand = () => {
-        setIsAddBrandOpen(true);
-    };
-    // Function to close the Add Brand modal
-    const closeAddBrand = () => {
-        setIsAddBrandOpen(false);
     };
 
     const links = [
@@ -40,18 +30,26 @@ const Brands = ({ categoryDetails, searchData }) => {
         { href: '/admin/productreviews', label: 'Product Reviews' },
     ]
 
-
     const handleLogout = () => {
         Cookies.remove('cart');
         dispatch({ type: 'CART_RESET' })
         signOut({ callbackUrl: '/login' });
     };
 
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        const filteredData = data.filter((item) =>
+            item.toLowerCase().includes(value.toLowerCase())
+        );
+        setDataToShow(filteredData);
+    };
+
     return (
         <>
             <Header title={`${session?.user?.name}`} categoryDetails={categoryDetails} searchData={searchData} />
-            <div className="min-h-screen flex flex-col sm:flex-row">
-                {/* Dashboard for mobile start */}
+            <div className="mx-auto min-h-screen flex flex-col sm:flex-row">
+                {/* Dashboard btn for mobile start */}
                 <div className='sm:hidden flex flex-row justify-center'>
                     <button
                         onClick={handleToggleDrawer}
@@ -67,7 +65,7 @@ const Brands = ({ categoryDetails, searchData }) => {
                         Dashboard
                     </button>
                 </div>
-                {/* Dashboard for mobile end */}
+                {/* Dashboard btn for mobile end */}
                 <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/4 md:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
@@ -166,30 +164,61 @@ const Brands = ({ categoryDetails, searchData }) => {
                     </div>
                 </div>
                 <div className="w-full p-4">
-                    <div className="pb-2 flex justify-between">
-                        <h2 className="text-2xl text-emerald-600">All Brand</h2>
-                        <button
-                            onClick={openAddBrand}
-                            className="primary-button dark:text-black flex sm:text-base text-xs ml-auto"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    <div className="pb-2 flex flex-col md:flex-row md:justify-between justify-center">
+                        <div className="mb-2 md:mb-0 text-center md:text-start">
+                            <h2 className="text-2xl text-emerald-600">All Product</h2>
+                        </div>
+                        <div className="relative w-full md:w-auto">
+                            <input
+                                type="text"
+                                placeholder="Search by name"
+                                value={searchProduct}
+                                onChange={handleSearch}
+                                className="text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm w-full md:w-auto"
+                            />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 right-2 text-gray-500 dark:text-white"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Add New Brand
-                        </button>
-                        {/* Render the CartModal if isCartModalOpen is true */}
-                        {isAddBrandOpen && <AddBrand onClose={closeAddBrand} />}
+                        </div>
+                        <div className="mt-2 md:mt-0">
+                            <Link legacyBehavior href={`addproduct`}>
+                                <a className="primary-button dark:text-black flex justify-center md:justify-start  sm:text-base text-base">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="w-6 h-6 mr-1"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                    Add New Product
+                                </a>
+                            </Link>
+                        </div>
                     </div>
+
+                    <hr className='border-emerald-600 p-2' />
+
                     <div className="flex flex-col">
                         <div className="overflow-x-auto">
                             <div className="inline-block min-w-full py-2">
                                 <div className="overflow-hidden">
-                                    <table className="min-w-full text-center text-sm font-light">
+                                    <table className="table-auto overflow-scroll min-w-full text-left text-sm font-light">
                                         <thead className="border-b font-medium dark:border-emerald-500">
                                             <tr>
                                                 <th scope="col" className="px-6 py-4">#</th>
-                                                <th scope="col" className="px-6 py-4">Brand Name</th>
-                                                <th scope="col" className="px-6 py-4">Brand Slug</th>
+                                                <th scope="col" className="px-6 py-4">Product</th>
+                                                <th scope="col" className="px-6 py-4">Product Info</th>
+                                                <th scope="col" className="px-6 py-4">Total Stock</th>
                                                 <th scope="col" className="px-6 py-4">
                                                     Action
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-settings inline-block ml-1" width="15" height="15" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg>
@@ -197,30 +226,44 @@ const Brands = ({ categoryDetails, searchData }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {categoryDetails && categoryDetails?.map((item, index) => (
-                                                <tr className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
-                                                    key={index}
-                                                >
-                                                    <td className="whitespace-nowrap px-6 py-4 font-medium">{index + 1}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4">{item.category}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4">{item.categorySlug}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-4">
-                                                        <a href="" className='dark:text-white' title='Edit'>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                            </svg>
-                                                        </a>
-                                                        <button
-                                                            title='Delete'
+                                            {productDetails &&
+                                                productDetails.map((item) =>
+                                                    item.products.map((product, index) => (
+                                                        <tr
+                                                            className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
+                                                            key={`${item.id}_${index}`} // Use a unique identifier here
                                                         >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                            </svg>
-                                                        </button>
-
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                            <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                                {index + 1}
+                                                            </td>
+                                                            <td className="whitespace-nowrap px-6 py-4 flex gap-2">
+                                                                <Image src={product.image} alt={item.name} width={50} height={50}></Image>
+                                                                {product.name}
+                                                            </td>
+                                                            <td className="whitespace-nowrap px-6 py-4">
+                                                                Rating:{product.rating}
+                                                                <br />
+                                                                Reviews: {product.numReviews}
+                                                            </td>
+                                                            <td className="whitespace-nowrap px-6 py-4">
+                                                                {product.countInStock}</td>
+                                                            <td className="whitespace-nowrap px-6 py-4 ">
+                                                                <a href="" className='dark:text-white' title='Edit'>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition inline-block mx-1">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                                                    </svg>
+                                                                </a>
+                                                                <button
+                                                                    title='Delete'
+                                                                >
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition inline-block mx-1">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                )}
                                         </tbody>
                                     </table>
                                 </div>
@@ -341,7 +384,7 @@ const Brands = ({ categoryDetails, searchData }) => {
     )
 }
 
-export default Brands;
+export default Allproducts;
 
 export async function getServerSideProps() {
     try {

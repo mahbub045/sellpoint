@@ -6,7 +6,7 @@ import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 
 const AddProduct = ({ categoryDetails, searchData }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,21 +35,11 @@ const AddProduct = ({ categoryDetails, searchData }) => {
         signOut({ callbackUrl: '/login' });
     };
 
-    useEffect(() => {
-        const storedValues = localStorage.getItem('formValues');
-        if (storedValues) {
-            setFormValues(JSON.parse(storedValues));
-            const numFields = Object.keys(JSON.parse(storedValues)).length;
-            setTotalUsers(numFields);
-        } else {
-            setTotalUsers(0);
-        }
-    }, []);
-
     return (
         <>
             <Header title={`${session?.user?.name}`} categoryDetails={categoryDetails} searchData={searchData} />
-            <div className="container mx-auto min-h-screen flex flex-col sm:flex-row">
+            <div className="mx-auto min-h-screen flex flex-col sm:flex-row">
+                {/* Dashboard for mobile start */}
                 <div className='sm:hidden flex flex-row justify-center'>
                     <button
                         onClick={handleToggleDrawer}
@@ -65,7 +55,8 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                         Dashboard
                     </button>
                 </div>
-                <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/5 md:w-[30%] sm:w-1/3">
+                {/* Dashboard for mobile end */}
+                <div className="hidden sm:flex flex-col bg-slate-100 dark:bg-slate-950 shadow border-r border-slate-400 dark:border-stone-500 rounded p-2 lg:w-1/4 md:w-1/3">
                     <h2 className="text-xl font-bold text-emerald-600">Dashboard</h2>
                     <div className="flex justify-start">
                         <ul className="pt-2 pb-4 space-y-1 sm:text-sm text-xs">
@@ -111,7 +102,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                                 {({ active }) => (
                                                     <a
                                                         href={link.href}
-                                                        className={`${active ? 'text-emerald-700 p-2' : 'text-emerald-600 p-2'
+                                                        className={`${active ? 'text-emerald-700 lg:text-sm md:text-xs p-2' : 'text-emerald-600 lg:text-sm md:text-xs p-2'
                                                             }`}
                                                     >
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-point-filled inline-block mr-2" width="15" height="15" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
