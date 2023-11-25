@@ -15,6 +15,7 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
     const { data: session } = useSession();
     const router = useRouter();
     const [searchProduct, setSearchProduct] = useState('');
+    const [dataToShow, setDataToShow] = useState('');
     const { dispatch } = useContext(Store);
 
     const handleToggleDrawer = () => {
@@ -37,13 +38,19 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
     };
 
     const handleSearch = (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-        const filteredData = data.filter((item) =>
-            item.toLowerCase().includes(value.toLowerCase())
-        );
+        const value = e.target.value.toLowerCase();
+        setSearchProduct(value);
+
+        const filteredData = productDetails.map((item) => ({
+            ...item,
+            products: item.products.filter((product) =>
+                product.name.toLowerCase().includes(value)
+            ),
+        }));
+
         setDataToShow(filteredData);
     };
+
 
     return (
         <>
@@ -168,6 +175,7 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
                         <div className="mb-2 md:mb-0 text-center md:text-start">
                             <h2 className="text-2xl text-emerald-600">All Product</h2>
                         </div>
+                        {/* Product Search start */}
                         <div className="relative w-full md:w-auto">
                             <input
                                 type="text"
@@ -187,6 +195,7 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
+                        {/* Product Search end */}
                         <div className="mt-2 md:mt-0">
                             <Link legacyBehavior href={`addproduct`}>
                                 <a className="primary-button dark:text-black flex justify-center md:justify-start  sm:text-base text-base">
@@ -228,41 +237,95 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
                                         <tbody>
                                             {productDetails &&
                                                 productDetails.map((item) =>
-                                                    item.products.map((product, index) => (
-                                                        <tr
-                                                            className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
-                                                            key={`${item.id}_${index}`} // Use a unique identifier here
-                                                        >
-                                                            <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                                                {index + 1}
-                                                            </td>
-                                                            <td className="whitespace-nowrap px-6 py-4 flex gap-2">
-                                                                <Image src={product.image} alt={item.name} width={50} height={50}></Image>
-                                                                {product.name}
-                                                            </td>
-                                                            <td className="whitespace-nowrap px-6 py-4">
-                                                                Rating:{product.rating}
-                                                                <br />
-                                                                Reviews: {product.numReviews}
-                                                            </td>
-                                                            <td className="whitespace-nowrap px-6 py-4">
-                                                                {product.countInStock}</td>
-                                                            <td className="whitespace-nowrap px-6 py-4 ">
-                                                                <a href="" className='dark:text-white' title='Edit'>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition inline-block mx-1">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                                    </svg>
-                                                                </a>
-                                                                <button
-                                                                    title='Delete'
+                                                    item.products.map((product, index) => {
+                                                        if (dataToShow && dataToShow.length > 0) {
+                                                            if (
+                                                                product.name.toLowerCase().includes(searchProduct.toLowerCase())
+                                                            ) {
+                                                                return (
+                                                                    <tr
+                                                                        className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
+                                                                        key={`${item.id}_${index}`} // Use a unique identifier here
+                                                                    >
+                                                                        {/* Render your table data here */}
+                                                                        <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                                            {index + 1}
+                                                                        </td>
+                                                                        <td className="whitespace-nowrap px-6 py-4 flex gap-2">
+                                                                            <Image src={product.image} alt={item.name} width={50} height={50}></Image>
+                                                                            {product.name}
+                                                                        </td>
+                                                                        <td className="whitespace-nowrap px-6 py-4">
+                                                                            Price: {product.price}
+                                                                            <br />
+                                                                            Discount Price: {product.discountPrice}
+                                                                            <br />
+                                                                            Rating:{product.rating} ||
+                                                                            Reviews: {product.numReviews}
+                                                                        </td>
+                                                                        <td className="whitespace-nowrap px-6 py-4">
+                                                                            {product.countInStock}</td>
+                                                                        <td className="whitespace-nowrap px-6 py-4 ">
+                                                                            <a href="" className='dark:text-white' title='Edit'>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition inline-block mx-1">
+                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                                                                </svg>
+                                                                            </a>
+                                                                            <button
+                                                                                title='Delete'
+                                                                            >
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition inline-block mx-1">
+                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                );
+                                                            } else {
+                                                                return null; // If the product doesn't match the search, don't render it
+                                                            }
+                                                        } else {
+                                                            return (
+                                                                <tr
+                                                                    className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
+                                                                    key={`${item.id}_${index}`} // Use a unique identifier here
                                                                 >
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition inline-block mx-1">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                    </svg>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ))
+                                                                    {/* Render your table data here */}
+                                                                    <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                                        {index + 1}
+                                                                    </td>
+                                                                    <td className="whitespace-nowrap px-6 py-4 flex gap-2">
+                                                                        <Image src={product.image} alt={item.name} width={50} height={50}></Image>
+                                                                        {product.name}
+                                                                    </td>
+                                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                                        Price: {product.price}
+                                                                        <br />
+                                                                        Discount Price: {product.discountPrice}
+                                                                        <br />
+                                                                        Rating:{product.rating} ||
+                                                                        Reviews: {product.numReviews}
+                                                                    </td>
+                                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                                        {product.countInStock}</td>
+                                                                    <td className="whitespace-nowrap px-6 py-4 ">
+                                                                        <a href="" className='dark:text-white' title='Edit'>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition inline-block mx-1">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                                                            </svg>
+                                                                        </a>
+                                                                        <button
+                                                                            title='Delete'
+                                                                        >
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition inline-block mx-1">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        }
+                                                    })
                                                 )}
                                         </tbody>
                                     </table>
