@@ -54,7 +54,7 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
 
     ////////for table pagination///////
     const [currentPage, setCurrentPage] = useState(0);
-    const productsPerPage = 2; // Number of products to display per page
+    const productsPerPage = 10; // Number of products to display per page
 
     const indexOfLastProduct = (currentPage + 1) * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -303,100 +303,6 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
 
                                             ))}
                                         </tbody>
-                                        {/* <tbody>
-                                            {productDetails &&
-                                                productDetails.map((item) =>
-                                                    item.products.map((product, index) => {
-                                                        if (dataToShow && dataToShow.length > 0) {
-                                                            if (
-                                                                product.name.toLowerCase().includes(searchProduct.toLowerCase())
-                                                            ) {
-                                                                return (
-                                                                    <tr
-                                                                        className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
-                                                                        key={`${item.id}_${index}`}
-                                                                    >
-                                                                    
-                                                                        <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                                                            {index + 1}
-                                                                        </td>
-                                                                        <td className="whitespace-nowrap px-6 py-4 flex gap-2">
-                                                                            <Image src={product.image} alt={item.name} width={50} height={50}></Image>
-                                                                            {product.name}
-                                                                        </td>
-                                                                        <td className="whitespace-nowrap px-6 py-4">
-                                                                            Price: {product.price}
-                                                                            <br />
-                                                                            Discount Price: {product.discountPrice}
-                                                                            <br />
-                                                                            Rating: {product.rating} ||
-                                                                            Reviews: {product.numReviews}
-                                                                        </td>
-                                                                        <td className="whitespace-nowrap px-6 py-4">
-                                                                            {product.countInStock}</td>
-                                                                        <td className="whitespace-nowrap px-6 py-4 ">
-                                                                            <a href="" className='dark:text-white' title='Edit'>
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition inline-block mx-1">
-                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                                                </svg>
-                                                                            </a>
-                                                                            <button
-                                                                                title='Delete'
-                                                                            >
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition inline-block mx-1">
-                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                                </svg>
-                                                                            </button>
-                                                                        </td>
-                                                                    </tr>
-                                                                );
-                                                            } else {
-                                                                return null;
-                                                            }
-                                                        } else {
-                                                            return (
-                                                                <tr
-                                                                    className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
-                                                                    key={`${item.id}_${index}`}
-                                                                >
-                                                                    
-                                                                    <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                                                        {index + 1}
-                                                                    </td>
-                                                                    <td className="whitespace-nowrap px-6 py-4 flex gap-2">
-                                                                        <Image src={product.image} alt={item.name} width={50} height={50}></Image>
-                                                                        {product.name}
-                                                                    </td>
-                                                                    <td className="whitespace-nowrap px-6 py-4">
-                                                                        Price: {product.price}
-                                                                        <br />
-                                                                        Discount Price: {product.discountPrice}
-                                                                        <br />
-                                                                        Rating:{product.rating} ||
-                                                                        Reviews: {product.numReviews}
-                                                                    </td>
-                                                                    <td className="whitespace-nowrap px-6 py-4">
-                                                                        {product.countInStock}</td>
-                                                                    <td className="whitespace-nowrap px-6 py-4 ">
-                                                                        <a href="" className='dark:text-white' title='Edit'>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition inline-block mx-1">
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                                            </svg>
-                                                                        </a>
-                                                                        <button
-                                                                            title='Delete'
-                                                                        >
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-red-600 transition inline-block mx-1">
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                            </svg>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            );
-                                                        }
-                                                    })
-                                                )}
-                                        </tbody> */}
                                     </table>
                                     {/* pagination serial number */}
                                     <ReactPaginate
@@ -413,20 +319,14 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
                                         breakLabel={'...'}
                                         pageCount={totalPages}
                                         marginPagesDisplayed={2}
-                                        pageRangeDisplayed={3}
+                                        pageRangeDisplayed={5}
                                         onPageChange={handlePageClick}
-                                        containerClassName={'flex justify-end my-8'}
-                                        activeClassName={'bg-emerald-500 text-white px-3 py-1 rounded-md mx-1 transition-all duration-300 hover:bg-emerald-600 cursor-pointer'}
-                                        previousClassName={'bg-gray-200 text-gray-600 hover:bg-gray-300 px-3 py-1 rounded-md mx-1 transition-all duration-300 cursor-pointer'}
-                                        nextClassName={'bg-gray-200 text-gray-600 hover:bg-gray-300 px-3 py-1 rounded-md mx-1 transition-all duration-300 cursor-pointer'}
-                                        pageLinkClassName={'px-3 py-1 rounded-md mx-1 transition-all duration-300'}
-                                        initialPage={currentPage}
-                                        disableInitialCallback
-                                        pageClassName={({ selected }) =>
-                                            selected
-                                                ? 'bg-emerald-500 px-3 py-1 rounded-md mx-1 transition-all duration-300 hover:bg-emerald-600 cursor-pointer'
-                                                : 'bg-gray-200  hover:bg-gray-300 px-3 py-1 rounded-md mx-1 transition-all duration-300 cursor-pointer'
-                                        }
+                                        containerClassName={'flex justify-end items-center gap-x-1 my-8'}
+                                        pageLinkClassName={' px-3 py-1 rounded-md dark:text-white text-black transition-all duration-300 border border-gray-400'}
+                                        activeClassName={'bg-emerald-500 text-white  px-0 py-1 rounded-md transition-all duration-300 hover:bg-emerald-600'}
+                                        previousClassName={'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-all duration-300'}
+                                        nextClassName={'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 px-3 py-1 rounded-md mx-1 transition-all duration-300'}
+                                        disabledClassName={'text-gray-400 dark:text-gray-600 px-3 py-1 rounded-md cursor-not-allowed'}
                                     />
                                     {/* pagination serial number end */}
                                 </div>

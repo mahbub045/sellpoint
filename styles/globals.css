@@ -17,7 +17,7 @@ body {
 }
 
 a {
-  @apply text-black;
+  @apply text-black dark:text-white;
 }
 
 * {
