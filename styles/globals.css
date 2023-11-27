@@ -16,9 +16,9 @@ body {
   }
 }
 
-a {
+/* a {
   @apply text-black dark:text-white;
-}
+} */
 
 * {
   box-sizing: border-box;

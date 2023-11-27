@@ -6,7 +6,8 @@ import { Menu } from '@headlessui/react';
 import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
+import ReactPaginate from 'react-paginate';
 import AddCategory from './AddCategory';
 
 const Categories = ({ categoryDetails, searchData }) => {
@@ -17,6 +18,10 @@ const Categories = ({ categoryDetails, searchData }) => {
     const [formValues, setFormValues] = useState([]);
     const [totalUsers, setTotalUsers] = useState([]);
     const { dispatch } = useContext(Store);
+
+    //For category search
+    const [searchCategory, setSearchCategory] = useState('');
+    const [dataToShow, setDataToShow] = useState('');
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -47,16 +52,54 @@ const Categories = ({ categoryDetails, searchData }) => {
         signOut({ callbackUrl: '/login' });
     };
 
-    useEffect(() => {
-        const storedValues = localStorage.getItem('formValues');
-        if (storedValues) {
-            setFormValues(JSON.parse(storedValues));
-            const numFields = Object.keys(JSON.parse(storedValues)).length;
-            setTotalUsers(numFields);
-        } else {
-            setTotalUsers(0);
-        }
-    }, []);
+    /////category search//////
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchCategory(value);
+
+        const filteredData = categoryDetails.map((item) => {
+            let filteredCategories = [];
+
+            if (Array.isArray(item.categories)) {
+                filteredCategories = item.categories.filter((category) =>
+                    category.toLowerCase().includes(value)
+                );
+            }
+
+            return {
+                ...item,
+                categories: filteredCategories,
+            };
+        });
+
+        setDataToShow(filteredData);
+    };
+    /////category search end//////
+
+    ////////for table pagination///////
+    const [currentPage, setCurrentPage] = useState(0);
+    const categoriesPerPage = 10; // Number of products to display per page
+
+    const indexOfLastProduct = (currentPage + 1) * categoriesPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - categoriesPerPage;
+    const currentcategories = categoryDetails
+        // .map((item) => item.categories)
+        .flat() // Flatten the array of products
+        .filter((item) =>
+            item.category.toLowerCase().includes(searchCategory.toLowerCase())
+        ); // Filter products based on search query
+
+    const paginatedProducts = currentcategories.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+    const totalPages = Math.ceil(currentcategories.length / categoriesPerPage);
+
+    // Function to handle page change
+    const handlePageClick = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+    ////////for table pagination end///////
 
     return (
         <>
@@ -178,16 +221,43 @@ const Categories = ({ categoryDetails, searchData }) => {
                 </div>
                 <div className="w-full p-4">
                     <div className="pb-2 flex justify-between">
-                        <h2 className="text-2xl text-emerald-600">All Category</h2>
-                        <button
-                            onClick={openAddCategory}
-                            className="primary-button dark:text-black flex sm:text-base text-xs ml-auto"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        <div>
+                            <h2 className="text-2xl text-emerald-600">All Category</h2>
+                        </div>
+                        {/* Product Search start */}
+                        <div className="relative w-full md:w-auto">
+                            <input
+                                type="text"
+                                placeholder="Search by Category"
+                                value={searchCategory}
+                                onChange={handleSearch}
+                                className="text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm w-full md:w-auto"
+                            />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 right-2 text-gray-500 dark:text-white"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Add New Category
-                        </button>
+                        </div>
+                        {/* Product Search end */}
+                        <div>
+                            <button
+                                onClick={openAddCategory}
+                                className="primary-button dark:text-black flex sm:text-base text-xs ml-auto"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                Add New Category
+                            </button>
+                        </div>
+
+
                         {/* Render the CartModal if isCartModalOpen is true */}
                         {isAddCategoryOpen && <AddCategory onClose={closeAddCategory} />}
                     </div>
@@ -208,7 +278,7 @@ const Categories = ({ categoryDetails, searchData }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {categoryDetails && categoryDetails?.map((item, index) => (
+                                            {paginatedProducts?.map((item, index) => (
                                                 <tr className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
                                                     key={index}
                                                 >
@@ -234,6 +304,31 @@ const Categories = ({ categoryDetails, searchData }) => {
                                             ))}
                                         </tbody>
                                     </table>
+                                    {/* pagination serial number */}
+                                    <ReactPaginate
+                                        previousLabel={
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                            </svg>
+                                        }
+                                        nextLabel={
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                            </svg>
+                                        }
+                                        breakLabel={'...'}
+                                        pageCount={totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={handlePageClick}
+                                        containerClassName={'flex justify-end items-center gap-x-1 my-8'}
+                                        pageLinkClassName={' px-3 py-1 rounded-md dark:text-white text-black transition-all duration-300 border border-gray-400'}
+                                        activeClassName={'bg-emerald-500 text-white  px-0 py-1 rounded-md transition-all duration-300 hover:bg-emerald-600'}
+                                        previousClassName={'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-all duration-300'}
+                                        nextClassName={'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 px-3 py-1 rounded-md mx-1 transition-all duration-300'}
+                                        disabledClassName={'text-gray-400 dark:text-gray-600 px-3 py-1 rounded-md cursor-not-allowed'}
+                                    />
+                                    {/* pagination serial number end */}
                                 </div>
                             </div>
                         </div>

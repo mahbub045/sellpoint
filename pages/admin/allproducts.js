@@ -37,7 +37,7 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
         dispatch({ type: 'CART_RESET' })
         signOut({ callbackUrl: '/login' });
     };
-
+    /////////////Product search///////////
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
         setSearchProduct(value);
@@ -51,7 +51,7 @@ const Allproducts = ({ productDetails, categoryDetails, searchData }) => {
 
         setDataToShow(filteredData);
     };
-
+    /////////////Product search end///////////
     ////////for table pagination///////
     const [currentPage, setCurrentPage] = useState(0);
     const productsPerPage = 10; // Number of products to display per page
