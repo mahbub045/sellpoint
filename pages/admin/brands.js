@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { Fragment, useContext, useState } from "react";
 import AddBrand from './AddBrand';
 
-const Brands = ({ categoryDetails, searchData }) => {
+const Brands = ({ categoryDetails, searchData, allBrands }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isAddBrandOpen, setIsAddBrandOpen] = useState(false);
     const { data: session } = useSession();
@@ -197,13 +197,13 @@ const Brands = ({ categoryDetails, searchData }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {categoryDetails && categoryDetails?.map((item, index) => (
+                                            {allBrands && allBrands?.map((item, index) => (
                                                 <tr className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
                                                     key={index}
                                                 >
                                                     <td className="whitespace-nowrap px-6 py-4 font-medium">{index + 1}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4">{item.category}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4">{item.categorySlug}</td>
+                                                    <td className="whitespace-nowrap px-6 py-4">{item.brand}</td>
+                                                    <td className="whitespace-nowrap px-6 py-4">{item.brandSlug}</td>
                                                     <td className="whitespace-nowrap px-6 py-4 flex justify-center gap-4">
                                                         <a href="" className='dark:text-white' title='Edit'>
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 hover:text-emerald-600 transition">
@@ -345,28 +345,30 @@ export default Brands;
 
 export async function getServerSideProps() {
     try {
-        const productRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
-        const productData = await productRes.json();
 
-        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`);
         const categoryData = await categoryRes.json();
 
-        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`);
         const searchData = await searchRes.json();
+
+        const brandRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/brand`);
+        const brandData = await brandRes.json();
+
         return {
             props: {
-                productDetails: productData,
                 categoryDetails: categoryData,
                 searchData: searchData,
+                allBrands: brandData,
             },
         };
     } catch (error) {
         console.error('Error fetching products data:', error);
         return {
             props: {
-                productDetails: null,
                 categoryDetails: null,
-                searchData: null
+                searchData: null,
+                allBrands: null
             },
         };
     }
