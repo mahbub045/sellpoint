@@ -3,13 +3,12 @@ import CartModal from '@/components/CartModal';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { Store } from '@/utils/Store';
-import axios from "axios";
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-const ProductScreen = ({ categoryDetails, searchData }) => {
+const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
     const { data: session } = useSession();
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
@@ -32,23 +31,6 @@ const ProductScreen = ({ categoryDetails, searchData }) => {
             setUserDetails(result);
         });
     }
-
-    //for get productDetails
-    const [productDetails, setProductDetails] = useState(null);
-
-    //for get productDetails
-    useEffect(() => {
-        const fetchProductsData = async () => {
-            try {
-                const response = await axios.get('https://raw.githubusercontent.com/mahbub045/sellPointApi/main/productDetails.json');
-                setProductDetails(response.data);
-            } catch (error) {
-                console.error('Error fetching products data:', error);
-            }
-        }
-        fetchProductsData();
-    }, []);
-    //for get productDetails end
 
 
     useEffect(() => {
@@ -364,13 +346,13 @@ export default ProductScreen;
 
 export async function getServerSideProps() {
     try {
-        const productRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const productRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product`);
         const productData = await productRes.json();
 
-        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`);
         const categoryData = await categoryRes.json();
 
-        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`);
         const searchData = await searchRes.json();
         return {
             props: {

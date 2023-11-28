@@ -107,10 +107,10 @@ export default PaymentScreen;
 
 export async function getServerSideProps() {
     try {
-        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`);
         const categoryData = await categoryRes.json();
 
-        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`);
         const searchData = await searchRes.json();
         return {
             props: {

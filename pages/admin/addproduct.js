@@ -16,7 +16,7 @@ const options = [
     { value: 'vanilla', label: 'Vanilla' }
 ]
 
-const AddProduct = ({ categoryDetails, searchData }) => {
+const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
@@ -265,7 +265,7 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                                     {item.category}
                                                 </option>
                                             ))}
-                                            {/* Add more options dynamically or fetch from a data source */}
+                                            {/*Fetch from a data source */}
                                         </select>
                                     </div>
                                     <div>
@@ -338,9 +338,15 @@ const AddProduct = ({ categoryDetails, searchData }) => {
                                             required
                                         >
                                             <option value="">None</option>
-                                            <option value="Category 1">Category 1</option>
-                                            <option value="Category 2">Category 2</option>
-                                            {/* Add more options dynamically or fetch from a data source */}
+                                            {allBrands && allBrands?.map((item, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={item.brand}
+                                                >
+                                                    {item.brand}
+                                                </option>
+                                            ))}
+                                            {/* Fetch from a data source */}
                                         </select>
                                     </div>
                                     <div>
@@ -717,19 +723,24 @@ const AddProduct = ({ categoryDetails, searchData }) => {
 export default AddProduct;
 export async function getServerSideProps() {
     try {
-        const productRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
+        const productRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product`);
         const productData = await productRes.json();
 
-        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`);
         const categoryData = await categoryRes.json();
 
-        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`);
         const searchData = await searchRes.json();
+
+        const brandRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/brand`);
+        const brandData = await brandRes.json();
+
         return {
             props: {
                 productDetails: productData,
                 categoryDetails: categoryData,
                 searchData: searchData,
+                allBrands: brandData,
             },
         };
     } catch (error) {
@@ -738,7 +749,8 @@ export async function getServerSideProps() {
             props: {
                 productDetails: null,
                 categoryDetails: null,
-                searchData: null
+                searchData: null,
+                allBrands: null,
             },
         };
     }

@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Fragment, useContext, useState } from "react";
+import ReactPaginate from 'react-paginate';
 import AddBrand from './AddBrand';
 
 const Brands = ({ categoryDetails, searchData, allBrands }) => {
@@ -14,8 +15,6 @@ const Brands = ({ categoryDetails, searchData, allBrands }) => {
     const [isAddBrandOpen, setIsAddBrandOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
-    const [formValues, setFormValues] = useState([]);
-    const [totalUsers, setTotalUsers] = useState([]);
     const { dispatch } = useContext(Store);
 
     const handleToggleDrawer = () => {
@@ -46,6 +45,58 @@ const Brands = ({ categoryDetails, searchData, allBrands }) => {
         dispatch({ type: 'CART_RESET' })
         signOut({ callbackUrl: '/login' });
     };
+
+    /////Brand search//////
+    //For category search
+    const [searchBrand, setSearchBrand] = useState('');
+    const [dataToShow, setDataToShow] = useState('');
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchBrand(value);
+
+        const filteredData = allBrands.map((item) => {
+            let filteredBrands = [];
+
+            if (Array.isArray(item.brands)) {
+                filteredBrands = item.brands.filter((brand) =>
+                    brand.toLowerCase().includes(value)
+                );
+            }
+
+            return {
+                ...item,
+                brands: filteredBrands,
+            };
+        });
+
+        setDataToShow(filteredData);
+    };
+    /////Brand search end//////
+
+    ////////for table pagination///////
+    const [currentPage, setCurrentPage] = useState(0);
+    const brandsPerPage = 10; // Number of brands to display per page
+
+    const indexOfLastProduct = (currentPage + 1) * brandsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - brandsPerPage;
+    const currentBrands = allBrands
+        .flat() // Flatten the array of brands
+        .filter((item) =>
+            item.brand.toLowerCase().includes(searchBrand.toLowerCase())
+        ); // Filter brands based on search query
+
+    const paginatedBrands = currentBrands.slice(
+        indexOfFirstProduct,
+        indexOfLastProduct
+    );
+    const totalPages = Math.ceil(currentBrands.length / brandsPerPage);
+
+    // Function to handle page change
+    const handlePageClick = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+    ////////for table pagination end///////
 
     return (
         <>
@@ -167,16 +218,43 @@ const Brands = ({ categoryDetails, searchData, allBrands }) => {
                 </div>
                 <div className="w-full p-4">
                     <div className="pb-2 flex justify-between">
-                        <h2 className="text-2xl text-emerald-600">All Brand</h2>
-                        <button
-                            onClick={openAddBrand}
-                            className="primary-button dark:text-black flex sm:text-base text-xs ml-auto"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            Add New Brand
-                        </button>
+                        <div>
+                            <h2 className="text-2xl text-emerald-600">All Brand</h2>
+                        </div>
+                        <div>
+                            {/* Brand Search start */}
+                            <div className="relative w-full md:w-auto">
+                                <input
+                                    type="text"
+                                    placeholder="Search by Name"
+                                    value={searchBrand}
+                                    onChange={handleSearch}
+                                    className="text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm w-full md:w-auto"
+                                />
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-6 h-6 absolute top-1/2 transform -translate-y-1/2 right-2 text-gray-500 dark:text-white"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            {/* Brand Search end */}
+                        </div>
+                        <div>
+                            <button
+                                onClick={openAddBrand}
+                                className="primary-button dark:text-black flex sm:text-base text-xs ml-auto"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                Add New Brand
+                            </button>
+                        </div>
                         {/* Render the CartModal if isCartModalOpen is true */}
                         {isAddBrandOpen && <AddBrand onClose={closeAddBrand} />}
                     </div>
@@ -197,7 +275,7 @@ const Brands = ({ categoryDetails, searchData, allBrands }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {allBrands && allBrands?.map((item, index) => (
+                                            {paginatedBrands && paginatedBrands?.map((item, index) => (
                                                 <tr className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
                                                     key={index}
                                                 >
@@ -223,6 +301,31 @@ const Brands = ({ categoryDetails, searchData, allBrands }) => {
                                             ))}
                                         </tbody>
                                     </table>
+                                    {/* pagination serial number */}
+                                    <ReactPaginate
+                                        previousLabel={
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                            </svg>
+                                        }
+                                        nextLabel={
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                            </svg>
+                                        }
+                                        breakLabel={'...'}
+                                        pageCount={totalPages}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={handlePageClick}
+                                        containerClassName={'flex justify-end items-center gap-x-1 my-8'}
+                                        pageLinkClassName={' px-3 py-1 rounded-md dark:text-white text-black transition-all duration-300 border border-gray-400'}
+                                        activeClassName={'bg-emerald-500 text-white  px-0 py-1 rounded-md transition-all duration-300 hover:bg-emerald-600'}
+                                        previousClassName={'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 px-3 py-1 rounded-md transition-all duration-300'}
+                                        nextClassName={'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 px-3 py-1 rounded-md mx-1 transition-all duration-300'}
+                                        disabledClassName={'text-gray-400 dark:text-gray-600 px-3 py-1 rounded-md cursor-not-allowed'}
+                                    />
+                                    {/* pagination serial number end */}
                                 </div>
                             </div>
                         </div>

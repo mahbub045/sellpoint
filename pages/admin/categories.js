@@ -15,13 +15,7 @@ const Categories = ({ categoryDetails, searchData }) => {
     const [isAddCategoryOpen, setIsAddCategoryOpen] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
-    const [formValues, setFormValues] = useState([]);
-    const [totalUsers, setTotalUsers] = useState([]);
     const { dispatch } = useContext(Store);
-
-    //For category search
-    const [searchCategory, setSearchCategory] = useState('');
-    const [dataToShow, setDataToShow] = useState('');
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -53,6 +47,10 @@ const Categories = ({ categoryDetails, searchData }) => {
     };
 
     /////category search//////
+    //For category search state
+    const [searchCategory, setSearchCategory] = useState('');
+    const [dataToShow, setDataToShow] = useState('');
+
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
         setSearchCategory(value);
@@ -78,22 +76,21 @@ const Categories = ({ categoryDetails, searchData }) => {
 
     ////////for table pagination///////
     const [currentPage, setCurrentPage] = useState(0);
-    const categoriesPerPage = 10; // Number of products to display per page
+    const categoriesPerPage = 10; // Number of categories to display per page
 
     const indexOfLastProduct = (currentPage + 1) * categoriesPerPage;
     const indexOfFirstProduct = indexOfLastProduct - categoriesPerPage;
-    const currentcategories = categoryDetails
-        // .map((item) => item.categories)
-        .flat() // Flatten the array of products
+    const currentCategories = categoryDetails
+        .flat() // Flatten the array of categories
         .filter((item) =>
             item.category.toLowerCase().includes(searchCategory.toLowerCase())
-        ); // Filter products based on search query
+        ); // Filter categories based on search query
 
-    const paginatedProducts = currentcategories.slice(
+    const paginatedCategories = currentCategories.slice(
         indexOfFirstProduct,
         indexOfLastProduct
     );
-    const totalPages = Math.ceil(currentcategories.length / categoriesPerPage);
+    const totalPages = Math.ceil(currentCategories.length / categoriesPerPage);
 
     // Function to handle page change
     const handlePageClick = ({ selected }) => {
@@ -224,11 +221,11 @@ const Categories = ({ categoryDetails, searchData }) => {
                         <div>
                             <h2 className="text-2xl text-emerald-600">All Category</h2>
                         </div>
-                        {/* Product Search start */}
+                        {/* Category Search start */}
                         <div className="relative w-full md:w-auto">
                             <input
                                 type="text"
-                                placeholder="Search by Category"
+                                placeholder="Search by Name"
                                 value={searchCategory}
                                 onChange={handleSearch}
                                 className="text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm w-full md:w-auto"
@@ -244,7 +241,7 @@ const Categories = ({ categoryDetails, searchData }) => {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        {/* Product Search end */}
+                        {/* Category Search end */}
                         <div>
                             <button
                                 onClick={openAddCategory}
@@ -256,8 +253,6 @@ const Categories = ({ categoryDetails, searchData }) => {
                                 Add New Category
                             </button>
                         </div>
-
-
                         {/* Render the CartModal if isCartModalOpen is true */}
                         {isAddCategoryOpen && <AddCategory onClose={closeAddCategory} />}
                     </div>
@@ -278,7 +273,7 @@ const Categories = ({ categoryDetails, searchData }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {paginatedProducts?.map((item, index) => (
+                                            {paginatedCategories && paginatedCategories?.map((item, index) => (
                                                 <tr className="border-b transition duration-300 ease-in-out hover:bg-emerald-50 dark:hover:bg-neutral-900 dark:border-emerald-500"
                                                     key={index}
                                                 >
@@ -451,17 +446,13 @@ export default Categories;
 
 export async function getServerSideProps() {
     try {
-        const productRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product`);
-        const productData = await productRes.json();
-
-        const categoryRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/category`);
+        const categoryRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`);
         const categoryData = await categoryRes.json();
 
-        const searchRes = await fetch(`http://sellpoint-api.vercel.app/api/v1/product/name`);
+        const searchRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`);
         const searchData = await searchRes.json();
         return {
             props: {
-                productDetails: productData,
                 categoryDetails: categoryData,
                 searchData: searchData,
             },
@@ -470,7 +461,6 @@ export async function getServerSideProps() {
         console.error('Error fetching products data:', error);
         return {
             props: {
-                productDetails: null,
                 categoryDetails: null,
                 searchData: null
             },
