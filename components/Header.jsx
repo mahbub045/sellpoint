@@ -285,7 +285,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
                                     <p>All Categories</p>
                                 }
                             </div>
-                            <div className='absolute invisible w-[300px] group-hover:visible mt-3 bg-white dark:bg-black'>
+                            <div className='absolute invisible w-[300px] group-hover:visible mt-3 text-black dark:text-white bg-white dark:bg-black'>
                                 <div className='flex flex-col p-4'>
                                     {categoryDetails && categoryDetails?.map((item, index) => (
                                         <Link legacyBehavior href={`/categorypages/${item?.categorySlug}`} key={index}>

@@ -1,7 +1,15 @@
 import Link from "next/link";
 
 const Productitem = ({ product }) => {
-    const discountPercentage = Math.ceil(((product.price - product.discountPrice) / product.price) * 100);
+    //calculate discount
+    let discountPercentage = 0; // Default value if product is undefined or has no price
+    if (product && typeof product.price !== 'undefined' && typeof product.discountPrice !== 'undefined') {
+        const { price, discountPrice } = product;
+        if (price !== 0) { // Avoid division by zero
+            discountPercentage = Math.ceil(((price - discountPrice) / price) * 100);
+        }
+    }
+    //calculate discount end
     return (
         <>
             <Link legacyBehavior href={`/product/${product.slug}`}>
