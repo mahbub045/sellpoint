@@ -1,14 +1,15 @@
+"use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Productitem = ({ product }) => {
-    //calculate discount
-    let discountPercentage = 0; // Default value if product is undefined or has no price
-    if (product && typeof product.price !== 'undefined' && typeof product.discountPrice !== 'undefined') {
-        const { price, discountPrice } = product;
-        if (price !== 0) { // Avoid division by zero
-            discountPercentage = Math.ceil(((price - discountPrice) / price) * 100);
+    const [discount, setDiscount] = useState(null);
+    useEffect(() => {
+        if (product?.price) {
+            const discountPercentage = Math.ceil(((product.price - product.discountPrice) / product.price) * 100);
+            setDiscount(discountPercentage);
         }
-    }
+    }, [product])
     //calculate discount end
     return (
         <>
@@ -20,7 +21,7 @@ const Productitem = ({ product }) => {
                         {/* Absolute positioning for the discount price */}
                         <div className='absolute top-2 left-2 bg-emerald-500 rounded-md p-1 shadow-md'>
                             <p className='font-bold text-xs '>
-                                -{discountPercentage}%
+                                -{discount && discount}%
                             </p>
                         </div>
                     </div>

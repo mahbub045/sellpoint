@@ -46,13 +46,13 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
     }, [router.query.slug, productDetails]);
     // fetch product by slug start
     //calculate discount
-    let discountPercentage = 0; // Default value if product is undefined or has no price
-    if (product && typeof product.price !== 'undefined' && typeof product.discountPrice !== 'undefined') {
-        const { price, discountPrice } = product;
-        if (price !== 0) { // Avoid division by zero
-            discountPercentage = Math.ceil(((price - discountPrice) / price) * 100);
+    const [discount, setDiscount] = useState(null);
+    useEffect(() => {
+        if (product?.price) {
+            const discountPercentage = Math.ceil(((product.price - product.discountPrice) / product.price) * 100);
+            setDiscount(discountPercentage);
         }
-    }
+    }, [product])
     //calculate discount end
 
     const handleColorButtonClick = (index) => {
@@ -147,7 +147,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                             <del className='text-red-600'>
                                 <span className='font-extrabold'>৳ </span>{product?.price}
                             </del>
-                            <p className='inline-block ml-2 text-sm font-semibold'>-{discountPercentage}% Off</p>
+                            <p className='inline-block ml-2 text-sm font-semibold'>-{discount && discount}% Off</p>
                         </div>
                         <hr className="my-2" />
                         {/* Color Family */}
