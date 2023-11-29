@@ -32,7 +32,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
         });
     }
 
-
+    // fetch product by slug start
     useEffect(() => {
         const findSingleProduct = () => {
             const singleProduct = productDetails?.map((item) => (item?.products?.find((i) => {
@@ -44,7 +44,9 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
 
         findSingleProduct();
     }, [router.query.slug, productDetails]);
-
+    // fetch product by slug start
+    //calculate discount
+    const discountPercentage = Math.ceil(((product.price - product.discountPrice) / product.price) * 100);
 
     const handleColorButtonClick = (index) => {
         const newActiveStatesColorFamily = activeStatesColorFamily.map((state, i) => i === index);
@@ -138,6 +140,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                             <del className='text-red-600'>
                                 <span className='font-extrabold'>৳ </span>{product?.price}
                             </del>
+                            <p className='inline-block ml-2 text-sm font-semibold'>-{discountPercentage}% Off</p>
                         </div>
                         <hr className="my-2" />
                         {/* Color Family */}
