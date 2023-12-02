@@ -2,6 +2,57 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+
+const generateStars = (rating) => {
+    const maxRating = 5;
+    const starCount = Math.floor(rating); // Get the integer part of the rating
+    const stars = [];
+
+    // Create SVG elements for each star based on the rating
+    for (let i = 0; i < maxRating; i++) {
+        if (i < starCount) {
+            stars.push(
+                <svg
+                    key={i}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="yellow"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-3 h-3 inline-block text-yellow-600"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                    />
+                </svg>
+            );
+        } else {
+            stars.push(
+                <svg
+                    key={i}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="gray" // Change color for remaining stars
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-3 h-3 inline-block text-gray-400" // Change class for styling
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                    />
+                </svg>
+            );
+        }
+    }
+
+    return stars;
+};
+
+
 const Productitem = ({ product }) => {
     const [discount, setDiscount] = useState(null);
     useEffect(() => {
@@ -11,6 +62,10 @@ const Productitem = ({ product }) => {
         }
     }, [product])
     //calculate discount end
+
+    // Generate stars
+    const stars = generateStars(product?.rating || 0);
+
     return (
         <>
             <Link legacyBehavior href={`/product/${product.slug}`}>
@@ -52,6 +107,10 @@ const Productitem = ({ product }) => {
                             <span className='font-extrabold'>৳ </span>
                             {product.price}
                         </del>
+                        <p>
+                            {stars} {/* Display generated stars */}
+                            <span className="text-xs">({product?.numReviews})</span>
+                        </p>
                     </div>
                 </div>
             </Link>
