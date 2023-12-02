@@ -60,6 +60,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
     const [description, setDescription] = useState('');
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
     const [worldWideDelivery, setWorldWideDelivery] = useState(false);
+    const [warranty, setWarranty] = useState(false);
     const [featuredProduct, setFeaturedProduct] = useState(false);
     const [flashDeal, setFlashDeal] = useState(false);
 
@@ -537,6 +538,33 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                     </div>
                                 </div>
                                 {/* switch for World Wide Delivery */}
+                                {/* Switch for warranty start  */}
+                                <div className='border rounded-md border-emerald-500 p-2 my-4'>
+                                    <div className='p-1'>
+                                        <h3 className='font-semibold text-lg mb-1'>
+                                            Warranty
+                                            <span className='text-red-600 text-xs'>(Active this state if needed)</span>
+                                        </h3>
+                                    </div>
+                                    <hr className='border-emerald-600 mb-4' />
+                                    <div className='mb-4 flex justify-start gap-x-32'>
+                                        <label htmlFor="warranty," className="text-sm font-semibold mt-1">
+                                            Status:
+                                        </label>
+                                        <Switch
+                                            checked={warranty}
+                                            onChange={setWarranty}
+                                            className={`relative inline-flex h-[28px] w-[56px] cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 ${warranty ? 'bg-emerald-600' : 'bg-slate-600'}`}
+                                        >
+                                            <span className="sr-only">Use setting</span>
+                                            <span
+                                                aria-hidden="true"
+                                                className={`inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${warranty ? 'translate-x-7' : 'translate-x-0'} pointer-events-none`}
+                                            />
+                                        </Switch>
+                                    </div>
+                                </div>
+                                {/* Switch for warranty end  */}
                                 {/* Switch for featured product start */}
                                 <div className='border rounded-md border-emerald-500 p-2 my-4'>
                                     <div className='p-1'>
