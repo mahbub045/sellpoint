@@ -56,7 +56,7 @@ const generateStars = (rating) => {
 
     return stars;
 };
-
+// Create SVG elements for each star based on the rating end
 
 const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
     const { data: session } = useSession();
@@ -352,6 +352,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                     <h1 className='font-semibold text-xl py-4'>Description:</h1>
                     <p>{product?.description}</p>
                 </div>
+                <hr className='border-emerald-300 mt-6' />
                 <div className='my-2'>
                     <h1 className='text-xl font-semibold py-4'>Coustomer Reviews</h1>
                     <div className="pb-5">
