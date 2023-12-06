@@ -174,8 +174,8 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                     <div className='flex flex-col'>
                         {/* Product Info */}
                         <ul className="mb-2">
-                            <li>
-                                <h1 className='text-xl font-semibold'>{product?.name}</h1>
+                            <li className='mb-2'>
+                                <h1 className='text-2xl leading-7'>{product?.name}</h1>
                             </li>
                             <li className="text-sm">
                                 <span className='font-semibold'>Sub Category: {product?.subCategory}</span>
@@ -199,10 +199,10 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                             </del>
                             <p className='inline-block ml-2 text-sm font-semibold'>-{discount && discount}% Off</p>
                         </div>
-                        <hr className="my-2" />
+                        <hr className="my-0" />
                         {/* Color Family */}
-                        <div className='my-4'>
-                            <h4 className='font-semibold'>Color Family</h4>
+                        <div className='my-2'>
+                            <h4 className='font-semibold mb-1'>Color Family</h4>
                             <div className="flex gap-2">
                                 {[0, 1, 2].map((index) => (
                                     <button
@@ -305,7 +305,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                         <div className="p-5">
                             <div className="mb-4">
                                 <h5 className='font-semibold'>Delivery Address</h5>
-                                <p className='m-0 mb-1 p-0 text-[10px] text-red-400'>(To Change Address Go To Your Profile!)</p>
+                                <p className='-mt-1 mb-1 text-[10px] text-gray-400 dark:text-gray-700'>(To Change Address Go To Your Profile!)</p>
                                 {/* address start */}
                                 {!userDetails ?
                                     <p className='text-slate-400 dark:text-slate-600 flex justify-start items-center text-sm'>
@@ -362,6 +362,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                                     </svg>
                                     <span className='ml-1 text-sm'>7 Days Returns</span>
                                 </p>
+                                <p className='text-[9px] text-gray-400 dark:text-gray-700 ml-5 -mt-1'>Change of mind is not applicable!</p>
                                 {/* 7 Days Returns End */}
                                 {/* Warranty Start */}
                                 <p className='flex justify-start items-center text-emerald-600'>
