@@ -34,6 +34,7 @@ export default NextAuth({
                     return {
                         _id: user._id,
                         name: user.name,
+                        email: user.email,
                         phone: user.phone,
                         address: user.address,
                         isAdmin: user.isAdmin,
