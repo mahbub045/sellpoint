@@ -300,7 +300,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
                             <button className="w-full md:w-72 p-2 primary-button dark:text-black" onClick={addToCartHandler}>Add to Cart</button>
                         </div>
                     </div>
-                    <div className="p-5">
+                    <div className="px-5">
                         {/* Delivery Information */}
                         <div className="my-2">
                             <h5 className='font-semibold'>Delivery Address</h5>
