@@ -12,7 +12,7 @@ const Home = ({ productDetails, categoryDetails, searchData }) => {
         {productDetails && productDetails?.map((item, index) => (
           <div className='container px-4 py-4 m-auto' key={index}>
             {item?.products != 0 && (
-              <div className='flex justify-between'>
+              <div className='flex justify-between items-center'>
                 <h2 className='text-3xl font-semibold pb-4'>{item.category}</h2>
                 <a href={`/categorypages/${item.categorySlug}`} className='text-emerald-600 hover:underline'>See more...</a>
               </div>
