@@ -226,7 +226,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                         id="productName"
                                         value={productName}
                                         onChange={(e) => setProductName(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                         placeholder='Your Product Name'
                                         required
                                     />
@@ -240,7 +240,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                         id="slug"
                                         value={slug}
                                         onChange={(e) => setSlug(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                         placeholder='Ex: product_name_345'
                                         required
                                     />
@@ -254,14 +254,15 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                             id="category"
                                             value={category}
                                             onChange={(e) => setCategory(e.target.value)}
-                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                             required
                                         >
-                                            <option value="">Select a category</option>
+                                            <option className='bg-slate-200 dark:bg-black' value="">Select a category</option>
                                             {categoryDetails && categoryDetails?.map((item, index) => (
                                                 <option
                                                     key={index}
                                                     value={item.category}
+                                                    className='bg-slate-200 dark:bg-black'
                                                 >
                                                     {item.category}
                                                 </option>
@@ -278,7 +279,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                             id="subCategory"
                                             value={subCategory}
                                             onChange={(e) => setSubCategory(e.target.value)}
-                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                             placeholder='Ex: Baby Toy'
                                             required
                                         />
@@ -294,7 +295,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                         value={image}
                                         accept="image/*"
                                         onChange={(e) => setImage(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                         required
                                     />
                                 </div>
@@ -308,7 +309,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                             id="price"
                                             value={price}
                                             onChange={(e) => setPrice(e.target.value)}
-                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                             placeholder='Amount in BDT'
                                             required
                                         />
@@ -322,7 +323,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                             id="discountPrice"
                                             value={discountPrice}
                                             onChange={(e) => setDiscountPrice(e.target.value)}
-                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                             placeholder='Amount in BDT'
                                             required
                                         />
@@ -335,14 +336,15 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                             id="brand"
                                             value={brand}
                                             onChange={(e) => setBrand(e.target.value)}
-                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                             required
                                         >
-                                            <option value="">None</option>
+                                            <option className='bg-slate-200 dark:bg-black' value="">None</option>
                                             {allBrands && allBrands?.map((item, index) => (
                                                 <option
                                                     key={index}
                                                     value={item.brand}
+                                                    className='bg-slate-200 dark:bg-black hover:!bg-emerald-400'
                                                 >
                                                     {item.brand}
                                                 </option>
@@ -359,7 +361,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                             id="countInStock,"
                                             value={countInStock}
                                             onChange={(e) => setCountInStock(e.target.value)}
-                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                            className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                             placeholder='In Stock'
                                             required
                                         />
@@ -440,12 +442,12 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                         id="attribute"
                                         value={attribute}
                                         onChange={(e) => setAttribute(e.target.value)}
-                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        className="w-full px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                         required
                                     >
-                                        <option value="">None</option>
-                                        <option value="Category 1">Category 1</option>
-                                        <option value="Category 2">Category 2</option>
+                                        <option className='bg-slate-200 dark:bg-black' value="None">None</option>
+                                        <option className='bg-slate-200 dark:bg-black' value="Category 1">Category 1</option>
+                                        <option className='bg-slate-200 dark:bg-black' value="Category 2">Category 2</option>
                                         {/* Add more options dynamically or fetch from a data source */}
                                     </select>
                                     {attribute ? (
@@ -457,7 +459,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                                 isMulti
                                                 name="colors"
                                                 options={options}
-                                                className="basic-multi-select text-emerald-700  border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                                className="basic-multi-select text-emerald-700 text-sm"
                                                 classNamePrefix="select"
                                             />
                                         </>
@@ -475,7 +477,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                                         id="description"
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
-                                        className="w-full h-60 px-3 py-2 text-emerald-700 dark:text-white border-emerald-500 rounded-md focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
+                                        className="w-full h-60 px-3 py-2 text-emerald-700 dark:text-white bg-transparent border-emerald-500 rounded-md focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40 text-sm"
                                         placeholder='Write Your Product Description'
                                         required
                                     />

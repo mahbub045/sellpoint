@@ -56,10 +56,10 @@ textarea {
   width: 1.3rem;
   height: 1.3rem;
   vertical-align: text-bottom;
-  border: .20em solid currentColor;
-  border-right: .20em solid transparent;
+  border: 0.2em solid currentColor;
+  border-right: 0.2em solid transparent;
   border-radius: 50%;
-  animation: spinner-border .75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
 }
 
 @keyframes spinner-border {
@@ -84,7 +84,7 @@ textarea {
   border-radius: 50%;
   left: 15%;
   transform-origin: 50%;
-  animation: circle7124 .5s alternate infinite ease;
+  animation: circle7124 0.5s alternate infinite ease;
 }
 
 @keyframes circle7124 {
@@ -108,13 +108,13 @@ textarea {
 
 .preloaderCircle:nth-child(2) {
   left: 45%;
-  animation-delay: .2s;
+  animation-delay: 0.2s;
 }
 
 .preloaderCircle:nth-child(3) {
   left: auto;
   right: 15%;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 
 .preloaderShadow {
@@ -128,7 +128,7 @@ textarea {
   z-index: -1;
   left: 15%;
   filter: blur(1px);
-  animation: shadow046 .5s alternate infinite ease;
+  animation: shadow046 0.5s alternate infinite ease;
 }
 
 @keyframes shadow046 {
@@ -138,24 +138,58 @@ textarea {
 
   40% {
     transform: scaleX(1);
-    opacity: .7;
+    opacity: 0.7;
   }
 
   100% {
-    transform: scaleX(.2);
-    opacity: .4;
+    transform: scaleX(0.2);
+    opacity: 0.4;
   }
 }
 
 .preloaderShadow:nth-child(4) {
   left: 45%;
-  animation-delay: .2s
+  animation-delay: 0.2s;
 }
 
 .preloaderShadow:nth-child(5) {
   left: auto;
   right: 15%;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 
 /* preloader end */
+
+/* Select box custom css start */
+.select__control {
+  @apply !bg-transparent !border-emerald-500;
+}
+
+.select__control--is-focused {
+  @apply !ring ring-emerald-300 outline-none ring-opacity-40;
+}
+
+.select__input {
+  @apply !border-emerald-600 !text-emerald-600;
+}
+
+.select__input:focus {
+  @apply !ring ring-emerald-300;
+}
+
+.select__menu {
+  @apply !bg-slate-300 dark:!bg-black border border-emerald-400 !rounded-md;
+}
+
+.select__option {
+  @apply hover:bg-slate-400;
+}
+.select__option:first-child {
+  @apply rounded-t-md !-mt-[6px];
+}
+
+.select__option:last-child {
+  @apply rounded-b-md !-mb-[6px];
+}
+
+/* Select box custom css end */
