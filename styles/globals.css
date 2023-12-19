@@ -181,9 +181,6 @@ textarea {
   @apply !bg-slate-300 dark:!bg-black border border-emerald-400 !rounded-md;
 }
 
-.select__option {
-  @apply hover:bg-slate-400;
-}
 .select__option:first-child {
   @apply rounded-t-md !-mt-[6px];
 }
@@ -193,3 +190,4 @@ textarea {
 }
 
 /* Select box custom css end */
+
