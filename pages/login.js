@@ -22,9 +22,7 @@ const Login = () => {
             } else if ((session?.user)) {
                 router.push(redirect || '/');
             }
-
         }
-
     }, [session, router, redirect])
 
 
@@ -78,7 +76,7 @@ const Login = () => {
                         <label htmlFor="phone" className="block text-emerald-600">
                             Phone
                         </label>
-                        <input type="tel" id="phone" placeholder="01XXXXXXXXX"
+                        <input type="tel" id="phone" placeholder="01XXXXXXXXX" value='01511111111'
                             {...register('phone', {
                                 required: 'Please enter your phone number!',
                                 pattern: {
@@ -96,7 +94,7 @@ const Login = () => {
                         <label htmlFor="password" className="block text-emerald-600">
                             Password
                         </label>
-                        <input type="password" id="password" placeholder="Enter password"
+                        <input type="password" id="password" placeholder="Enter password" value='123456'
                             {...register('password', {
                                 required: 'Please enter password',
                                 minLength: { value: 6, message: 'Password is more than 5 Characters!' }
