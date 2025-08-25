@@ -7,6 +7,8 @@ export async function middleware(request) {
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
+
+  console.log("Token in middleware:", token);
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
 
   // If user is not authenticated and not on login/signup, redirect to login
