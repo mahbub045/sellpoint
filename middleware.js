@@ -3,12 +3,16 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export async function middleware(request) {
+  // Safeguard: Never run middleware logic for API routes
+  if (request.nextUrl.pathname.startsWith("/api/")) {
+    return NextResponse.next();
+  }
+
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  // console.log("Token in middleware:", token);
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
 
   // If user is not authenticated and not on login/signup, redirect to login
@@ -21,5 +25,5 @@ export async function middleware(request) {
 
 // Apply middleware only to admin/* and user/* routes
 export const config = {
-  matcher: ["/admin/:path((?!api).*)", "/user/:path((?!api).*)"],
+  matcher: ["/admin/:path*", "/user/:path*"],
 };
