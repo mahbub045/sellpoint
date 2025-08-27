@@ -34,7 +34,7 @@ export const metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Next Pwa",
+    title: "SellPoint",
     startupImage: [
       {
         url: "/apple-splash-2048-2732.jpg",
