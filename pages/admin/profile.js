@@ -1,6 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import Drawer from "@/components/Drawer";
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SalesStat from "@/components/SalesStat";
 import { Store } from "@/utils/Store";
@@ -355,7 +354,6 @@ const Profile = ({ categoryDetails, searchData }) => {
           </div>
         </div>
       </div>
-      <Footer />
       {/* Drawer start */}
       {isDrawerOpen && (
         <>

@@ -75,16 +75,6 @@ const Header = ({ title, categoryDetails, searchData }) => {
       name: "Happy Deal",
       url: "/ServerNotFound",
     },
-    {
-      id: 3,
-      name: "Electronics",
-      url: "/ServerNotFound",
-    },
-    {
-      id: 4,
-      name: "Cookarise",
-      url: "/ServerNotFound",
-    },
   ];
 
   // State to track whether the header should be fixed
