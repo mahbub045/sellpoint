@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useEffect, useState } from "react";
 
-const ServerNotFound = () => {
+const ServerNotFound = ({ categoryDetails, searchData }) => {
   const [progress, setProgress] = useState(0);
   const [animate, setAnimate] = useState(false);
 
@@ -25,7 +25,11 @@ const ServerNotFound = () => {
 
   return (
     <>
-      <Header title={"Under Development"} />
+      <Header
+        title="Under Development"
+        categoryDetails={categoryDetails}
+        searchData={searchData}
+      />
 
       {/* Main Content */}
       <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 relative overflow-hidden">
@@ -37,7 +41,7 @@ const ServerNotFound = () => {
         </div>
 
         {/* Content Container */}
-        <div className="flex flex-col items-center justify-center min-h-screen px-4 relative z-10">
+        <div className="flex flex-col items-center justify-center min-h-screen px-4 ">
           <div
             className={`text-center max-w-4xl transition-all duration-1000 ${
               animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -167,10 +171,43 @@ const ServerNotFound = () => {
           </svg>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };
 
 export default ServerNotFound;
+
+export async function getServerSideProps() {
+  try {
+    const productRes = await fetch(
+      `http://sellpoint-api.vercel.app/api/v1/product`
+    );
+    const productData = await productRes.json();
+
+    const categoryRes = await fetch(
+      `http://sellpoint-api.vercel.app/api/v1/category`
+    );
+    const categoryData = await categoryRes.json();
+
+    const searchRes = await fetch(
+      `http://sellpoint-api.vercel.app/api/v1/product/name`
+    );
+    const searchData = await searchRes.json();
+    return {
+      props: {
+        productDetails: productData,
+        categoryDetails: categoryData,
+        searchData: searchData,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching products data:", error);
+    return {
+      props: {
+        productDetails: null,
+        categoryDetails: null,
+        searchData: null,
+      },
+    };
+  }
+}
