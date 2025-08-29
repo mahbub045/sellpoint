@@ -437,7 +437,7 @@ const AttributeValue = ({ categoryDetails, searchData, allBrands }) => {
                           #
                         </th>
                         <th scope="col" className="px-6 py-4">
-                        Attribute Value Name
+                          Attribute Value Name
                         </th>
                         <th scope="col" className="px-6 py-4">
                           Action
@@ -494,7 +494,10 @@ const AttributeValue = ({ categoryDetails, searchData, allBrands }) => {
                                   />
                                 </svg>
                               </a>
-                              <button title="Delete" className="p-1 text-red-500 hover:text-white hover:bg-red-600 rounded-lg transition">
+                              <button
+                                title="Delete"
+                                className="p-1 text-red-500 hover:text-white hover:bg-red-600 rounded-lg transition"
+                              >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"

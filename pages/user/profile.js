@@ -40,7 +40,6 @@ const Profile = ({ categoryDetails, searchData }) => {
 
   const customBreadcrumbs = [
     { href: "/", label: "Home" },
-    { href: "/user/profile", label: "User" },
     { label: "Profile" },
   ];
 
@@ -114,7 +113,7 @@ const Profile = ({ categoryDetails, searchData }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="inbox"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -136,7 +135,7 @@ const Profile = ({ categoryDetails, searchData }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="UserOders"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -158,7 +157,7 @@ const Profile = ({ categoryDetails, searchData }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="MyReviews"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -323,7 +322,7 @@ const Profile = ({ categoryDetails, searchData }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="inbox"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
@@ -345,7 +344,7 @@ const Profile = ({ categoryDetails, searchData }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="UserOders"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
@@ -367,7 +366,7 @@ const Profile = ({ categoryDetails, searchData }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="MyReviews"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg

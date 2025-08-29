@@ -1,6 +1,6 @@
-import Carousel from "@/components/Carousel";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ModernCarousel from "@/components/ModernCarousel";
 import Productitem from "@/components/Productitem";
 
 const Home = ({ productDetails, categoryDetails, searchData }) => {
@@ -11,7 +11,7 @@ const Home = ({ productDetails, categoryDetails, searchData }) => {
         categoryDetails={categoryDetails}
         searchData={searchData}
       />
-      <Carousel />
+      <ModernCarousel />
       <div>
         {productDetails &&
           productDetails?.map((item, index) => (
@@ -22,7 +22,7 @@ const Home = ({ productDetails, categoryDetails, searchData }) => {
                     {item.category}
                   </h2>
                   <a
-                    href={`/categorypages/${item.categorySlug}`}
+                    href={`/categories/${item.categorySlug}`}
                     className="text-emerald-600 hover:underline"
                   >
                     See more...

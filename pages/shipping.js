@@ -77,7 +77,7 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
 
   const customBreadcrumbs = [
     { href: "/", label: "Home" },
-    { href: "/cart", label: "Cart" },
+    { label: "Cart" },
     { label: "Shipping Address" },
   ];
 

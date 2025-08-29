@@ -1,6 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import Drawer from "@/components/Drawer";
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import SalesStat from "@/components/SalesStat";
 import { Store } from "@/utils/Store";
@@ -28,7 +27,7 @@ const Profile = ({ categoryDetails, searchData }) => {
     { href: "/admin/categories", label: "Category" },
     { href: "/admin/brands", label: "Brand" },
     { href: "/admin/attributes", label: "Attribute" },
-    { href: "/admin/productreviews", label: "Product Reviews" },
+    { href: "#", label: "Product Reviews" },
   ];
 
   const handleLogout = () => {
@@ -119,7 +118,7 @@ const Profile = ({ categoryDetails, searchData }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="inbox"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -226,7 +225,7 @@ const Profile = ({ categoryDetails, searchData }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="oders"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -270,7 +269,7 @@ const Profile = ({ categoryDetails, searchData }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="AdminSetting"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -355,7 +354,6 @@ const Profile = ({ categoryDetails, searchData }) => {
           </div>
         </div>
       </div>
-      <Footer />
       {/* Drawer start */}
       {isDrawerOpen && (
         <>
@@ -390,7 +388,7 @@ const Profile = ({ categoryDetails, searchData }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="inbox"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
@@ -501,7 +499,7 @@ const Profile = ({ categoryDetails, searchData }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="oders"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
@@ -545,7 +543,7 @@ const Profile = ({ categoryDetails, searchData }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="AdminSetting"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
