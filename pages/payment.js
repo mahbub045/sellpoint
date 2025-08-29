@@ -39,7 +39,7 @@ const PaymentScreen = ({ categoryDetails, searchData }) => {
 
   const customBreadcrumbs = [
     { href: "/", label: "Home" },
-    { href: "/cart", label: "Cart" },
+    { label: "Cart" },
     { href: "/shipping", label: "Shipping Address" },
     { label: "Payment Method" },
   ];

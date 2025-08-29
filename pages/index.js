@@ -22,7 +22,7 @@ const Home = ({ productDetails, categoryDetails, searchData }) => {
                     {item.category}
                   </h2>
                   <a
-                    href={`/categorypages/${item.categorySlug}`}
+                    href={`/categories/${item.categorySlug}`}
                     className="text-emerald-600 hover:underline"
                   >
                     See more...

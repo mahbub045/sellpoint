@@ -372,7 +372,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
                     categoryDetails?.map((item, index) => (
                       <Link
                         legacyBehavior
-                        href={`/categorypages/${item?.categorySlug}`}
+                        href={`/categories/${item?.categorySlug}`}
                         key={index}
                       >
                         <a className="flex p-1 gap-2 items-center dark:text-white hover:text-emerald-600 dark:hover:text-emerald-600">
