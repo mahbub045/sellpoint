@@ -32,7 +32,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
     { href: "/admin/categories", label: "Category" },
     { href: "/admin/brands", label: "Brand" },
     { href: "/admin/attributes", label: "Attribute" },
-    { href: "/admin/productreviews", label: "Product Reviews" },
+    { href: "#", label: "Product Reviews" },
   ];
 
   const handleLogout = () => {
@@ -156,7 +156,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="inbox"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -263,7 +263,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="oders"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -307,7 +307,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
               </li>
               <li className="rounded-sm">
                 <a
-                  href="AdminSetting"
+                  href="#"
                   className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                 >
                   <svg
@@ -969,7 +969,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="inbox"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
@@ -1080,7 +1080,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="oders"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
@@ -1124,7 +1124,7 @@ const AddProduct = ({ categoryDetails, searchData, allBrands }) => {
                   </li>
                   <li className="rounded-sm">
                     <a
-                      href="AdminSetting"
+                      href="#"
                       className="flex items-center p-2 space-x-3 text-emerald-500 hover:text-emerald-700 rounded-md"
                     >
                       <svg
