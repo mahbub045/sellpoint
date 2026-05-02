@@ -243,14 +243,16 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
       <ServiceWorkerRegistration />
       <SessionProvider session={session}>
         <StoreProvider>
-          {loading && <Preloader />}
-          {Component.auth ? (
-            <Auth>
+          <div className="min-h-screen flex flex-col">
+            {loading && <Preloader />}
+            {Component.auth ? (
+              <Auth>
+                <Component {...pageProps} />
+              </Auth>
+            ) : (
               <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </div>
         </StoreProvider>
       </SessionProvider>
     </ThemeProvider>

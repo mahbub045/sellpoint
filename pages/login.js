@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumb";
+import Preloader from "@/components/Preloader";
 import { getError } from "@/utils/error";
 import { signIn, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
@@ -9,9 +10,9 @@ import { useForm } from "react-hook-form";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
   const [error, setError] = useState("");
   const router = useRouter();
+  const { data: session, status } = useSession();
   const {
     register,
     handleSubmit,
@@ -56,6 +57,10 @@ const Login = () => {
   };
 
   const customBreadcrumbs = [{ href: "/", label: "Home" }, { label: "Login" }];
+
+  if (status === "loading" || session) {
+    return <Preloader />;
+  }
 
   return (
     <>
