@@ -15,7 +15,7 @@ const Home = ({ productDetails, categoryDetails, searchData }) => {
       <div>
         {productDetails &&
           productDetails?.map((item, index) => (
-            <div className="container px-4 py-4 m-auto" key={index}>
+            <div className="px-4 py-4 m-auto" key={index}>
               {item?.products != 0 && (
                 <div className="flex justify-between items-center">
                   <h2 className="text-3xl font-semibold pb-4">

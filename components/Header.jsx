@@ -135,8 +135,8 @@ const Header = ({ title, categoryDetails, searchData }) => {
       </Head>
       <div className="flex flex-col justify-between">
         {/* topbar */}
-        <section className="container m-auto">
-          <div className="flex items-center justify-between p-2 mx-auto">
+        <section>
+          <div className="flex items-center justify-between px-4 py-2 mx-auto">
             {/* Replace the "SellPoint" text with an <img> element */}
             <Link legacyBehavior href="/">
               <a className="text-xl italic font-bold text-emerald-500">
@@ -337,7 +337,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
         </section>
         {/* topbar end */}
         <header className={headerClassName}>
-          <nav className="relative container mx-auto flex items-center h-12">
+          <nav className="relative mx-auto flex items-center h-12 px-4">
             <div className=" group cursor-pointer hover:text-white h-12 ">
               <div className="text-xl italic font-bold text-white flex items-center gap-2 pt-2">
                 <svg
@@ -365,7 +365,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
                         href={`/categories/${item?.categorySlug}`}
                         key={index}
                       >
-                        <a className="flex p-1 gap-2 items-center dark:text-white hover:text-emerald-600 dark:hover:text-emerald-600">
+                        <a className="flex gap-2 items-center dark:text-white hover:text-emerald-600 dark:hover:text-emerald-600">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -547,7 +547,7 @@ const Header = ({ title, categoryDetails, searchData }) => {
             </div>
           </nav>
         </header>
-        <section className="container">
+        <section className="">
           <div className="md:flex">
             <div className="md:hidden flex flex-row justify-between">
               {navMenu2 &&

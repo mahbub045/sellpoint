@@ -35,7 +35,7 @@ const CategorySlug = ({ productDetails, categoryDetails, searchData }) => {
       <Breadcrumb customBreadcrumbs={customBreadcrumbs} />
       <div>
         {categoryData && (
-          <div className="container min-h-screen px-4 py-4 m-auto">
+          <div className="min-h-screen px-4 py-4 m-auto">
             <div className="flex justify-center">
               <h2 className="text-3xl font-semibold pb-4">
                 {categoryData?.category}

@@ -60,7 +60,7 @@ const Login = () => {
   return (
     <>
       <Breadcrumb customBreadcrumbs={customBreadcrumbs} />
-      <div className="container m-auto min-h-screen flex items-center sm:justify-between justify-center lg:px-12 md:p-5 p-5 ">
+      <div className="m-auto min-h-screen flex items-center sm:justify-between justify-center lg:px-12 md:p-5 p-5 ">
         <Head>
           <title>Login - SellPoint</title>
           <meta name="description" content="Signup page for Your Website" />

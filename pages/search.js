@@ -40,7 +40,7 @@ const Search = ({ productDetails, categoryDetails, searchData }) => {
       <div className="min-h-screen">
         <div>
           {productData && productData?.length > 0 ? (
-            <div className="container px-4 py-4 m-auto">
+            <div className="px-4 py-4 m-auto">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5">
                 {productData?.map((item) =>
                   item?.products?.map((product) => (
@@ -50,7 +50,7 @@ const Search = ({ productDetails, categoryDetails, searchData }) => {
               </div>
             </div>
           ) : (
-            <div className="container h-screen mx-auto flex flex-col justify-center items-center">
+            <div className="h-screen mx-auto flex flex-col justify-center items-center">
               <img
                 src="/searchError.webp"
                 alt="Not Found!"

@@ -189,7 +189,7 @@ const ProductScreen = ({ productDetails, categoryDetails, searchData }) => {
         searchData={searchData}
       />
       <Breadcrumb customBreadcrumbs={customBreadcrumbs} />
-      <div className="container mx-auto p-2">
+      <div className="mx-auto p-2">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <div className="relative overflow-hidden">
             <img

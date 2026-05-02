@@ -15,49 +15,54 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
   const { data: session } = useSession();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  const { shippingAddress } = cart;
+  const { shippingAddress = {} } = cart;
   const {
     handleSubmit,
     register,
     formState: { errors },
     setValue,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      fullName: shippingAddress.fullName || "",
+      phone: shippingAddress.phone || "",
+      address: shippingAddress.address || "",
+      district: shippingAddress.district || "",
+      division: shippingAddress.division || "",
+    },
+  });
 
   const [userDetails, setUserDetails] = useState();
   const id = session?.user?._id;
   const url = process.env.NEXT_PUBLIC_URL;
 
-  const fetchData = async (id) => {
-    const response = await fetch(`${url}/api/users/${id}`);
-    const data = await response.json();
-    return data;
-  };
-  if (!userDetails?.phone) {
+  useEffect(() => {
+    if (!id || userDetails?.phone) return;
+
+    const fetchData = async (userId) => {
+      const response = await fetch(`${url}/api/users/${userId}`);
+      const data = await response.json();
+      return data;
+    };
+
     fetchData(id).then((result) => {
       setUserDetails(result);
     });
-  }
+  }, [id, userDetails, url]);
 
-  // Add a new state to manage the input values
-  const [fullNameValue, setFullNameValue] = useState("");
-  const [phoneValue, setPhoneValue] = useState("");
-  const [addressValue, setAddressValue] = useState("");
-
-  // Set input values when userDetails is available
   useEffect(() => {
     if (userDetails) {
-      setFullNameValue(userDetails.name || "");
-      setPhoneValue(userDetails.phone || "");
-      setAddressValue(userDetails.address || "");
+      setValue("fullName", userDetails.name || "");
+      setValue("phone", userDetails.phone || "");
+      setValue("address", userDetails.address || "");
     }
-  }, [userDetails]);
+  }, [userDetails, setValue]);
 
   useEffect(() => {
-    setValue("fullName", shippingAddress.fullName);
-    setValue("phone", shippingAddress.phone);
-    setValue("address", shippingAddress.address);
-    setValue("district", shippingAddress.district);
-    setValue("division", shippingAddress.division);
+    setValue("fullName", shippingAddress.fullName || "");
+    setValue("phone", shippingAddress.phone || "");
+    setValue("address", shippingAddress.address || "");
+    setValue("district", shippingAddress.district || "");
+    setValue("division", shippingAddress.division || "");
   }, [setValue, shippingAddress]);
 
   const submitHandler = ({ fullName, phone, address, district, division }) => {
@@ -70,7 +75,7 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
       JSON.stringify({
         ...cart,
         shippingAddress: { fullName, phone, address, district, division },
-      })
+      }),
     );
     router.push("/payment");
   };
@@ -89,7 +94,7 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
         searchData={searchData}
       />
       <Breadcrumb customBreadcrumbs={customBreadcrumbs} />
-      <div className="container mx-auto px-4 py-2">
+      <div className="mx-auto px-4 py-2">
         <CheckoutWizard activeStep={1} />
         <form
           className="max-w-screen-md mx-auto bg-slate-100 dark:bg-slate-950 px-4 py-2 shadow-md shadow-emerald-600 rounded-md"
@@ -120,8 +125,6 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
                 {...register("fullName", {
                   required: "Please enter full name!",
                 })}
-                value={fullNameValue}
-                onChange={(e) => setFullNameValue(e.target.value)}
               />
               {errors.fullName && (
                 <div className="text-red-500">{errors.fullName.message}</div>
@@ -143,8 +146,6 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
                 {...register("phone", {
                   required: "Please enter your active phone number!",
                 })}
-                value={phoneValue}
-                onChange={(e) => setPhoneValue(e.target.value)}
               />
               {errors.phone && (
                 <div className="text-red-500">{errors.phone.message}</div>
@@ -168,8 +169,6 @@ export default function ShippingScreen({ categoryDetails, searchData }) {
               {...register("address", {
                 required: "Please enter details address!",
               })}
-              value={addressValue}
-              onChange={(e) => setAddressValue(e.target.value)}
             />
             {errors.address && (
               <div className="text-red-500">{errors.address.message}</div>
@@ -328,12 +327,12 @@ ShippingScreen.auth = true;
 export async function getServerSideProps() {
   try {
     const categoryRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`
+      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`,
     );
     const categoryData = await categoryRes.json();
 
     const searchRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`
+      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product/name`,
     );
     const searchData = await searchRes.json();
     return {

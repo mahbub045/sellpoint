@@ -203,7 +203,7 @@ const Profile = ({ categoryDetails, searchData }) => {
             </ul>
           </div>
         </div>
-        <div className="container p-2 mx-auto md:mt-5 mt-2">
+        <div className="p-2 mx-auto md:mt-5 mt-2">
           {/* ... Manage My Account code ... */}
           <div className="pb-2">
             <h2 className="md:text-2xl sm:text-xl text-base text-emerald-600">

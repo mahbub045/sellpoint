@@ -327,7 +327,7 @@ const Customers = ({ categoryDetails, searchData }) => {
             </ul>
           </div>
         </div>
-        <div className="container p-2">
+        <div className="p-2">
           <div className="mb-6">
             <div className="flex justify-between my-2">
               <h1 className="md:text-2xl sm:text-xl text-base font-bold text-emerald-600">

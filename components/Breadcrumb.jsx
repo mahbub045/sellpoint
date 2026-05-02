@@ -8,7 +8,7 @@ const Breadcrumb = ({ customBreadcrumbs = null }) => {
   if (customBreadcrumbs) {
     return (
       <nav className="bg-gray-50 dark:bg-gray-800 px-4 py-3">
-        <div className="container mx-auto">
+        <div className="mx-auto">
           <ol className="flex items-center space-x-2 text-sm">
             {customBreadcrumbs.map((crumb, index) => (
               <li key={index} className="flex items-center">
@@ -58,7 +58,7 @@ const Breadcrumb = ({ customBreadcrumbs = null }) => {
 
   return (
     <nav className="bg-gray-50 dark:bg-gray-800 px-4 py-3">
-      <div className="container mx-auto">
+      <div className="mx-auto">
         <ol className="flex items-center space-x-2 text-sm">
           {breadcrumbs.map((crumb, index) => (
             <li key={index} className="flex items-center">
