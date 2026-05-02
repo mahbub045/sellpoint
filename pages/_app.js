@@ -220,21 +220,30 @@ export const viewport = {
 };
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const handleStart = () => setLoading(true);
+    const handleStop = () => setLoading(false);
 
-    return () => clearTimeout(timer);
-  }, []);
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleStop);
+    router.events.on("routeChangeError", handleStop);
+
+    return () => {
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleStop);
+      router.events.off("routeChangeError", handleStop);
+    };
+  }, [router.events]);
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system">
       <ServiceWorkerRegistration />
       <SessionProvider session={session}>
         <StoreProvider>
+          {loading && <Preloader />}
           {Component.auth ? (
             <Auth>
               <Component {...pageProps} />
