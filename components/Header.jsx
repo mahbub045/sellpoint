@@ -24,8 +24,6 @@ const Header = ({ title, categoryDetails, searchData }) => {
   // for search
   const [query, setQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState([]);
-  const [suggestions, setSuggestions] = useState(false);
-  // const [searchData, setSearchData] = useState(null);
 
   //for login
   const [isLoggedIn, setIsLoggedIn] = useState();

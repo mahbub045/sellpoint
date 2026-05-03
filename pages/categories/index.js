@@ -20,7 +20,7 @@ const Categories = ({ productDetails, categoryDetails, searchData }) => {
         searchData={searchData}
       />
       <Breadcrumb customBreadcrumbs={customBreadcrumbs} />
-      <div className="mx-auto px-4 py-8 min-h-screen">
+      <div className="px-4 py-8 min-h-screen">
         <h1 className="text-3xl font-bold text-center mb-8">
           Shop by Categories
         </h1>
@@ -62,7 +62,7 @@ const Categories = ({ productDetails, categoryDetails, searchData }) => {
                       </div>
                     )}
                   </div>
-                )
+                ),
             )}
           </div>
         ) : (
@@ -83,17 +83,17 @@ export default Categories;
 export async function getServerSideProps() {
   try {
     const productRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product`
+      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product`,
     );
     const productData = await productRes.json();
 
     const categoryRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`
+      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/category`,
     );
     const categoryData = await categoryRes.json();
 
     const searchRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product`
+      `${process.env.NEXT_PUBLIC_BACKEND_ENPOINT}/product`,
     );
     const searchData = await searchRes.json();
 
